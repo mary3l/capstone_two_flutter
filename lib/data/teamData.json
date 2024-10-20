@@ -1,0 +1,88 @@
+{
+    "teams": [
+      {
+        "schoolYear": "2024-2025",
+        "teamName": "Ateneo de Davao University",
+        "games": [
+          {
+            "gameName": "12/2/23, 2pm",
+            "players": [
+              {
+                "lastName": "Mabano",
+                "firstName": "Mariel",
+                "playerJerseyNumber": 10,
+                "statisticsCount": {
+                  "points": 25,
+                  "rebound": 12,
+                  "steal": 4,
+                  "block": 3,
+                  "turnover": 2,
+                  "foul": 3,
+                  "assist": 7
+                }
+              },
+              {
+                "lastName": "Doe",
+                "firstName": "John",
+                "playerJerseyNumber": 5,
+                "statisticsCount": {
+                  "points": 18,
+                  "rebound": 8,
+                  "steal": 2,
+                  "block": 1,
+                  "turnover": 4,
+                  "foul": 5,
+                  "assist": 6
+                }
+              }
+            ]
+          },
+          {
+            "gameName": "4/12/24, 4pm",
+            "players": [
+              {
+                "lastName": "Mabano",
+                "firstName": "Mariel",
+                "playerJerseyNumber": 10,
+                "statisticsCount": {
+                  "points": 20,
+                  "rebound": 10,
+                  "steal": 3,
+                  "block": 1,
+                  "turnover": 1,
+                  "foul": 2,
+                  "assist": 5
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "schoolYear": "2024-2025",
+        "teamName": "Team B",
+        "games": [
+          {
+            "gameName": "4/12/24, 4pm",
+            "players": [
+              {
+                "lastName": "Smith",
+                "firstName": "Alice",
+                "playerJerseyNumber": 7,
+                "statisticsCount": {
+                  "points": 15,
+                  "rebound": 5,
+                  "steal": 1,
+                  "block": 0,
+                  "turnover": 3,
+                  "foul": 1,
+                  "assist": 4
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  
