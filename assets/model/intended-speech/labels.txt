@@ -1,0 +1,20 @@
+0 Assist
+1 Background Noise
+2 Block
+3 Eight
+4 Five
+5 Foul
+6 Four
+7 Made
+8 Miss
+9 Nine
+10 One
+11 Player
+12 Rebound
+13 Seven
+14 Six
+15 Steal
+16 Ten
+17 Three
+18 Turnover
+19 Two
