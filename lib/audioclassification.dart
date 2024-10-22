@@ -18,20 +18,16 @@ class _AudioClassificationState extends State<AudioClassification> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final isRecording = ValueNotifier<bool>(false);
   Stream<Map<dynamic, dynamic>>? result;
-
-  ///example values for decodedwav models
-  // final String model = 'assets/decoded_wav_model.tflite';
-  // final String label = 'assets/decoded_wav_label.txt';
-  // final String audioDirectory = 'assets/sample_audio_16k_mono.wav';
-  // final String inputType = 'decodedWav';
-  // final int sampleRate = 16000;
-  // final int bufferSize = 2000;
-  // // final int audioLength = 16000;
+  Future<dynamic>? intendedNoiseModel;
+  Future<dynamic>? intendedSpeechModel;
 
   ///example values for google's teachable machine model
-  final String model =
+  final String intendedSpeechPath =
       'assets/model/intended-speech/soundclassifier_with_metadata.tflite';
-  final String label = 'assets/model/intended-speech/labels.txt';
+  final String intendedSpeechLabel = 'assets/model/intended-speech/labels.txt';
+  final String intendedNoisePath =
+      'assets/model/intended-noise/soundclassifier_with_metadata.tflite';
+  final String intendedNoiseLabel = 'assets/model/intended-noise/labels.txt';
   final String inputType = 'rawAudio';
   final String audioDirectory = 'assets/sample_audio_44k_mono.wav';
   final int sampleRate = 44100;
@@ -43,7 +39,7 @@ class _AudioClassificationState extends State<AudioClassification> {
   final bool isAsset = true;
 
   ///Adjust the values below when tuning model detection.
-  final double detectionThreshold = 0.3;
+  final double detectionThreshold = 0.7;
   final int averageWindowDuration = 1000;
   final int minimumTimeBetweenSamples = 30;
   final int suppressionTime = 1500;
@@ -51,11 +47,28 @@ class _AudioClassificationState extends State<AudioClassification> {
   @override
   void initState() {
     super.initState();
-    TfliteAudio.loadModel(
+    intendedSpeechModel = TfliteAudio.loadModel(
       inputType: inputType,
-      model: model,
-      label: label,
+      model: intendedSpeechPath,
+      label: intendedSpeechLabel,
     );
+    result = TfliteAudio.startAudioRecognition(
+      sampleRate: sampleRate,
+      bufferSize: bufferSize,
+      numOfInferences: numOfInferences,
+    );
+    print(result);
+    intendedNoiseModel = TfliteAudio.loadModel(
+      inputType: inputType,
+      model: intendedNoisePath,
+      label: intendedNoiseLabel,
+    );
+    result = TfliteAudio.startAudioRecognition(
+      sampleRate: sampleRate,
+      bufferSize: bufferSize,
+      numOfInferences: numOfInferences,
+    );
+    print(result);
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
   }
 
@@ -65,11 +78,6 @@ class _AudioClassificationState extends State<AudioClassification> {
       sampleRate: sampleRate,
       bufferSize: bufferSize,
       numOfInferences: numOfInferences,
-      // audioLength: audioLength,
-      // detectionThreshold: detectionThreshold,
-      // averageWindowDuration: averageWindowDuration,
-      // minimumTimeBetweenSamples: minimumTimeBetweenSamples,
-      // suppressionTime: suppressionTime,
     );
 
     result
@@ -81,7 +89,7 @@ class _AudioClassificationState extends State<AudioClassification> {
   ///fetches the labels from the text file in assets
   Future<List<String>> fetchLabelList() async {
     List<String> _labelList = [];
-    await rootBundle.loadString(this.label).then((q) {
+    await rootBundle.loadString(intendedSpeechLabel).then((q) {
       for (String i in const LineSplitter().convert(q)) {
         _labelList.add(i);
       }
