@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:tflite_audio/tflite_audio.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +8,6 @@ import 'package:mic_stream/mic_stream.dart';
 
 void main() => runApp(const AudioClassification());
 
-///This example showcases how to take advantage of all the futures and streams
-///from the plugin.
 class AudioClassification extends StatefulWidget {
   const AudioClassification({Key? key}) : super(key: key);
 
@@ -21,183 +18,143 @@ class AudioClassification extends StatefulWidget {
 class _AudioClassificationState extends State<AudioClassification> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final isRecording = ValueNotifier<bool>(false);
-  Stream<Map<dynamic, dynamic>>? result;
-  Future<dynamic>? intendedNoiseModel;
-  Future<dynamic>? intendedSpeechModel;
-
-  ///example values for google's teachable machine model
-  final String intendedSpeechPath =
-      'assets/model/intended-speech/soundclassifier_with_metadata.tflite';
-  final String intendedSpeechLabel = 'assets/model/intended-speech/labels.txt';
-  final String intendedNoisePath =
-      'assets/model/intended-noise/soundclassifier_with_metadata.tflite';
-  final String intendedNoiseLabel = 'assets/model/intended-noise/labels.txt';
   dynamic speechInterpreter;
   dynamic noiseInterpreter;
 
-  @override
-  void initState() {
-    super.initState();
-    loadModel();
-  }
+  final String intendedSpeechPath =
+      'assets/model/intended-speech/soundclassifier_with_metadata.tflite';
+  final String intendedNoisePath =
+      'assets/model/intended-noise/soundclassifier_with_metadata.tflite';
 
-  void loadModel() async {
+  String model1Result = 'Loading Speech Model...';
+  String model2Result = 'Loading Noise Model...';
+
+  Future<void> loadModels() async {
     speechInterpreter = await Interpreter.fromAsset(intendedSpeechPath);
     noiseInterpreter = await Interpreter.fromAsset(intendedNoisePath);
+  }
 
-    print(speechInterpreter);
-    print(noiseInterpreter);
+  classifyAudio(List<List<double>> audioInput) {
+    // Output arrays for both models
+    var speechOutput = List<double>.filled(20, 0.0).reshape([1, 20]);
+    var noiseOutput = List<double>.filled(3, 0.0).reshape([1, 3]);
+
+    // Run the model inference
+    speechInterpreter.run(audioInput, speechOutput);
+    noiseInterpreter.run(audioInput, noiseOutput);
+
+    print(speechOutput);
+    print(noiseOutput);
+  }
+
+  Future<List<List<double>>> getAudioInput() async {
+    // Stream audio input from the microphone
+    Stream<List<int>> stream = await MicStream.microphone(sampleRate: 44100);
+    List<int> audioSamples = [];
+
+    // Collect audio samples from the stream
+    await for (final sample in stream) {
+      audioSamples.addAll(sample);
+      if (audioSamples.length >= 44032) {
+        // Collect 44032 samples
+        break;
+      }
+    }
+
+    if (audioSamples.isEmpty) {
+      print('No audio samples captured.');
+      return [
+        [0.0]
+      ]; // Return a silent input if no samples were captured
+    }
+
+    // Convert raw audio data to List<float32>
+    List<double> audioInput = audioSamples
+        .map((sample) => sample.toDouble() / 32768.0)
+        .toList(); // Normalize
+
+    // Ensure the input shape is [1, 44032]
+    return [audioInput]; // Wrap in another list for model input
   }
 
   Future<void> getResult() async {
-    Stream<List<int>> stream = await MicStream.microphone(sampleRate: 44100);
+    isRecording.value = true;
 
-    var output = List.filled(1 * 44032, 0).reshape([1, 44032]);
-// Start listening to the stream
-    StreamSubscription<List<int>> listener = stream.listen((samples) {
-      speechInterpreter.run(samples, output);
+    List<List<double>> audioInput = await getAudioInput();
+    print('Audio Input: $audioInput');
+
+    Duration recordingDuration = Duration(seconds: 5);
+
+    // Use a Timer to stop recording after the duration
+    Timer(recordingDuration, () {
+      isRecording.value = false;
+      print(
+          'Audio recognition stopped after ${recordingDuration.inSeconds} seconds');
+      // Add logic to stop recording if necessary (if needed, e.g., clearing streams)
     });
-
-    speechInterpreter.close();
   }
-
-  ///fetches the labels from the text file in assets
-  Future<List<String>> fetchLabelList() async {
-    List<String> _labelList = [];
-    await rootBundle.loadString(intendedSpeechLabel).then((q) {
-      for (String i in const LineSplitter().convert(q)) {
-        _labelList.add(i);
-      }
-    });
-    return _labelList;
-  }
-
-  ///handles null exception if snapshot is null.
-  String showResult(AsyncSnapshot snapshot, String key) =>
-      snapshot.hasData ? snapshot.data[key].toString() : '0 ';
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            key: _scaffoldKey,
-            appBar: AppBar(
-              title: const Text('Tflite-audio/speech'),
-            ),
-
-            ///Streambuilder for inference results
-            body: StreamBuilder<Map<dynamic, dynamic>>(
-                stream: result,
-                builder: (BuildContext context,
-                    AsyncSnapshot<Map<dynamic, dynamic>> inferenceSnapshot) {
-                  ///futurebuilder for getting the label list
-                  return FutureBuilder(
-                      future: fetchLabelList(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<String>> labelSnapshot) {
-                        switch (inferenceSnapshot.connectionState) {
-                          case ConnectionState.none:
-                            //Loads the asset file.
-                            if (labelSnapshot.hasData) {
-                              return labelListWidget(labelSnapshot.data);
-                            } else {
-                              return const CircularProgressIndicator();
-                            }
-                          case ConnectionState.waiting:
-
-                            ///Widets will let the user know that its loading when waiting for results
-                            return Stack(children: <Widget>[
-                              Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: inferenceTimeWidget('calculating..')),
-                              labelListWidget(labelSnapshot.data),
-                            ]);
-
-                          ///Widgets will display the final results.
-                          default:
-                            return Stack(children: <Widget>[
-                              Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: inferenceTimeWidget(showResult(
-                                          inferenceSnapshot, 'inferenceTime') +
-                                      'ms')),
-                              labelListWidget(
-                                  labelSnapshot.data,
-                                  showResult(
-                                      inferenceSnapshot, 'recognitionResult'))
-                            ]);
-                        }
-                      });
-                }),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: ValueListenableBuilder(
-                valueListenable: isRecording,
-                builder: (context, value, widget) {
-                  if (value == false) {
-                    return FloatingActionButton(
-                      onPressed: () {
-                        isRecording.value = true;
-                        setState(() {
-                          getResult();
-                        });
-                      },
-                      backgroundColor: Colors.blue,
-                      child: const Icon(Icons.mic),
-                    );
-                  } else {
-                    return FloatingActionButton(
-                      onPressed: () {
-                        print('Audio Recognition Stopped');
-                        TfliteAudio.stopAudioRecognition();
-                      },
-                      backgroundColor: Colors.red,
-                      child: const Icon(Icons.adjust),
-                    );
-                  }
-                })));
+      home: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: const Text('TFLite Audio Classification'),
+        ),
+        body: FutureBuilder<void>(
+          future: loadModels(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: Text('Error loading models: ${snapshot.error}'));
+            } else {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Speech Model Result: $model1Result'),
+                    Text('Noise Model Result: $model2Result'),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: ValueListenableBuilder(
+          valueListenable: isRecording,
+          builder: (context, value, widget) {
+            if (!value) {
+              return FloatingActionButton(
+                onPressed: () {
+                  getResult();
+                },
+                backgroundColor: Colors.blue,
+                child: const Icon(Icons.mic),
+              );
+            } else {
+              return FloatingActionButton(
+                onPressed: () {
+                  // Optionally, add logic to stop recording if necessary
+                  print('Audio Recognition Stopped');
+                },
+                backgroundColor: Colors.red,
+                child: const Icon(Icons.stop),
+              );
+            }
+          },
+        ),
+      ),
+    );
   }
 
-  ///If snapshot data matches the label, it will change colour
-  Widget labelListWidget(List<String>? labelList, [String? result]) {
-    return Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: labelList!.map((labels) {
-              if (labels == result) {
-                return Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(labels.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Colors.green,
-                        )));
-              } else {
-                return Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(labels.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        )));
-              }
-            }).toList()));
-  }
-
-  ///If the future isn't completed, shows 'calculating'. Else shows inference time.
-  Widget inferenceTimeWidget(String result) {
-    return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(result,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.black,
-            )));
+  @override
+  void dispose() {
+    speechInterpreter.close();
+    noiseInterpreter.close();
+    super.dispose();
   }
 }
