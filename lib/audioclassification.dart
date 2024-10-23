@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tflite_audio/tflite_audio.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:mic_stream/mic_stream.dart';
 
 void main() => runApp(const AudioClassification());
 
@@ -28,62 +32,33 @@ class _AudioClassificationState extends State<AudioClassification> {
   final String intendedNoisePath =
       'assets/model/intended-noise/soundclassifier_with_metadata.tflite';
   final String intendedNoiseLabel = 'assets/model/intended-noise/labels.txt';
-  final String inputType = 'rawAudio';
-  final String audioDirectory = 'assets/sample_audio_44k_mono.wav';
-  final int sampleRate = 44100;
-  final int bufferSize = 11016;
-
-  final bool outputRawScores = false;
-  final int numOfInferences = 5;
-  final int numThreads = 1;
-  final bool isAsset = true;
-
-  ///Adjust the values below when tuning model detection.
-  final double detectionThreshold = 0.7;
-  final int averageWindowDuration = 1000;
-  final int minimumTimeBetweenSamples = 30;
-  final int suppressionTime = 1500;
+  dynamic speechInterpreter;
+  dynamic noiseInterpreter;
 
   @override
   void initState() {
     super.initState();
-    intendedSpeechModel = TfliteAudio.loadModel(
-      inputType: inputType,
-      model: intendedSpeechPath,
-      label: intendedSpeechLabel,
-    );
-    result = TfliteAudio.startAudioRecognition(
-      sampleRate: sampleRate,
-      bufferSize: bufferSize,
-      numOfInferences: numOfInferences,
-    );
-    print(result);
-    intendedNoiseModel = TfliteAudio.loadModel(
-      inputType: inputType,
-      model: intendedNoisePath,
-      label: intendedNoiseLabel,
-    );
-    result = TfliteAudio.startAudioRecognition(
-      sampleRate: sampleRate,
-      bufferSize: bufferSize,
-      numOfInferences: numOfInferences,
-    );
-    print(result);
-    TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
+    loadModel();
   }
 
-  void getResult() {
-    ///example for recording recognition
-    result = TfliteAudio.startAudioRecognition(
-      sampleRate: sampleRate,
-      bufferSize: bufferSize,
-      numOfInferences: numOfInferences,
-    );
+  void loadModel() async {
+    speechInterpreter = await Interpreter.fromAsset(intendedSpeechPath);
+    noiseInterpreter = await Interpreter.fromAsset(intendedNoisePath);
 
-    result
-        ?.listen((event) => print(
-            "Recognition Result: " + event["recognitionResult"].toString()))
-        .onDone(() => isRecording.value = false);
+    print(speechInterpreter);
+    print(noiseInterpreter);
+  }
+
+  Future<void> getResult() async {
+    Stream<List<int>> stream = await MicStream.microphone(sampleRate: 44100);
+
+    var output = List.filled(1 * 44032, 0).reshape([1, 44032]);
+// Start listening to the stream
+    StreamSubscription<List<int>> listener = stream.listen((samples) {
+      speechInterpreter.run(samples, output);
+    });
+
+    speechInterpreter.close();
   }
 
   ///fetches the labels from the text file in assets
