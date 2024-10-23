@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tflite_audio/tflite_audio.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:mic_stream/mic_stream.dart';
 
@@ -29,69 +27,70 @@ class _AudioClassificationState extends State<AudioClassification> {
   String model1Result = 'Loading Speech Model...';
   String model2Result = 'Loading Noise Model...';
 
+  late Stream<List<int>> audioStream;
+
   Future<void> loadModels() async {
     speechInterpreter = await Interpreter.fromAsset(intendedSpeechPath);
     noiseInterpreter = await Interpreter.fromAsset(intendedNoisePath);
   }
 
-  classifyAudio(List<List<double>> audioInput) {
-    // Output arrays for both models
-    var speechOutput = List<double>.filled(20, 0.0).reshape([1, 20]);
-    var noiseOutput = List<double>.filled(3, 0.0).reshape([1, 3]);
+  Future<void> classifyAudio(List<double> audioInput) async {
+    const int expectedLength = 44032; // Expected input length
+    const int speechOutputSize = 20; // Adjust output shape if needed
+    const int noiseOutputSize = 3; // Adjust output shape if needed
 
-    // Run the model inference
-    speechInterpreter.run(audioInput, speechOutput);
-    noiseInterpreter.run(audioInput, noiseOutput);
+    // Prepare output buffers
+    var speechOutput = List<double>.filled(speechOutputSize, 0.0)
+        .reshape([1, speechOutputSize]);
+    var noiseOutput =
+        List<double>.filled(noiseOutputSize, 0.0).reshape([1, noiseOutputSize]);
+
+    try {
+      // Run the model inference
+      speechInterpreter.run(
+          audioInput.reshape([1, expectedLength]), speechOutput);
+      noiseInterpreter.run(
+          audioInput.reshape([1, expectedLength]), noiseOutput);
+    } catch (e) {
+      print('Inference error: $e');
+      return; // Exit if there was an inference error
+    }
 
     print(speechOutput);
     print(noiseOutput);
   }
 
-  Future<List<List<double>>> getAudioInput() async {
-    // Stream audio input from the microphone
-    Stream<List<int>> stream = await MicStream.microphone(sampleRate: 44100);
-    List<int> audioSamples = [];
-
-    // Collect audio samples from the stream
-    await for (final sample in stream) {
-      audioSamples.addAll(sample);
-      if (audioSamples.length >= 44032) {
-        // Collect 44032 samples
-        break;
-      }
-    }
-
-    if (audioSamples.isEmpty) {
-      print('No audio samples captured.');
-      return [
-        [0.0]
-      ]; // Return a silent input if no samples were captured
-    }
-
-    // Convert raw audio data to List<float32>
-    List<double> audioInput = audioSamples
-        .map((sample) => sample.toDouble() / 32768.0)
-        .toList(); // Normalize
-
-    // Ensure the input shape is [1, 44032]
-    return [audioInput]; // Wrap in another list for model input
-  }
-
-  Future<void> getResult() async {
+  Future<void> startListening() async {
     isRecording.value = true;
 
-    List<List<double>> audioInput = await getAudioInput();
-    print('Audio Input: $audioInput');
+    // Start the microphone stream
+    audioStream = await MicStream.microphone(sampleRate: 44100);
 
-    Duration recordingDuration = Duration(seconds: 5);
+    // Buffer to collect audio data
+    List<double> audioInputBuffer = [];
 
-    // Use a Timer to stop recording after the duration
-    Timer(recordingDuration, () {
-      isRecording.value = false;
-      print(
-          'Audio recognition stopped after ${recordingDuration.inSeconds} seconds');
-      // Add logic to stop recording if necessary (if needed, e.g., clearing streams)
+    // Listen to the microphone stream continuously
+    audioStream.listen((List<int> samples) async {
+      // Convert raw audio data to List<double>
+      List<double> audioInput =
+          samples.map((sample) => sample.toDouble() / 32768.0).toList();
+      audioInputBuffer.addAll(audioInput);
+
+      // Process the audio input once we have enough data
+      while (audioInputBuffer.length >= 44032) {
+        // Extract the first 44032 samples and remove them from the buffer
+        List<double> currentInput = audioInputBuffer.sublist(0, 44032);
+        audioInputBuffer.removeRange(0, 44032); // Remove processed samples
+
+        await classifyAudio(
+            currentInput); // Call classifyAudio with the current input
+      }
     });
+  }
+
+  Future<void> stopListening() async {
+    isRecording.value = false;
+    //await MicStream.stop(); // Stop the microphone stream
   }
 
   @override
@@ -127,10 +126,10 @@ class _AudioClassificationState extends State<AudioClassification> {
         floatingActionButton: ValueListenableBuilder(
           valueListenable: isRecording,
           builder: (context, value, widget) {
-            if (!value) {
+            if (value == false) {
               return FloatingActionButton(
                 onPressed: () {
-                  getResult();
+                  startListening();
                 },
                 backgroundColor: Colors.blue,
                 child: const Icon(Icons.mic),
@@ -138,8 +137,7 @@ class _AudioClassificationState extends State<AudioClassification> {
             } else {
               return FloatingActionButton(
                 onPressed: () {
-                  // Optionally, add logic to stop recording if necessary
-                  print('Audio Recognition Stopped');
+                  stopListening();
                 },
                 backgroundColor: Colors.red,
                 child: const Icon(Icons.stop),
