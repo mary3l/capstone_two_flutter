@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:capstone_two_one/constants/colors.dart';
+import 'package:capstone_two_one/constants/stat_category.dart'; // Import your constants file
+import 'package:flutter/material.dart';
 
 class StatCategorySelector extends StatefulWidget {
-  final void Function(String)
-      onSelectCategory; // Callback for selected category
+  final void Function(StatCategory)
+      onSelectCategory; // Updated to use StatCategory
 
   const StatCategorySelector({Key? key, required this.onSelectCategory})
       : super(key: key);
@@ -13,19 +14,19 @@ class StatCategorySelector extends StatefulWidget {
 }
 
 class _StatCategorySelectorState extends State<StatCategorySelector> {
-  String? focusedButton; // State to track the focused button
+  StatCategory? focusedButton; // State to track the focused button
 
-  final List<String> buttons = [
-    "points",
-    "rebound",
-    "steal",
-    "block",
-    "turnover",
-    "foul",
-    "assist",
+  final List<StatCategory> buttons = [
+    StatCategory.points,
+    StatCategory.rebounds,
+    StatCategory.steal,
+    StatCategory.block,
+    StatCategory.turnover,
+    StatCategory.foul,
+    StatCategory.assists,
   ];
 
-  void handlePress(String button) {
+  void handlePress(StatCategory button) {
     setState(() {
       focusedButton = button; // Set the focused button
     });
@@ -54,7 +55,10 @@ class _StatCategorySelectorState extends State<StatCategorySelector> {
                 ),
               ),
               child: Text(
-                button,
+                button
+                    .toString()
+                    .split('.')
+                    .last, // Display the name of the StatCategory
                 style: TextStyle(
                   color: isFocused ? Colors.white : Colors.black,
                 ),

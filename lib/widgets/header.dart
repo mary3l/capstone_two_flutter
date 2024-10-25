@@ -24,12 +24,12 @@ class Header extends StatelessWidget {
         title,
         style: textType == "headerText"
             ? TextStyle(
-                fontFamily: 'Jersey10Regular',
+                fontFamily: 'Jersey10',
                 fontSize: 40,
                 color: AppColors.black,
               )
             : TextStyle(
-                fontFamily: 'Jersey10Regular',
+                fontFamily: 'Jersey10',
                 fontSize: 32,
                 color: AppColors.grey,
               ),

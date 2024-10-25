@@ -1,0 +1,357 @@
+{
+  "seasons": {
+    "year": 2024,
+    "games": [
+      {
+        "game_id": "game_1",
+        "title": "Championship Game",
+        "date": "2024-10-15T18:00:00Z",
+        "semester": "First Semester",
+        "totalPoints": 120,
+        "teams": [
+          {
+            "team_id": "team_1",
+            "name": "Ateneo de Davao University",
+            "players": [
+              {
+                "player_id": "player_1",
+                "lastName": "Doe",
+                "firstName": "John",
+                "middleName": "M.",
+                "jerseyNumber": 23,
+                "gamesPlayed": 10,
+                "statistics": {
+                  "totalPoints": 57,
+                  "totalRebounds": 80,
+                  "totalSteals": 10,
+                  "totalBlocks": 2,
+                  "totalTurnovers": 3,
+                  "totalFouls": 5,
+                  "totalAssists": 20,
+                  "seasonBreakdown": {
+                    "totalPoints": 170,
+                    "totalRebounds": 50,
+                    "totalSteals": 10,
+                    "totalBlocks": 2,
+                    "totalTurnovers": 3,
+                    "totalFouls": 5,
+                    "totalAssists": 20,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "season_breakdown_1",
+                        "madeOne": 40,
+                        "madeTwo": 50,
+                        "madeThree": 10,
+                        "missOne": 5,
+                        "missTwo": 10,
+                        "missThree": 2
+                      }
+                    ]
+                  },
+                  "gameBreakdown": {
+                    "game_id": "game_1",
+                    "totalPoints": 40,
+                    "totalRebounds": 10,
+                    "totalSteals": 2,
+                    "totalBlocks": 1,
+                    "totalTurnovers": 1,
+                    "totalFouls": 2,
+                    "totalAssists": 3,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "game_breakdown_1",
+                        "madeOne": 5,
+                        "madeTwo": 10,
+                        "madeThree": 5,
+                        "missOne": 1,
+                        "missTwo": 2,
+                        "missThree": 1
+                      }
+                    ]
+                  }
+                },
+                "pointsBreakdown": [
+                  {
+                    "breakdown_id": "breakdown_1",
+                    "madeOne": 5,
+                    "madeTwo": 10,
+                    "madeThree": 3,
+                    "missOne": 2,
+                    "missTwo": 1,
+                    "missThree": 0,
+                    "quarterID": "quarter_1"
+                  },
+                  {
+                    "breakdown_id": "breakdown_2",
+                    "madeOne": 4,
+                    "madeTwo": 8,
+                    "madeThree": 1,
+                    "missOne": 1,
+                    "missTwo": 2,
+                    "missThree": 1,
+                    "quarterID": "quarter_2"
+                  }
+                ]
+              },
+              {
+                "player_id": "player_2",
+                "lastName": "Smith",
+                "firstName": "Alice",
+                "middleName": "B.",
+                "jerseyNumber": 10,
+                "gamesPlayed": 12,
+                "statistics": {
+                  "totalPoints": 57,
+                  "totalRebounds": 90,
+                  "totalSteals": 15,
+                  "totalBlocks": 3,
+                  "totalTurnovers": 2,
+                  "totalFouls": 4,
+                  "totalAssists": 25,
+                  "seasonBreakdown": {
+                    "totalPoints": 180,
+                    "totalRebounds": 90,
+                    "totalSteals": 15,
+                    "totalBlocks": 3,
+                    "totalTurnovers": 2,
+                    "totalFouls": 4,
+                    "totalAssists": 25,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "season_breakdown_2",
+                        "madeOne": 30,
+                        "madeTwo": 40,
+                        "madeThree": 20,
+                        "missOne": 5,
+                        "missTwo": 10,
+                        "missThree": 5
+                      }
+                    ]
+                  },
+                  "gameBreakdown": {
+                    "game_id": "game_1",
+                    "totalPoints": 40,
+                    "totalRebounds": 12,
+                    "totalSteals": 3,
+                    "totalBlocks": 1,
+                    "totalTurnovers": 1,
+                    "totalFouls": 1,
+                    "totalAssists": 7,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "game_breakdown_2",
+                        "madeOne": 10,
+                        "madeTwo": 15,
+                        "madeThree": 5,
+                        "missOne": 1,
+                        "missTwo": 2,
+                        "missThree": 1
+                      }
+                    ]
+                  }
+                },
+                "pointsBreakdown": [
+                  {
+                    "breakdown_id": "breakdown_3",
+                    "madeOne": 6,
+                    "madeTwo": 12,
+                    "madeThree": 5,
+                    "missOne": 1,
+                    "missTwo": 2,
+                    "missThree": 1,
+                    "quarterID": "quarter_1"
+                  },
+                  {
+                    "breakdown_id": "breakdown_4",
+                    "madeOne": 7,
+                    "madeTwo": 14,
+                    "madeThree": 3,
+                    "missOne": 1,
+                    "missTwo": 3,
+                    "missThree": 2,
+                    "quarterID": "quarter_2"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "game_id": "game_1",
+        "title": "Championship Game",
+        "date": "2024-10-15T18:00:00Z",
+        "semester": "First Semester",
+        "totalPoints": 120,
+        "teams": [
+          {
+            "team_id": "team_1",
+            "name": "Ateneo de Davao University",
+            "players": [
+              {
+                "player_id": "player_1",
+                "lastName": "Doe",
+                "firstName": "John",
+                "middleName": "M.",
+                "jerseyNumber": 23,
+                "gamesPlayed": 10,
+                "statistics": {
+                  "totalPoints": 57,
+                  "totalRebounds": 80,
+                  "totalSteals": 10,
+                  "totalBlocks": 2,
+                  "totalTurnovers": 3,
+                  "totalFouls": 5,
+                  "totalAssists": 20,
+                  "seasonBreakdown": {
+                    "totalPoints": 170,
+                    "totalRebounds": 50,
+                    "totalSteals": 10,
+                    "totalBlocks": 2,
+                    "totalTurnovers": 3,
+                    "totalFouls": 5,
+                    "totalAssists": 20,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "season_breakdown_1",
+                        "madeOne": 40,
+                        "madeTwo": 50,
+                        "madeThree": 10,
+                        "missOne": 5,
+                        "missTwo": 10,
+                        "missThree": 2
+                      }
+                    ]
+                  },
+                  "gameBreakdown": {
+                    "game_id": "game_1",
+                    "totalPoints": 40,
+                    "totalRebounds": 10,
+                    "totalSteals": 2,
+                    "totalBlocks": 1,
+                    "totalTurnovers": 1,
+                    "totalFouls": 2,
+                    "totalAssists": 3,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "game_breakdown_1",
+                        "madeOne": 5,
+                        "madeTwo": 10,
+                        "madeThree": 5,
+                        "missOne": 1,
+                        "missTwo": 2,
+                        "missThree": 1
+                      }
+                    ]
+                  }
+                },
+                "pointsBreakdown": [
+                  {
+                    "breakdown_id": "breakdown_1",
+                    "madeOne": 5,
+                    "madeTwo": 10,
+                    "madeThree": 3,
+                    "missOne": 2,
+                    "missTwo": 1,
+                    "missThree": 0,
+                    "quarterID": "quarter_1"
+                  },
+                  {
+                    "breakdown_id": "breakdown_2",
+                    "madeOne": 4,
+                    "madeTwo": 8,
+                    "madeThree": 1,
+                    "missOne": 1,
+                    "missTwo": 2,
+                    "missThree": 1,
+                    "quarterID": "quarter_2"
+                  }
+                ]
+              },
+              {
+                "player_id": "player_2",
+                "lastName": "Smith",
+                "firstName": "Alice",
+                "middleName": "B.",
+                "jerseyNumber": 10,
+                "gamesPlayed": 12,
+                "statistics": {
+                  "totalPoints": 57,
+                  "totalRebounds": 90,
+                  "totalSteals": 15,
+                  "totalBlocks": 3,
+                  "totalTurnovers": 2,
+                  "totalFouls": 4,
+                  "totalAssists": 25,
+                  "seasonBreakdown": {
+                    "totalPoints": 180,
+                    "totalRebounds": 90,
+                    "totalSteals": 15,
+                    "totalBlocks": 3,
+                    "totalTurnovers": 2,
+                    "totalFouls": 4,
+                    "totalAssists": 25,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "season_breakdown_2",
+                        "madeOne": 30,
+                        "madeTwo": 40,
+                        "madeThree": 20,
+                        "missOne": 5,
+                        "missTwo": 10,
+                        "missThree": 5
+                      }
+                    ]
+                  },
+                  "gameBreakdown": {
+                    "game_id": "game_1",
+                    "totalPoints": 40,
+                    "totalRebounds": 12,
+                    "totalSteals": 3,
+                    "totalBlocks": 1,
+                    "totalTurnovers": 1,
+                    "totalFouls": 1,
+                    "totalAssists": 7,
+                    "pointsBreakdown": [
+                      {
+                        "breakdown_id": "game_breakdown_2",
+                        "madeOne": 10,
+                        "madeTwo": 15,
+                        "madeThree": 5,
+                        "missOne": 1,
+                        "missTwo": 2,
+                        "missThree": 1
+                      }
+                    ]
+                  }
+                },
+                "pointsBreakdown": [
+                  {
+                    "breakdown_id": "breakdown_3",
+                    "madeOne": 6,
+                    "madeTwo": 12,
+                    "madeThree": 5,
+                    "missOne": 1,
+                    "missTwo": 2,
+                    "missThree": 1,
+                    "quarterID": "quarter_1"
+                  },
+                  {
+                    "breakdown_id": "breakdown_4",
+                    "madeOne": 7,
+                    "madeTwo": 14,
+                    "madeThree": 3,
+                    "missOne": 1,
+                    "missTwo": 3,
+                    "missThree": 2,
+                    "quarterID": "quarter_2"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
