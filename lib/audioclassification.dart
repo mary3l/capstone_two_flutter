@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:tflite_audio/tflite_audio.dart';
+import 'package:flutter/services.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:mic_stream/mic_stream.dart';
 
@@ -21,6 +22,9 @@ class _AudioClassificationState extends State<AudioClassification> {
 
   final String intendedSpeechPath =
       'assets/model/intended-speech/soundclassifier_with_metadata.tflite';
+  final String intendedSpeechLabelPath =
+      'assets/model/intended-speech/labels.txt';
+  Future<List<String>>? intendedSpeechLabelList;
   final String intendedNoisePath =
       'assets/model/intended-noise/soundclassifier_with_metadata.tflite';
 
@@ -28,10 +32,38 @@ class _AudioClassificationState extends State<AudioClassification> {
   String model2Result = 'Loading Noise Model...';
 
   late Stream<List<int>> audioStream;
+  late StreamSubscription<List<int>> audioStreamSubscription;
 
   Future<void> loadModels() async {
     speechInterpreter = await Interpreter.fromAsset(intendedSpeechPath);
     noiseInterpreter = await Interpreter.fromAsset(intendedNoisePath);
+    intendedSpeechLabelList = fetchLabelList();
+    audioStream = MicStream.microphone(sampleRate: 44100).asBroadcastStream();
+  }
+
+  ///fetches the labels from the text file in assets
+  Future<List<String>> fetchLabelList() async {
+    List<String> _labelList = [];
+    await rootBundle.loadString(this.intendedSpeechLabelPath).then((q) {
+      for (String i in const LineSplitter().convert(q)) {
+        _labelList.add(i);
+      }
+    });
+    return _labelList;
+  }
+
+  Future<String> classifiedInput(
+      List<double> speechOutput, List<double> noiseOutput) async {
+    // Find the predicted class for speech
+    double speechPredictedClass = speechOutput.reduce((a, b) => a > b ? a : b);
+    double noisePredictedClass = noiseOutput.reduce((a, b) => a > b ? a : b);
+
+    print('SpeechOutput $speechOutput');
+    print('NoiseOutput $noiseOutput');
+    print('Predicted Speech Class: $speechPredictedClass');
+    print('Predicted Noise Class: $noisePredictedClass');
+
+    return "";
   }
 
   Future<void> classifyAudio(List<double> audioInput) async {
@@ -55,42 +87,32 @@ class _AudioClassificationState extends State<AudioClassification> {
       print('Inference error: $e');
       return; // Exit if there was an inference error
     }
-
-    print(speechOutput);
-    print(noiseOutput);
+    classifiedInput(speechOutput[0], noiseOutput[0]);
   }
 
   Future<void> startListening() async {
     isRecording.value = true;
-
-    // Start the microphone stream
-    audioStream = await MicStream.microphone(sampleRate: 44100);
-
-    // Buffer to collect audio data
     List<double> audioInputBuffer = [];
 
-    // Listen to the microphone stream continuously
-    audioStream.listen((List<int> samples) async {
-      // Convert raw audio data to List<double>
+    // Start listening to the microphone stream
+    audioStreamSubscription = audioStream.listen((List<int> samples) async {
       List<double> audioInput =
           samples.map((sample) => sample.toDouble() / 32768.0).toList();
       audioInputBuffer.addAll(audioInput);
 
       // Process the audio input once we have enough data
       while (audioInputBuffer.length >= 44032) {
-        // Extract the first 44032 samples and remove them from the buffer
         List<double> currentInput = audioInputBuffer.sublist(0, 44032);
-        audioInputBuffer.removeRange(0, 44032); // Remove processed samples
+        audioInputBuffer.removeRange(0, 44032);
 
-        await classifyAudio(
-            currentInput); // Call classifyAudio with the current input
+        await classifyAudio(currentInput);
       }
     });
   }
 
   Future<void> stopListening() async {
     isRecording.value = false;
-    //await MicStream.stop(); // Stop the microphone stream
+    await audioStreamSubscription.cancel();
   }
 
   @override
