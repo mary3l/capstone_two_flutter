@@ -1,3 +1,7 @@
 0 Background Noise
-1 ball
-2 traction
+1 Ball Bouncing
+2 Buzzer / Horn
+3 Crowd Noise
+4 Shoe Traction
+5 Team Cheer
+6 Whistle
