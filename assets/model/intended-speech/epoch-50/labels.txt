@@ -1,0 +1,22 @@
+0 Background Noise
+1 Intended Speech - Assist
+2 Intended Speech - Block
+3 Intended Speech - Defensive
+4 Intended Speech - Eight
+5 Intended Speech - Five
+6 Intended Speech - Foul
+7 Intended Speech - Four 
+8 Intended Speech - Made
+9 Intended Speech - Miss
+10 Intended Speech - Nine
+11 Intended Speech - Offensive
+12 Intended Speech - One
+13 Intended Speech - Player
+14 Intended Speech - Rebound
+15 Intended Speech - Seven
+16 Intended Speech - Six
+17 Intended Speech - Steal
+18 Intended Speech - Ten
+19 Intended Speech - Three
+20 Intended Speech - Turnover
+21 Intended Speech - Two

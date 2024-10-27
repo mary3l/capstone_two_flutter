@@ -37,7 +37,6 @@ class _AudioClassificationState extends State<AudioClassification> {
   Future<void> loadModels() async {
     speechInterpreter = await Interpreter.fromAsset(intendedSpeechPath);
     noiseInterpreter = await Interpreter.fromAsset(intendedNoisePath);
-    intendedSpeechLabelList = fetchLabelList();
     audioStream = MicStream.microphone(sampleRate: 44100).asBroadcastStream();
   }
 
@@ -52,20 +51,25 @@ class _AudioClassificationState extends State<AudioClassification> {
     return _labelList;
   }
 
-  Future<String> classifiedInput(
-      List<double> speechOutput, List<double> noiseOutput) async {
+  Future<String> classifiedInput(List<double> speechOutput) async {
     // Find the predicted class for speech
+    List<String> intendedSpeechLabels = await fetchLabelList();
     double speechPredictedClass = speechOutput.reduce((a, b) => a > b ? a : b);
-    double noisePredictedClass = noiseOutput.reduce((a, b) => a > b ? a : b);
+    //double noisePredictedClass = noiseOutput.reduce((a, b) => a > b ? a : b);
+    int predictedIndex = await speechOutput.indexWhere(
+        (value) => value == speechOutput.reduce((a, b) => a > b ? a : b));
 
     print('SpeechOutput $speechOutput');
-    print('NoiseOutput $noiseOutput');
-    print('Predicted Speech Class: $speechPredictedClass');
-    print('Predicted Noise Class: $noisePredictedClass');
-
+    //print('NoiseOutput $noiseOutput');
+    print('$predictedIndex');
+    //print('Predicted Noise Class: $noisePredictedClass');
+    setState(() {
+      model1Result = intendedSpeechLabels[predictedIndex];
+    });
     return "";
   }
 
+  double probabilityThreshold = 0.7;
   Future<void> classifyAudio(List<double> audioInput) async {
     const int expectedLength = 44032; // Expected input length
     const int speechOutputSize = 20; // Adjust output shape if needed
@@ -77,35 +81,40 @@ class _AudioClassificationState extends State<AudioClassification> {
     var noiseOutput =
         List<double>.filled(noiseOutputSize, 0.0).reshape([1, noiseOutputSize]);
 
-    try {
-      // Run the model inference
-      speechInterpreter.run(
-          audioInput.reshape([1, expectedLength]), speechOutput);
-      noiseInterpreter.run(
-          audioInput.reshape([1, expectedLength]), noiseOutput);
-    } catch (e) {
-      print('Inference error: $e');
-      return; // Exit if there was an inference error
-    }
-    classifiedInput(speechOutput[0], noiseOutput[0]);
+    int predictionTimeStart = DateTime.now().millisecondsSinceEpoch;
+    speechInterpreter?.run(
+        audioInput.reshape([1, expectedLength]), speechOutput);
+    int predictionTime =
+        DateTime.now().millisecondsSinceEpoch - predictionTimeStart;
+    print('Prediction time: $predictionTime ms');
+    classifiedInput(speechOutput[0]);
   }
 
+  double overlapFactor = 0.75; // Set overlap factor, e.g., 0.5 for 50%
+  final int expectedLength = 44032; // Length in samples
   Future<void> startListening() async {
+    final int predictionInterval =
+        (expectedLength * (1 - overlapFactor)).toInt();
     isRecording.value = true;
     List<double> audioInputBuffer = [];
 
-    // Start listening to the microphone stream
     audioStreamSubscription = audioStream.listen((List<int> samples) async {
+      // Normalize the samples to the range [-1, 1] and add to the buffer
       List<double> audioInput =
-          samples.map((sample) => sample.toDouble() / 32768.0).toList();
+          samples.map((s) => s.toDouble() / 32768.0).toList();
       audioInputBuffer.addAll(audioInput);
 
-      // Process the audio input once we have enough data
-      while (audioInputBuffer.length >= 44032) {
-        List<double> currentInput = audioInputBuffer.sublist(0, 44032);
-        audioInputBuffer.removeRange(0, 44032);
-
+      // Check if we have enough data for classification
+      while (audioInputBuffer.length >= expectedLength) {
+        // Take the first expectedLength samples for classification
+        List<double> currentInput = audioInputBuffer.sublist(0, expectedLength);
         await classifyAudio(currentInput);
+
+        // Remove the processed samples based on predictionInterval for overlap
+        int removeUntilIndex = predictionInterval < audioInputBuffer.length
+            ? predictionInterval
+            : audioInputBuffer.length;
+        audioInputBuffer.removeRange(0, removeUntilIndex);
       }
     });
   }
