@@ -18,6 +18,7 @@ class _AudioClassificationState extends State<AudioClassification> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final isRecording = ValueNotifier<bool>(false);
   dynamic speechInterpreter;
+  late IsolateInterpreter isolateSpeechInterpreter;
   dynamic noiseInterpreter;
 
   final String intendedSpeechPath =
@@ -36,6 +37,8 @@ class _AudioClassificationState extends State<AudioClassification> {
 
   Future<void> loadModels() async {
     speechInterpreter = await Interpreter.fromAsset(intendedSpeechPath);
+    isolateSpeechInterpreter =
+        await IsolateInterpreter.create(address: speechInterpreter.address);
     noiseInterpreter = await Interpreter.fromAsset(intendedNoisePath);
     audioStream = MicStream.microphone(sampleRate: 44100).asBroadcastStream();
   }
@@ -51,25 +54,39 @@ class _AudioClassificationState extends State<AudioClassification> {
     return _labelList;
   }
 
-  Future<String> classifiedInput(List<double> speechOutput) async {
+  Future<List<String>> fetchLabelList() async {
+    List<String> _labelList = [];
+    await rootBundle.loadString(this.intendedSpeechLabelPath).then((q) {
+      for (String i in const LineSplitter().convert(q)) {
+        _labelList.add(i);
+      }
+    });
+    return _labelList;
+  }
+
+  double probabilityThreshold = 0.3;
+  Future<String> classifiedInput(
+      List<double> speechOutput, List<double> noiseOutput) async {
     // Find the predicted class for speech
     List<String> intendedSpeechLabels = await fetchLabelList();
     double speechPredictedClass = speechOutput.reduce((a, b) => a > b ? a : b);
-    //double noisePredictedClass = noiseOutput.reduce((a, b) => a > b ? a : b);
     int predictedIndex = await speechOutput.indexWhere(
         (value) => value == speechOutput.reduce((a, b) => a > b ? a : b));
+    print(speechPredictedClass);
+    if (speechPredictedClass >= probabilityThreshold) {
+      print('SpeechOutput $speechOutput');
+      //print('NoiseOutput $noiseOutput');
+      print('$predictedIndex');
+      print(intendedSpeechLabels[predictedIndex]);
+      //print('Predicted Noise Class: $noisePredictedClass');
+      setState(() {
+        model1Result = intendedSpeechLabels[predictedIndex];
+      });
+    }
 
-    print('SpeechOutput $speechOutput');
-    //print('NoiseOutput $noiseOutput');
-    print('$predictedIndex');
-    //print('Predicted Noise Class: $noisePredictedClass');
-    setState(() {
-      model1Result = intendedSpeechLabels[predictedIndex];
-    });
     return "";
   }
 
-  double probabilityThreshold = 0.7;
   Future<void> classifyAudio(List<double> audioInput) async {
     const int expectedLength = 44032; // Expected input length
     const int speechOutputSize = 20; // Adjust output shape if needed
@@ -90,7 +107,7 @@ class _AudioClassificationState extends State<AudioClassification> {
     classifiedInput(speechOutput[0]);
   }
 
-  double overlapFactor = 0.75; // Set overlap factor, e.g., 0.5 for 50%
+  double overlapFactor = 0.3; // Set overlap factor, e.g., 0.5 for 50%
   final int expectedLength = 44032; // Length in samples
   Future<void> startListening() async {
     final int predictionInterval =
