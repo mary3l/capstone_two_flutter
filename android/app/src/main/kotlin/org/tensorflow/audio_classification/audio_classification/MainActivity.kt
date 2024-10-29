@@ -60,7 +60,9 @@ class MainActivity : FlutterActivity() {
                 "startRecord" -> {
                     startRecord()
                 }
-
+                "stopRecord" -> {
+                    stopRecord()
+                }
                 "getAudioFloatArray" -> {
                     result.success(getAudioFloatArray())
                 }
@@ -153,6 +155,9 @@ class MainActivity : FlutterActivity() {
     // Starts the recorder. This function should be called after the recorder has been created.
     private fun startRecord() {
         audioRecord?.startRecording()
+    }
+      private fun stopRecord() {
+        audioRecord?.stop()
     }
 
     private fun getAudioFloatArray(): FloatArray {
