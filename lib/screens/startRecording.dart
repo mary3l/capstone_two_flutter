@@ -68,7 +68,6 @@ class _StartRecordingState extends State<StartRecording> {
                       gameQuarter: selectedQuarter ?? '',
                       type: 'outputSpeechFieldType',
                     ),
-                    SizedBox(height: 10),
                     RecordingField(
                       speech: 'test',
                       gameQuarter: selectedQuarter ?? '',
