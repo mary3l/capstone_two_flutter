@@ -183,7 +183,7 @@ class GameBreakdown {
 }
 
 class PointsBreakdown {
-  final String? breakdownId;
+  final int? breakdownId;
   final int? madeOne;
   final int? madeTwo;
   final int? madeThree;

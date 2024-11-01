@@ -10,12 +10,12 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:capstone_two_one/widgets/statistic_category_selector.dart';
 import 'package:capstone_two_one/constants/stat_category.dart'; // Import your constants file
 
-class TeamStatistics extends StatefulWidget {
+class PlayerProfile extends StatefulWidget {
   @override
-  _TeamStatisticsState createState() => _TeamStatisticsState();
+  _PlayerProfileState createState() => _PlayerProfileState();
 }
 
-class _TeamStatisticsState extends State<TeamStatistics> {
+class _PlayerProfileState extends State<PlayerProfile> {
   // State to manage the selected statistic category
   StatCategory selectedStat = StatCategory.points;
   List<Game> games = []; // Updated to hold games instead of players
@@ -23,19 +23,6 @@ class _TeamStatisticsState extends State<TeamStatistics> {
   @override
   void initState() {
     super.initState();
-    loadTeamStatistics(); // Load team statistics
-  }
-
-  Future<void> loadTeamStatistics() async {
-    // Load team statistics from JSON
-    final String response =
-        await rootBundle.loadString('lib/data/allData.json');
-    final List<dynamic> data = json.decode(response);
-
-    // Extract games from the loaded data
-    setState(() {
-      games = data.map((gameJson) => Game.fromJson(gameJson)).toList();
-    });
   }
 
   List<PointsBreakdown> pointsBreakdownList = [
@@ -59,9 +46,7 @@ class _TeamStatisticsState extends State<TeamStatistics> {
       missThree: 0,
       quarterID: 'Q2',
     ),
-    // Add more breakdowns as needed
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,44 +60,36 @@ class _TeamStatisticsState extends State<TeamStatistics> {
             children: [
               // Header for the screen
               Header(
-                title: "PLAYER STATISTICS",
+                title: "PLAYER PROFILE",
                 alignment: HeaderAlignment.header,
                 textType: TextType.header,
               ),
-              SizedBox(height: 20),
-
-              // Static labels for game details
-              Label(text: "Team Name", alignment: LabelAlignment.header),
-              SizedBox(height: 10),
-              Label(text: "Game Name", alignment: LabelAlignment.header),
-              SizedBox(height: 10),
-              Label(
-                  text: "Date and Time Schedule",
-                  alignment: LabelAlignment.header),
-              SizedBox(height: 20),
-
-              // Statistic category selection
-              StatCategorySelector(
-                onSelectCategory: (StatCategory category) {
-                  setState(() {
-                    selectedStat = category; // Update the selected stat
-                  });
-                },
+              Header(
+                title: "TEAM NAME",
+                alignment: HeaderAlignment.header,
+                textType: TextType.section,
               ),
-              SizedBox(height: 20),
 
-              // Game card with spacing
+              Label(
+                  text: "School Year, First Semester",
+                  alignment: LabelAlignment.header),
+              Label(text: "Game Title", alignment: LabelAlignment.header),
+
               GameCard(
+                showStats: true,
+                onPress: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/screens/teamPlayerProfile',
+                  );
+                },
                 player: Player(
                   lastName: 'lastname',
                   firstName: 'firstname',
                   jerseyNumber: 12,
-                  pointsBreakdown: pointsBreakdownList,
                 ),
               ),
-              SizedBox(height: 20),
-
-              // Uncomment and add spacing if using ListView for displaying games
+              // Mapping over the games list to display player statistics
               // Expanded(
               //   child: ListView.builder(
               //     itemCount: games.length,
@@ -121,21 +98,20 @@ class _TeamStatisticsState extends State<TeamStatistics> {
               //       return Column(
               //         crossAxisAlignment: CrossAxisAlignment.start,
               //         children: [
+              //           // Display game name and other game info
               //           Text(
               //             game.title, // Use 'title' instead of 'gameName'
               //             style: TextStyle(fontWeight: FontWeight.bold),
               //           ),
-              //           SizedBox(height: 5),
               //           Text(
               //             game.teams, // Display the team name
               //             style: TextStyle(fontStyle: FontStyle.italic),
               //           ),
-              //           SizedBox(height: 5),
               //           Text(
               //             game.date.toString(), // Display date and time
               //             style: TextStyle(color: Colors.grey),
               //           ),
-              //           SizedBox(height: 10),
+              //           SizedBox(height: 10), // Add spacing
               //           ListView.builder(
               //             shrinkWrap: true,
               //             physics:
@@ -152,7 +128,7 @@ class _TeamStatisticsState extends State<TeamStatistics> {
               //               );
               //             },
               //           ),
-              //           Divider(),
+              //           Divider(), // Add a divider between games
               //         ],
               //       );
               //     },

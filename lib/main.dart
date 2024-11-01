@@ -124,11 +124,14 @@
 //   }
 // }
 
+import 'package:capstone_two_one/screens/playerProfile.dart';
+import 'package:capstone_two_one/screens/teamProfile.dart';
 import 'package:capstone_two_one/screens/teamStatistics.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_two_one/screens/startRecording.dart';
-import 'package:capstone_two_one/screens/dashboard.dart'; // Adjust path as needed
-import 'package:capstone_two_one/screens/landing.dart'; // Adjust path as needed
+import 'package:capstone_two_one/screens/dashboard.dart';
+import 'package:capstone_two_one/screens/landing.dart';
+import 'package:capstone_two_one/screens/teamPlayerProfile.dart';
 
 void main() {
   runApp(MyApp());
@@ -140,13 +143,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Basketball Voice Recognition App',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      initialRoute: '/screens/landing', // Set the initial route
+      initialRoute: '/screens/landing',
       routes: {
         '/screens/landing': (context) => Landing(),
-        '/screens/startRecording': (context) =>
-            StartRecording(), // Ensure this matches your screen
+        '/screens/startRecording': (context) => StartRecording(),
         '/screens/dashboard': (context) => Dashboard(),
-        // '/screens/teamStatistics': (context) => TeamStatistics()
+        '/screens/teamStatistics': (context) => TeamStatistics(),
+        '/screens/teamProfile': (context) => TeamProfile(),
+        '/screens/playerProfile': (context) => PlayerProfile(),
+        '/screens/teamPlayerProfile': (context) => TeamPlayerProfile()
       },
     );
   }

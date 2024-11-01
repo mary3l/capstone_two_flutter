@@ -60,6 +60,7 @@ class _StatCategorySelectorState extends State<StatCategorySelector> {
                     .split('.')
                     .last, // Display the name of the StatCategory
                 style: TextStyle(
+                  fontSize: 14,
                   color: isFocused ? Colors.white : Colors.black,
                 ),
               ),

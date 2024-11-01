@@ -1,3 +1,4 @@
+import 'package:capstone_two_one/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_two_one/widgets/general_screen_padding.dart';
 import 'package:capstone_two_one/widgets/header.dart';
@@ -19,20 +20,26 @@ class _StartRecordingState extends State<StartRecording> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Wrap with Scaffold
-      backgroundColor:
-          Theme.of(context).scaffoldBackgroundColor, // Optional: set background
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(),
+      drawer: CustomDrawer(),
       body: GeneralScreenPadding(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Header(
               title: 'RECORDING',
-              alignment: 'headerAlignment',
-              textType: 'headerText',
+              alignment: HeaderAlignment.header,
+              textType: TextType.header,
             ),
-            Label(text: 'Game Name'),
-            Label(text: 'Date and Time Schedule'),
+
+            Label(text: 'Game Name', alignment: LabelAlignment.header),
+
+            Label(
+              text: 'Date and Time Schedule',
+              alignment: LabelAlignment.header,
+            ),
+            SizedBox(height: 10),
 
             // Pass the setter function to GameQuarter
             GameQuarter(onSelectQuarter: (quarter) {
@@ -40,18 +47,33 @@ class _StartRecordingState extends State<StartRecording> {
                 selectedQuarter = quarter;
               });
             }),
+            SizedBox(height: 10),
 
             RecordingField(
               speech: 'test',
               type: 'inputSpeechFieldType',
               gameQuarter: '',
             ),
-            RecordingButton(),
+            SizedBox(height: 20),
+            Center(child: RecordingButton()),
+            SizedBox(height: 10),
+
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   children: [
+                    RecordingField(
+                      speech: 'test',
+                      gameQuarter: selectedQuarter ?? '',
+                      type: 'outputSpeechFieldType',
+                    ),
+                    SizedBox(height: 10),
+                    RecordingField(
+                      speech: 'test',
+                      gameQuarter: selectedQuarter ?? '',
+                      type: 'outputSpeechFieldType',
+                    ),
                     RecordingField(
                       speech: 'test',
                       gameQuarter: selectedQuarter ?? '',
@@ -65,13 +87,6 @@ class _StartRecordingState extends State<StartRecording> {
                   ],
                 ),
               ),
-            ),
-            Button(
-              text: 'Team Profile',
-              onPress: () {
-                // Navigate to the Team Profile screen
-                Navigator.pushNamed(context, '/screens/teamProfile');
-              },
             ),
           ],
         ),

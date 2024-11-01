@@ -78,10 +78,10 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
 
-fonts:
-  - family: Jersey10
-    fonts:
-      - asset: lib/assets/fonts/Jersey10-Regular.ttf
+  fonts:
+    - family: Jersey10
+      fonts:
+        - asset: fonts/Jersey10-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

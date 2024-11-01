@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_two_one/constants/colors.dart';
 
+enum HeaderAlignment {
+  header,
+  sectionTitle,
+}
+
+enum TextType {
+  header,
+  section,
+}
+
 class Header extends StatelessWidget {
   final String title;
-  final String alignment; // Use "headerAlignment" or "sectionTitleAlignment"
-  final String textType; // Use "headerText" or "sectionTextType"
+  final HeaderAlignment alignment; // Use enum for alignment
+  final TextType textType; // Use enum for text type
 
   const Header({
     Key? key,
@@ -16,13 +26,12 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: alignment == "headerAlignment"
+      alignment: alignment == HeaderAlignment.header
           ? Alignment.center
           : Alignment.centerLeft,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 60),
       child: Text(
         title,
-        style: textType == "headerText"
+        style: textType == TextType.header
             ? TextStyle(
                 fontFamily: 'Jersey10',
                 fontSize: 40,
@@ -33,9 +42,8 @@ class Header extends StatelessWidget {
                 fontSize: 32,
                 color: AppColors.grey,
               ),
-        textAlign: textType == "headerText"
-            ? TextAlign.center
-            : TextAlign.left, // Set textAlign here
+        textAlign:
+            textType == TextType.header ? TextAlign.center : TextAlign.left,
       ),
     );
   }

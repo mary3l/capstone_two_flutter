@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_two_one/constants/colors.dart';
 
+enum LabelAlignment {
+  header,
+  sectionLabel,
+}
+
 class Label extends StatelessWidget {
   final String text;
+  final LabelAlignment alignment;
 
-  const Label({Key? key, required this.text}) : super(key: key);
+  const Label({Key? key, required this.text, required this.alignment})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
-      alignment: Alignment.center,
+      alignment: alignment == LabelAlignment.header
+          ? Alignment.center
+          : Alignment.centerLeft,
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Text(
         text,
         style: TextStyle(
