@@ -20,8 +20,7 @@ class _RecordingButtonState extends State<RecordingButton>
     super.initState();
     // Initialize the animation controller
     _controller = AnimationController(
-      duration:
-          const Duration(milliseconds: 200), // Adjust the duration as needed
+      duration: const Duration(microseconds: 50000),
       vsync: this,
     );
     // Set up the animation
@@ -37,19 +36,34 @@ class _RecordingButtonState extends State<RecordingButton>
     super.dispose();
   }
 
-  void _onLongPressStart(LongPressStartDetails details) {
+  // void _onLongPressStart(LongPressStartDetails details) {
+  //   _controller.forward(); // Animate to a larger size immediately
+  // }
+
+  // void _onLongPressEnd(LongPressEndDetails details) {
+  //   _controller.reverse(); // Return to original size immediately
+  // }
+
+  void _onTapDown(TapDownDetails details) {
     _controller.forward(); // Animate to a larger size immediately
   }
 
-  void _onLongPressEnd(LongPressEndDetails details) {
+  void _onTapUp(TapUpDetails details) {
     _controller.reverse(); // Return to original size immediately
+  }
+
+  void _onTapCancel() {
+    _controller.reverse(); // Reverse if the tap is canceled
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPressStart: _onLongPressStart,
-      onLongPressEnd: _onLongPressEnd,
+      // onLongPressStart: _onLongPressStart,
+      // onLongPressEnd: _onLongPressEnd,
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTapCancel: _onTapCancel,
       child: ScaleTransition(
         scale: _animation,
         child: Column(
