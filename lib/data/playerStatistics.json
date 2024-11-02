@@ -1,0 +1,55 @@
+{
+    "players": [
+      {
+        "lastName": "Mabano",
+        "firstName": "Mariel",
+        "playerJerseyNumber": 10,
+        "icon": null
+      },
+      {
+        "lastName": "Mabano",
+        "firstName": "Mariel",
+        "playerJerseyNumber": 5,
+        "icon": null
+      },
+      {
+        "lastName": "Mabano",
+        "firstName": "Mariel",
+        "playerJerseyNumber": 3,
+        "icon": null
+      }
+    ],
+    "statistics": [
+      {
+        "jerseyNumber": 10,
+        "points": 25,
+        "rebound": 12,
+        "steal": 4,
+        "block": 3,
+        "turnover": 2,
+        "foul": 3,
+        "assist": 7
+      },
+      {
+        "jerseyNumber": 5,
+        "points": 18,
+        "rebound": 8,
+        "steal": 2,
+        "block": 1,
+        "turnover": 4,
+        "foul": 5,
+        "assist": 6
+      },
+      {
+        "jerseyNumber": 3,
+        "points": 30,
+        "rebound": 15,
+        "steal": 5,
+        "block": 4,
+        "turnover": 1,
+        "foul": 2,
+        "assist": 9
+      }
+    ]
+  }
+  
