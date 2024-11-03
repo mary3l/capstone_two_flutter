@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:audio_classification/helper/classification_list_helper.dart';
+
 import 'helper/audio_classification_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -82,15 +84,54 @@ class _MyHomePageState extends State<MyHomePage> {
   List<MapEntry<String, double>> _classificationSpeech = List.empty();
   List<MapEntry<String, double>> _classificationNoise = List.empty();
 
+  late KeywordList keywordList;
   List<MapEntry<String, double>> biggestValue = List.empty();
-  var _showError = false;
+  ValueNotifier<bool> _isRecording = ValueNotifier(false);
+  bool _hasPermission = false;
 
-  void _startRecorder() {
+  List<String> _keywordCombinations = List.empty(growable: true);
+
+  Future<void> _startRecorder() async {
+    print('Starting recording');
     try {
       platform.invokeMethod('startRecord');
+      if (_hasPermission) {
+        _isRecording.value = true;
+        Timer.periodic(
+          Duration(milliseconds: _expectAudioLength),
+          (timer) {
+            if (!_isRecording.value) {
+              timer.cancel(); // Stop the timer when recording ends
+            } else {
+              _runInference();
+            }
+          },
+        );
+      }
     } on PlatformException catch (e) {
       log("Failed to start record: '${e.message}'");
     }
+  }
+
+  void _stopRecorder() {
+    log('Stopping recording');
+    try {
+      platform.invokeMethod('stopRecord');
+    } on PlatformException catch (e) {
+      log("Failed to stop record: ${e.message}");
+    }
+    _isRecording.value = false;
+    keywordList = KeywordList();
+    print('keywords ${_keywordCombinations.toString()}');
+    _keywordCombinations.clear();
+
+    /* final List<String> _keywordCombinations = [
+      "Player Fifty",
+      "Made",
+      "3",
+    ]; */
+    /* print('matches?${keywordList.matches(_keywordCombinations)}');
+    print('keyword combinations${_keywordCombinations}'); */
   }
 
   Future<bool> _requestPermission() async {
@@ -151,20 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _modelNoisePath, _modelNoiselabelsPath, _modelNoiseSize);
     await _helperSpeech.initHelper();
     await _helperNoise.initHelper();
-    bool success = await _requestPermission();
-    if (success) {
-      _startRecorder();
-
-      Timer.periodic(Duration(milliseconds: _expectAudioLength), (timer) {
-        // classify here
-        _runInference();
-      });
-    } else {
-      // show error here
-      setState(() {
-        _showError = true;
-      });
-    }
+    _hasPermission = await _requestPermission();
   }
 
   Future<void> _runInference() async {
@@ -176,7 +204,6 @@ class _MyHomePageState extends State<MyHomePage> {
     final resultNoise = await _helperNoise
         .inference(inputArray.sublist(0, _requiredInputBuffer));
     _VoteBetweenModels(resultSpeech, resultNoise);
-    // Since your model outputs two classes, we can simply get the output directly
   }
 
   void _VoteBetweenModels(resultSpeech, resultNoise) {
@@ -196,9 +223,15 @@ class _MyHomePageState extends State<MyHomePage> {
       biggestValue = _classificationNoise; // Noise classification wins
     }
 
+    if (_keywordCombinations.length < 3) {
+      _keywordCombinations.add(biggestValue[0].key);
+    } else {
+      _stopRecorder();
+    }
+
     setState(() {
-      print(biggestValue);
       biggestValue = biggestValue;
+      print(biggestValue[0].key);
     });
   }
 
@@ -210,52 +243,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.black.withOpacity(0.5),
-      ),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    if (_showError) {
-      return const Center(
-        child: Text(
-          "Audio recording permission required for audio classification",
-          textAlign: TextAlign.center,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('TFLite Audio Classification'),
         ),
-      );
-    } else {
-      return (Column(
-        children: [Text(biggestValue[0].key.toString())],
-      )); /* ListView.separated(
-        padding: const EdgeInsets.all(10),
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: _classification.length,
-        itemBuilder: (context, index) {
-          final item = _classification[index];
-          return Row(
+        body: Container(
+          child: Column(
             children: [
-              SizedBox(
-                width: 200,
-                child: Text(item.key),
-              ),
-              Flexible(
-                child: LinearProgressIndicator(
-                  value: item.value,
-                  minHeight: 20,
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(''),
+                  ],
                 ),
               )
             ],
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const SizedBox(
-          height: 10,
+          ),
         ),
-      ); */
-    }
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: ValueListenableBuilder(
+          valueListenable: _isRecording,
+          builder: (context, value, widget) {
+            if (value == false) {
+              return FloatingActionButton(
+                onPressed: () {
+                  _startRecorder();
+                },
+                backgroundColor: Colors.blue,
+                child: const Icon(Icons.mic),
+              );
+            } else {
+              return FloatingActionButton(
+                onPressed: () {
+                  _stopRecorder();
+                },
+                backgroundColor: Colors.red,
+                child: const Icon(Icons.stop),
+              );
+            }
+          },
+        ),
+      ),
+    );
   }
 }
