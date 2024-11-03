@@ -48,8 +48,8 @@ class Player {
       'lastName': lastName,
       'firstName': firstName,
       'middleName': middleName,
-      'jersey_number': jerseyNumber,
-      'team_id': teamID,
+      'jerseyNumber': jerseyNumber,
+      'teamID': teamID,
     };
   }
 
@@ -64,9 +64,40 @@ class Player {
       lastName: map['lastName'],
       firstName: map['firstName'],
       middleName: map['middleName'],
-      jerseyNumber: map['jersey_number'],
-      teamID: map['team_id'],
+      jerseyNumber: map['jerseyNumber'],
+      teamID: map['teamID'],
     );
+  }
+}
+
+// Stores general information about each game
+class Season {
+  final int seasonID;
+  final int gameID;
+  final int startYear;
+  final int endYear;
+
+  Season(
+      {required this.seasonID,
+      required this.gameID,
+      required this.startYear,
+      required this.endYear});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'seasonID': seasonID,
+      'gameID': gameID,
+      'startYear': startYear,
+      'endYear': endYear
+    };
+  }
+
+  factory Season.fromMap(Map<String, dynamic> map) {
+    return Season(
+        seasonID: map['seasonID'],
+        gameID: map['gameID'],
+        startYear: map['startYear'],
+        endYear: map['endYear']);
   }
 }
 
@@ -107,24 +138,24 @@ class Game {
 
 class Team {
   final int teamID;
-  final int teamName;
+  final String teamName;
 
   Team({required this.teamID, required this.teamName});
 
-  factory Team.fromJson(Map<String, dynamic> map) {
+  factory Team.fromMap(Map<String, dynamic> map) {
     return Team(teamID: map['teamID'], teamName: map['teamName']);
   }
 }
 
 // Stores general information about each quarter of the game
 class Quarter {
-  final int? quarterID;
+  final int quarterID;
   final int gameID;
   final int quarterNumber;
   final int quarterScore;
 
   Quarter({
-    this.quarterID,
+    required this.quarterID,
     required this.gameID,
     required this.quarterNumber,
     required this.quarterScore,
@@ -146,4 +177,87 @@ class Quarter {
         quarterNumber: map['quarterNumber'],
         quarterScore: map['quarterScore']);
   }
+}
+
+class PlayerStatistics {
+  final int playerStatisticID;
+  final int playerID;
+  final int gameID;
+  final int quarterID;
+  final ActionType actionType; // Action performed by the player
+  final int? scorePoints; //score poinrs {1,2,3} for actions made and miss
+
+  PlayerStatistics(
+      {required this.playerStatisticID,
+      required this.gameID,
+      required this.playerID,
+      required this.quarterID,
+      required this.actionType})
+      : scorePoints = _mapActionToScore(actionType);
+
+  // Method to calculate score based on action type
+  static int _mapActionToScore(ActionType actionType) {
+    switch (actionType) {
+      case ActionType.madeOne:
+        return 1; // Assign 1 point for made one
+      case ActionType.madeTwo:
+        return 2; // Assign 2 points for made two
+      case ActionType.madeThree:
+        return 3; // Assign 3 points for made three
+      case ActionType.missOne:
+        return 0; // No score for miss one
+      case ActionType.missTwo:
+        return 0; // No score for miss two
+      case ActionType.missThree:
+        return 0; // No score for miss three
+      default:
+        return 0; // No score for other actions
+    }
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'playerStatisticID': playerStatisticID,
+      'gameID': gameID,
+      'playerID': playerID,
+      'quarterID': quarterID,
+      'actionType': actionType,
+      'scorePoints': scorePoints,
+    };
+  }
+
+  factory PlayerStatistics.fromMap(Map<String, dynamic> map) {
+    return PlayerStatistics(
+      playerStatisticID: map['playerStatisticID'],
+      gameID: map['gameID'],
+      playerID: map['playerID'],
+      quarterID: map['quarterID'],
+      actionType: map['actionType'],
+    );
+  }
+}
+// possible look of the output
+// Statistics stat = Statistics(
+//   statID: 1, // or some generated ID
+//   playerID: recognizedPlayerID, // ID from voice recognition
+//   gameID: currentGameID, // ID of the current game
+//   quarterID: currentQuarterID, // ID of the current quarter
+//   actionType: 'made', // or 'missed', etc.
+//   score: 3, // score can be null if not applicable
+// );
+
+// Enum for action types
+enum ActionType {
+  madeOne, // 1 point made
+  madeTwo, // 2 point made
+  madeThree, // 3 point made
+  missOne, // 1 point miss
+  missTwo, // 2 point miss
+  missThree, // 3 point miss
+  rebound,
+  foul,
+  turnover,
+  assist,
+  steal,
+  block
 }
