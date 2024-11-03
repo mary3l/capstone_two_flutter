@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_classification/constants/colors.dart';
 
 class RecordingField extends StatelessWidget {
-  final String speech;
+  final String? speech;
   final String gameQuarter;
   final String type; // Use "inputSpeechFieldType" or "outputSpeechFieldType"
 
@@ -35,7 +35,7 @@ class RecordingField extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              speech,
+              speech!,
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.bold,

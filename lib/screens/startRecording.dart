@@ -43,6 +43,7 @@ class _StartRecordingState extends State<StartRecording> {
   List<MapEntry<String, double>> biggestValue = List.empty();
   ValueNotifier<bool> _isRecording = ValueNotifier(false);
   bool _hasPermission = false;
+  bool _isValidKeywordCombination = false;
 
   List<String> _keywordCombinations = List.empty(growable: true);
 
@@ -78,6 +79,7 @@ class _StartRecordingState extends State<StartRecording> {
     _isRecording.value = false;
     keywordList = KeywordList();
     print('keywords ${_keywordCombinations.toString()}');
+    _isValidKeywordCombination = keywordList.matches(_keywordCombinations);
     _keywordCombinations.clear();
 
     /* final List<String> _keywordCombinations = [
@@ -178,9 +180,10 @@ class _StartRecordingState extends State<StartRecording> {
       biggestValue = _classificationNoise; // Noise classification wins
     }
 
-    if (_keywordCombinations.length < 3) {
+    if (_keywordCombinations.length < 4) {
       _keywordCombinations.add(biggestValue[0].key);
     } else {
+      _keywordCombinations.removeAt(0);
       _stopRecorder();
     }
 
@@ -231,7 +234,7 @@ class _StartRecordingState extends State<StartRecording> {
             SizedBox(height: 10),
 
             RecordingField(
-              speech: 'test',
+              speech: '',
               type: 'inputSpeechFieldType',
               gameQuarter: '',
             ),
@@ -249,7 +252,7 @@ class _StartRecordingState extends State<StartRecording> {
                 child: Column(
                   children: [
                     RecordingField(
-                      speech: 'test',
+                      speech: _keywordCombinations.join('-'),
                       gameQuarter: selectedQuarter ?? '',
                       type: 'outputSpeechFieldType',
                     ),
