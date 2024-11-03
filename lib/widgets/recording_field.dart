@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:capstone_two_one/constants/colors.dart';
+import 'package:audio_classification/constants/colors.dart';
 
 class RecordingField extends StatelessWidget {
   final String speech;

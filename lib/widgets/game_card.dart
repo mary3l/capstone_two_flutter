@@ -1,34 +1,30 @@
-import 'package:capstone_two_one/constants/colors.dart';
-import 'package:capstone_two_one/constants/fonts.dart';
-import 'package:capstone_two_one/models/game_model.dart';
+import 'package:audio_classification/constants/colors.dart';
+import 'package:audio_classification/models/basketball_model.dart';
 import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
 
 class GameCard extends StatelessWidget {
-  final Game? game; // Game types
-  final Player? player; // Player types
-  final Team? team; // Team types
-  final String? selectedStat; // Selected statistic
-  final VoidCallback? onPress; // Callback for onPress event
+  final Game? game; // Game object
+  final Player? player; // Player object
+  final Team? team; // Team object
+  final VoidCallback? onPress; // Optional callback for tap
+  final bool showStats;
+  final bool againstTeam;
 
-  const GameCard({
-    Key? key,
-    this.game,
-    this.player,
-    this.team,
-    this.onPress,
-    this.selectedStat,
-  }) : super(key: key);
-
-  // Function to get player's statistic based on the selected stat
-  int getPlayerStat(String statCategory) {
-    // Check if player is not null and access statistics safely
-    return player?.statisticsCount[statCategory] ?? 0;
-  }
+  const GameCard(
+      {Key? key,
+      this.game,
+      this.player,
+      this.team,
+      this.onPress,
+      this.showStats = false,
+      this.againstTeam = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPress,
+      onTap: onPress, // Reference the onPress function
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -48,16 +44,19 @@ class GameCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Displaying the game title
                         Text(
-                          game!.gameName.toUpperCase(), // Updated for uppercase
+                          game!.title ?? "Game Title",
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 16,
+                            color: AppColors.black,
                           ),
                         ),
                         Text(
-                          game!.teamName,
+                          // game!.teams.map((team) => team.name).join(', ') ??
+                          "Team Name",
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -66,19 +65,22 @@ class GameCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          game!.dateAndTimeSchedule,
+                          // DateFormat('yMMMMd').format(game!.date) ??
+                          "Game Date",
                           style: const TextStyle(
                             fontFamily: 'Inter',
-                            fontSize: 10,
+                            fontSize: 14,
                             color: AppColors.grey,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  if (game!.icon != null) ...[
-                    game!.icon!,
-                  ],
+                  Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: AppColors.darkOrange,
+                    size: 35,
+                  ),
                 ],
               ),
             ] else if (player != null) ...[
@@ -90,48 +92,63 @@ class GameCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '${player!.lastName}, ${player!.firstName}',
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                        if (againstTeam) // Use if statement for conditional rendering
+                          Text(
+                            "${player!.lastName?.toUpperCase()}, ${player!.firstName}",
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                          )
+                        else // Add an else statement for the alternative case
+                          Text(
+                            'Against Team',
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
                           ),
-                        ),
                         Text(
-                          'Player No. ${player!.playerJerseyNumber}',
+                          againstTeam
+                              ? 'Player No. 123'
+                              : 'Game Title - Date and Time Schedule',
                           style: const TextStyle(
                             fontFamily: 'Inter',
-                            fontSize: 10,
+                            fontSize: 14,
                             color: AppColors.grey,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  if (player!.icon != null) ...[
-                    player!.icon!,
-                  ] else ...[
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.darkOrange,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        // Check if selectedStat is not null
-                        '${getPlayerStat(selectedStat ?? "")}', // Safe call for selectedStat
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                  showStats
+                      ? Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.darkOrange,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            "0", // Placeholder for stats; replace with actual value if available
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      : Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: AppColors.darkOrange,
+                          size: 35,
                         ),
-                      ),
-                    ),
-                  ],
                 ],
-              ),
+              )
             ] else if (team != null) ...[
               // Team Card Layout
               Row(
@@ -139,17 +156,21 @@ class GameCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      team!.teamName,
+                      // team?.name ??
+                      "Team Name",
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 16,
+                        color: AppColors.black,
                       ),
                     ),
                   ),
-                  if (team!.icon != null) ...[
-                    team!.icon!,
-                  ],
+                  Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: AppColors.darkOrange,
+                    size: 35,
+                  ),
                 ],
               ),
             ],

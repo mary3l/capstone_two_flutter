@@ -1,52 +1,65 @@
+import 'dart:async';
+import 'dart:developer';
+import 'dart:typed_data';
+
+import 'helper/audio_classification_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// import 'package:audio_classification/screens/playerProfile.dart';
+// import 'package:audio_classification/screens/teamProfile.dart';
+// import 'package:audio_classification/screens/teamStatistics.dart';
+// import 'package:flutter/material.dart';
+// import 'package:audio_classification/screens/startRecording.dart';
+// import 'package:audio_classification/screens/dashboard.dart';
+// import 'package:audio_classification/screens/landing.dart';
+// import 'package:audio_classification/screens/teamPlayerProfile.dart';
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Basketball Voice Recognition App',
+//       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+//       initialRoute: '/screens/landing',
+//       routes: {
+//         '/screens/landing': (context) => Landing(),
+//         '/screens/startRecording': (context) => StartRecording(),
+//         '/screens/dashboard': (context) => Dashboard(),
+//         '/screens/teamStatistics': (context) => TeamStatistics(),
+//         '/screens/teamProfile': (context) => TeamProfile(),
+//         '/screens/playerProfile': (context) => PlayerProfile(),
+//         '/screens/teamPlayerProfile': (context) => TeamPlayerProfile()
+//       },
+//     );
+//   }
+// }
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AudioClassificationApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AudioClassificationApp extends StatelessWidget {
+  const AudioClassificationApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Audio Classification',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Audio classification home page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -55,71 +68,194 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  static const platform =
+      MethodChannel('org.tensorflow.audio_classification/audio_record');
 
-  void _incrementCounter() {
+  // Update to match your model's specifications
+  static const _sampleRate = 44100; // 44.1 kHz
+  static const _expectAudioLength =
+      1000; // milliseconds (you can adjust this as needed)
+  final int _requiredInputBuffer =
+      (_sampleRate * (_expectAudioLength / 1000)).toInt(); // Adjust as needed
+  late AudioClassificationHelper _helperSpeech;
+  late AudioClassificationHelper _helperNoise;
+  List<MapEntry<String, double>> _classificationSpeech = List.empty();
+  List<MapEntry<String, double>> _classificationNoise = List.empty();
+
+  List<MapEntry<String, double>> biggestValue = List.empty();
+  var _showError = false;
+
+  void _startRecorder() {
+    try {
+      platform.invokeMethod('startRecord');
+    } on PlatformException catch (e) {
+      log("Failed to start record: '${e.message}'");
+    }
+  }
+
+  Future<bool> _requestPermission() async {
+    try {
+      return await platform.invokeMethod('requestPermissionAndCreateRecorder', {
+        "sampleRate": _sampleRate,
+        "requiredInputBuffer": _requiredInputBuffer
+      });
+    } on Exception catch (e) {
+      log("Failed to create recorder: '${e.toString()}'");
+      return false;
+    }
+  }
+
+  Future<Float32List> _getAudioFloatArray() async {
+    var audioFloatArray = Float32List(0);
+    try {
+      final Float32List result =
+          await platform.invokeMethod('getAudioFloatArray');
+      audioFloatArray = result;
+    } on PlatformException catch (e) {
+      log("Failed to get audio array: '${e.message}'");
+    }
+    return audioFloatArray;
+  }
+
+  Future<void> _closeRecorder() async {
+    try {
+      await platform.invokeMethod('closeRecorder');
+      _helperSpeech.closeInterpreter();
+      _helperNoise.closeInterpreter();
+    } on PlatformException {
+      log("Failed to close recorder.");
+    }
+  }
+
+  @override
+  void initState() {
+    _initRecorder();
+    super.initState();
+  }
+
+  Future<void> _initRecorder() async {
+    const _modelSpeechPath =
+        'assets/models/intended-speech/soundclassifier_with_metadata.tflite';
+    const _modelSpeechlabelsPath = 'assets/models/intended-speech/labels.txt';
+    const _modelSpeechSize = 20;
+    const _modelNoisePath =
+        'assets/models/intended-noise/soundclassifier_with_metadata.tflite';
+    const _modelNoiselabelsPath = 'assets/models/intended-noise/labels.txt';
+    const _modelNoiseSize = 7;
+    _helperSpeech = AudioClassificationHelper(
+      _modelSpeechPath,
+      _modelSpeechlabelsPath,
+      _modelSpeechSize,
+    );
+    _helperNoise = AudioClassificationHelper(
+        _modelNoisePath, _modelNoiselabelsPath, _modelNoiseSize);
+    await _helperSpeech.initHelper();
+    await _helperNoise.initHelper();
+    bool success = await _requestPermission();
+    if (success) {
+      _startRecorder();
+
+      Timer.periodic(Duration(milliseconds: _expectAudioLength), (timer) {
+        // classify here
+        _runInference();
+      });
+    } else {
+      // show error here
+      setState(() {
+        _showError = true;
+      });
+    }
+  }
+
+  Future<void> _runInference() async {
+    Float32List inputArray = await _getAudioFloatArray();
+
+    // Adjust the input array to match your model's input tensor
+    final resultSpeech = await _helperSpeech
+        .inference(inputArray.sublist(0, _requiredInputBuffer));
+    final resultNoise = await _helperNoise
+        .inference(inputArray.sublist(0, _requiredInputBuffer));
+    _VoteBetweenModels(resultSpeech, resultNoise);
+    // Since your model outputs two classes, we can simply get the output directly
+  }
+
+  void _VoteBetweenModels(resultSpeech, resultNoise) {
+    _classificationSpeech = [
+      (resultSpeech.entries as Iterable<MapEntry<String, double>>)
+          .reduce((a, b) => a.value > b.value ? a : b)
+    ];
+
+    _classificationNoise = [
+      (resultNoise.entries as Iterable<MapEntry<String, double>>)
+          .reduce((a, b) => a.value > b.value ? a : b)
+    ];
+
+    if (_classificationSpeech[0].value > _classificationNoise[0].value) {
+      biggestValue = _classificationSpeech; // Speech classification wins
+    } else {
+      biggestValue = _classificationNoise; // Noise classification wins
+    }
+
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      print(biggestValue);
+      biggestValue = biggestValue;
     });
   }
 
   @override
+  void dispose() {
+    _closeRecorder();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        backgroundColor: Colors.black.withOpacity(0.5),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: _buildBody(),
     );
+  }
+
+  Widget _buildBody() {
+    if (_showError) {
+      return const Center(
+        child: Text(
+          "Audio recording permission required for audio classification",
+          textAlign: TextAlign.center,
+        ),
+      );
+    } else {
+      return (Column(
+        children: [Text(biggestValue[0].key.toString())],
+      )); /* ListView.separated(
+        padding: const EdgeInsets.all(10),
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: _classification.length,
+        itemBuilder: (context, index) {
+          final item = _classification[index];
+          return Row(
+            children: [
+              SizedBox(
+                width: 200,
+                child: Text(item.key),
+              ),
+              Flexible(
+                child: LinearProgressIndicator(
+                  value: item.value,
+                  minHeight: 20,
+                ),
+              )
+            ],
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => const SizedBox(
+          height: 10,
+        ),
+      ); */
+    }
   }
 }

@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = capstone_two_one
+PRODUCT_NAME = audio_classification
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.arisenlab.capstoneTwoOne
+PRODUCT_BUNDLE_IDENTIFIER = org.tensorflow.audioclassification.audioClassification
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.arisenlab. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 org.tensorflow.audio_classification. All rights reserved.

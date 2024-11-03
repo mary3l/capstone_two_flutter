@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.arisenlab" "\0"
-            VALUE "FileDescription", "capstone_two_one" "\0"
+            VALUE "CompanyName", "org.tensorflow.audio_classification" "\0"
+            VALUE "FileDescription", "audio_classification" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "capstone_two_one" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.arisenlab. All rights reserved." "\0"
-            VALUE "OriginalFilename", "capstone_two_one.exe" "\0"
-            VALUE "ProductName", "capstone_two_one" "\0"
+            VALUE "InternalName", "audio_classification" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 org.tensorflow.audio_classification. All rights reserved." "\0"
+            VALUE "OriginalFilename", "audio_classification.exe" "\0"
+            VALUE "ProductName", "audio_classification" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

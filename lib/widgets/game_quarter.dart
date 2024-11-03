@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:capstone_two_one/constants/colors.dart';
+import 'package:audio_classification/constants/colors.dart';
 
 class GameQuarter extends StatefulWidget {
   final Function(String) onSelectQuarter; // Callback to pass selected quarter
