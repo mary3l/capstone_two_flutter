@@ -58,7 +58,6 @@ class AudioClassificationHelper {
     await _loadModel();
   }
 
-  double _overlapFactor = 0.25;
   Future<Map<String, double>> inference(Float32List input) async {
     // Check input length
     print('Input length: ${input.length}');
@@ -77,6 +76,7 @@ class AudioClassificationHelper {
     try {
       // Run the model
       _interpreter.run(input.reshape([1, expectedLength]), speechOutput);
+      print(speechOutput);
     } catch (e) {
       print('Error during inference: $e');
       return {};

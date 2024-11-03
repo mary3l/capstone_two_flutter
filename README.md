@@ -1,27 +1,35 @@
-# Audio classification Yamnet
+# Voice Recognition-Based Basketball Performance Analysis App
 
-|      | Android | iOS | Linux | Mac | Windows | Web |
-|------|---------|-----|-------|-----|---------|-----|
-| live | ✅       | ✅   |       |    |         |     |
+## Overview
 
-This project is a sample of how to perform Audio Classification using
-TensorFlow Lite in Flutter. It includes support for both Android and IOS.
+This project introduces a voice recognition-based application designed to enhance basketball performance analysis by recording player statistics in noisy game environments. The application aims to minimize human errors and reduce the time required for manual data entry.
 
-## Download model and labels
+Leveraging **Google Teachable Machine** for audio classification, the app addresses the challenges posed by background noise in speech-to-text data processing. By developing a mobile application, the project seeks to provide coaches, players, and analysts with real-time, clear speech data for better sports analysis.
 
-To build the project, you must first download the YAMNET TensorFlow Lite
-model and its corresponding labels. You can do this by
-running `sh ./scripts/download_model.sh` from the root folder of the repository.
+## Objectives
 
-## About the sample
+The primary objectives of the study are:
 
-- You can use Flutter-supported IDEs such as Android Studio or Visual Studio.
-  This project has been tested on Android Studio Flamingo.
-- Before building, ensure that you have downloaded the model and the labels by
-  following a set of instructions.
+1. **Designing the App**: Develop an intuitive mobile application that allows users to record and access player statistics effortlessly.
+2. **Evaluating Google Teachable Machine**: Assess the performance of Google Teachable Machine in audio classification, particularly in noisy environments.
+3. **Assessing Impact**: Analyze how the application enhances player performance analysis by providing accurate and timely data.
 
-## Screenshots
+## Significance
 
-![Android](screenshots/android_screenshot.png)
+This project aims to revolutionize sports analysis methods by aiding coaches, players, and analysts in understanding team dynamics and individual performance. The integration of machine learning technology in sports analytics offers a promising avenue for improving performance assessment and enhancing player development.
 
-![IOS](screenshots/ios_screenshot.png)
+## Scope
+
+The application focuses on basketball-related sounds, with specific limitations in the areas of:
+
+- **Noisy Speech Classification**: Addressing the challenges of recognizing speech amidst background noise.
+- **Clean Speech Processing**: Ensuring accurate transcription of clear speech data for reliable analysis.
+
+## Getting Started
+
+To set up and run this project on your local machine, please follow these instructions:
+
+### Prerequisites
+
+- **Flutter**: Ensure you have Flutter installed. Refer to the [official installation guide](https://flutter.dev/docs/get-started/install).
+- **Development Environment**: Use an IDE like Visual Studio Code or Android Studio.
