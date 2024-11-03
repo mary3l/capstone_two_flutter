@@ -89,16 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     _isRecording.value = false;
     keywordList = KeywordList();
+    print('keywords ${_keywordCombinations.toString()}');
+    _keywordCombinations.clear();
 
-    final List<String> _keywordCombinations = [
-      "Player",
-      "One",
+    /* final List<String> _keywordCombinations = [
+      "Player Fifty",
       "Made",
       "3",
-      "5"
-    ];
-    print('matches?${keywordList.matches(_keywordCombinations)}');
-    print('keyword combinations${_keywordCombinations}');
+    ]; */
+    /* print('matches?${keywordList.matches(_keywordCombinations)}');
+    print('keyword combinations${_keywordCombinations}'); */
   }
 
   Future<bool> _requestPermission() async {
@@ -189,7 +189,12 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       biggestValue = _classificationNoise; // Noise classification wins
     }
-    _keywordCombinations.add(biggestValue[0].key);
+
+    if (_keywordCombinations.length < 3) {
+      _keywordCombinations.add(biggestValue[0].key);
+    } else {
+      _stopRecorder();
+    }
 
     setState(() {
       biggestValue = biggestValue;
