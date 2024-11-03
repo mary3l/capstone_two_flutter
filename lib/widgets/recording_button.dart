@@ -4,7 +4,10 @@ import 'package:audio_classification/constants/colors.dart';
 class RecordingButton extends StatefulWidget {
   final String? text;
 
-  const RecordingButton({Key? key, this.text}) : super(key: key);
+  final VoidCallback onStartRecording;
+
+  const RecordingButton({Key? key, this.text, required this.onStartRecording})
+      : super(key: key);
 
   @override
   _RecordingButtonState createState() => _RecordingButtonState();
@@ -45,6 +48,8 @@ class _RecordingButtonState extends State<RecordingButton>
   // }
 
   void _onTapDown(TapDownDetails details) {
+    widget.onStartRecording();
+    print('pressed');
     _controller.forward(); // Animate to a larger size immediately
   }
 

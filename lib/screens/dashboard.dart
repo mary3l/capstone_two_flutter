@@ -11,6 +11,10 @@ import 'package:audio_classification/models/basketball_model.dart'; // Import Te
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
+
+  final VoidCallback onStartRecording;
+
+  const Dashboard({Key? key, required this.onStartRecording}) : super(key: key);
 }
 
 class _DashboardState extends State<Dashboard> {
@@ -44,7 +48,9 @@ class _DashboardState extends State<Dashboard> {
                 onTap: () {
                   Navigator.pushNamed(context, '/screens/startRecording');
                 },
-                child: const RecordingButton(text: "Start New Recording!"),
+                /* child: RecordingButton(
+                  /onStartRecording: () async => await _startRecorder(),
+                ), */
               ),
             ),
             SizedBox(height: 30), // Space below the RecordingButton

@@ -236,7 +236,11 @@ class _StartRecordingState extends State<StartRecording> {
               gameQuarter: '',
             ),
             SizedBox(height: 20),
-            Center(child: RecordingButton()),
+            Center(
+              child: RecordingButton(
+                onStartRecording: () async => await _startRecorder(),
+              ),
+            ),
             SizedBox(height: 10),
 
             Expanded(

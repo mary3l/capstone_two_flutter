@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/screens/landing': (context) => Landing(),
         '/screens/startRecording': (context) => StartRecording(),
-        '/screens/dashboard': (context) => Dashboard(),
+        // '/screens/dashboard': (context) => Dashboard(),
         '/screens/teamStatistics': (context) => TeamStatistics(),
         '/screens/teamProfile': (context) => TeamProfile(),
         '/screens/playerProfile': (context) => PlayerProfile(),
