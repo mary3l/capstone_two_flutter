@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:audio_classification/helper/classification_list_helper.dart';
+
 import 'helper/audio_classification_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,9 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List<MapEntry<String, double>> _classificationSpeech = List.empty();
   List<MapEntry<String, double>> _classificationNoise = List.empty();
 
+  late KeywordList keywordList;
   List<MapEntry<String, double>> biggestValue = List.empty();
   ValueNotifier<bool> _isRecording = ValueNotifier(false);
   bool _hasPermission = false;
+
+  List<String> _keywordCombinations = List.empty(growable: true);
 
   Future<void> _startRecorder() async {
     print('Starting recording');
@@ -83,6 +88,17 @@ class _MyHomePageState extends State<MyHomePage> {
       log("Failed to stop record: ${e.message}");
     }
     _isRecording.value = false;
+    keywordList = KeywordList();
+
+    final List<String> _keywordCombinations = [
+      "Player",
+      "One",
+      "Made",
+      "3",
+      "5"
+    ];
+    print('matches?${keywordList.matches(_keywordCombinations)}');
+    print('keyword combinations${_keywordCombinations}');
   }
 
   Future<bool> _requestPermission() async {
@@ -173,9 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       biggestValue = _classificationNoise; // Noise classification wins
     }
+    _keywordCombinations.add(biggestValue[0].key);
 
     setState(() {
       biggestValue = biggestValue;
+      print(biggestValue[0].key);
     });
   }
 
@@ -199,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Speech Model Result: ${biggestValue[0].key}'),
+                    Text(''),
                   ],
                 ),
               )
