@@ -6,24 +6,42 @@ import 'package:audio_classification/widgets/recording_button.dart';
 import 'package:audio_classification/widgets/button.dart';
 import 'package:audio_classification/widgets/game_card.dart'; // Import GameCard widget
 import 'package:audio_classification/models/test_basketball_model.dart'; // Import Team and Game model
-import 'package:audio_classification/widgets/button.dart';
 
 class Dashboard extends StatefulWidget {
+  const Dashboard({Key? key}) : super(key: key);
+
   @override
   _DashboardState createState() => _DashboardState();
-
-  const Dashboard({Key? key}) : super(key: key);
 }
 
 class _DashboardState extends State<Dashboard> {
   // Sample Game and Team Data
-  final Game game = Game(
-    gameID: 1,
-    gameTitle: 'Championship Game',
-    date: DateTime.now(),
-  );
+  final List<Game> games = [
+    Game(
+      gameID: 1,
+      gameTitle: 'Championship Game',
+      date: DateTime.now(),
+      teamID: 1,
+    ),
+    Game(
+      gameID: 2,
+      gameTitle: 'Friendly Match',
+      date: DateTime.now(),
+      teamID: 2,
+    ),
+    Game(
+      gameID: 3,
+      gameTitle: 'Season Opener',
+      date: DateTime.now(),
+      teamID: 3,
+    ),
+  ];
 
-  final List<Team> teams = [Team(teamID: 1, teamName: 'Lions')];
+  final List<Team> teams = [
+    Team(teamID: 1, teamName: 'Team A'),
+    Team(teamID: 2, teamName: 'Team B'),
+    Team(teamID: 3, teamName: 'Team C')
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +85,36 @@ class _DashboardState extends State<Dashboard> {
               ),
               SizedBox(height: 10), // Space below the Games History header
 
-              // Display the GameCard with sample data
-              GameCard(
-                game: game, // Pass the game object
-                teams: teams, // Pass the list of teams
-                onPress: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/screens/teamStatistics',
-                    arguments: game, // Pass game data for navigation
+              // Use ListView.builder for dynamic rendering of games
+              ListView.builder(
+                shrinkWrap:
+                    true, // Allows ListView to work inside SingleChildScrollView
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: games.length,
+                itemBuilder: (context, index) {
+                  final game = games[index];
+                  // final teams = [
+                  //   Team(teamID: game.teamID),
+                  // ];
+
+                  return Column(
+                    children: [
+                      GameCard(
+                        game: game,
+                        listTeams: teams,
+                        onPress: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/screens/teamStatistics',
+                            arguments: game,
+                          );
+                        },
+                      ),
+                      SizedBox(height: 5),
+                    ],
                   );
                 },
               ),
-              SizedBox(height: 20), // Space below the GameCard
-
-              // FutureBuilder or other widgets can go here as needed
             ],
           ),
         ),

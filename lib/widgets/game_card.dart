@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 
 class GameCard extends StatelessWidget {
   final Game? game; // Game object
-  final List<Team>? teams; // List of teams for this game
+  final Team? team;
+  final List<Team>? listTeams; // List of teams for this game
   final Player? player; // Player object
   final VoidCallback? onPress; // Optional callback for tap
   final bool showStats; // Whether to show stats
   final bool againstTeam; // Flag for against team
-  final bool isTeamCard; // Flag to determine if it's a team card
 
   const GameCard({
     Key? key,
     this.game,
-    this.teams,
+    this.team,
+    this.listTeams,
     this.player,
     this.onPress,
     this.showStats = false,
     this.againstTeam = false,
-    this.isTeamCard = false, // New parameter for team card flag
   }) : super(key: key);
 
   @override
@@ -28,6 +28,15 @@ class GameCard extends StatelessWidget {
     String formattedDate = game != null
         ? "${game!.date.year}-${game!.date.month}-${game!.date.day}"
         : '';
+
+    // Find the team name using teamID
+    String teamName = listTeams
+            ?.firstWhere(
+              (team) => team.teamID == game?.teamID,
+              orElse: () => Team(teamID: 0, teamName: 'No Team Available'),
+            )
+            .teamName ??
+        'No Team Available';
 
     return GestureDetector(
       onTap: onPress, // Reference the onPress function
@@ -41,7 +50,7 @@ class GameCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         child: Column(
           children: [
-            if (game != null && !isTeamCard) ...[
+            if (game != null) ...[
               // Game Card Layout
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,12 +69,9 @@ class GameCard extends StatelessWidget {
                             color: AppColors.black,
                           ),
                         ),
-                        const SizedBox(
-                            height: 5), // Space between title and team
+                        const SizedBox(height: 5),
                         Text(
-                          teams != null && teams!.isNotEmpty
-                              ? teams!.map((team) => team.teamName).join(', ')
-                              : "No Team Name Available", // Display team names or default text
+                          teamName, // Display the team name here
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.normal,
@@ -73,10 +79,9 @@ class GameCard extends StatelessWidget {
                             color: AppColors.grey,
                           ),
                         ),
-                        const SizedBox(
-                            height: 5), // Space between team and date
+                        const SizedBox(height: 5),
                         Text(
-                          formattedDate, // Display formatted game date
+                          formattedDate,
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -86,7 +91,7 @@ class GameCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 10), // Space between text and icon
+                  const SizedBox(width: 10),
                   Icon(
                     Icons.remove_red_eye_outlined,
                     color: AppColors.darkOrange,
@@ -94,7 +99,7 @@ class GameCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ] else if (player != null && !isTeamCard) ...[
+            ] else if (player != null) ...[
               // Player Card Layout
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,14 +158,14 @@ class GameCard extends StatelessWidget {
                   ],
                 ],
               ),
-            ] else if (isTeamCard && teams != null && teams!.isNotEmpty) ...[
+            ] else if (team != null) ...[
               // Team Card Layout
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Text(
-                      teams!.first.teamName, // Display the first team's name
+                      team?.teamName ?? 'No Team Available', // Handle null case
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.bold,

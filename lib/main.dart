@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // import 'package:audio_classification/screens/playerProfile.dart';
-// import 'package:audio_classification/screens/teamProfile.dart';
+import 'package:audio_classification/screens/teamProfile.dart';
 // import 'package:audio_classification/screens/teamStatistics.dart';
 import 'package:audio_classification/screens/startRecording.dart';
 import 'package:audio_classification/screens/dashboard.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         '/screens/startRecording': (context) => StartRecording(),
         '/screens/dashboard': (context) => const Dashboard(),
         // '/screens/teamStatistics': (context) => TeamStatistics(),
-        // '/screens/teamProfile': (context) => TeamProfile(),
+        '/screens/teamProfile': (context) => TeamProfile(),
         // '/screens/playerProfile': (context) => PlayerProfile(),
         // '/screens/teamPlayerProfile': (context) => TeamPlayerProfile()
       },

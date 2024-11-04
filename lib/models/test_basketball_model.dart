@@ -107,14 +107,14 @@ class Game {
   final String gameTitle;
   final DateTime date;
   final String? semester;
-  final int? teamID;
+  final int teamID;
 
   Game(
       {required this.gameID,
       required this.date,
       required this.gameTitle,
       this.semester,
-      this.teamID});
+      required this.teamID});
 
   Map<String, dynamic> toMap() {
     return {
