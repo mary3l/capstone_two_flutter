@@ -1,3 +1,4 @@
+import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
@@ -46,7 +47,9 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: AppColors.lightOrange,
+      ),
       drawer: CustomDrawer(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: GeneralScreenPadding(
