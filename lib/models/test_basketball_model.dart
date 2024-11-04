@@ -103,24 +103,24 @@ class Season {
 
 // Stores general information about each game
 class Game {
-  final int gameID;
+  final int? gameID;
   final String gameTitle;
   final DateTime date; // date now of the game
   final String? semester;
-  final int teamID;
+  final int? teamID; // TEMPORARILY SETTED TO "?"
 
   Game(
-      {required this.gameID,
+      {this.gameID,
       required this.date,
       required this.gameTitle,
       this.semester,
-      required this.teamID});
+      this.teamID}); // TEMPORARILY SETTED TO "?"
 
   Map<String, dynamic> toMap() {
     return {
       'gameID': gameID,
       'gameTitle': gameTitle,
-      'date': date,
+      'date': date.toIso8601String(), // Convert DateTime to string
       'semester': semester,
       'teamID': teamID
     };
@@ -130,7 +130,7 @@ class Game {
     return Game(
         gameID: map['gameID'],
         gameTitle: map['gameTitle'],
-        date: map['date'],
+        date: DateTime.parse(map['date']), // Convert back to DateTime
         semester: map['semester'],
         teamID: map['teamID']);
   }

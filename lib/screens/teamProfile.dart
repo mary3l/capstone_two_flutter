@@ -103,8 +103,13 @@ class _TeamProfileState extends State<TeamProfile> {
                 String teamName = _teamNameController.text.trim();
 
                 if (teamName.isNotEmpty) {
+                  // Create Team object without teamID
                   Team newTeam = Team(teamName: teamName);
+
+                  // Insert team into database
                   await _databaseHelper.insertTeam(newTeam);
+
+                  // Clear controllers and close dialog
                   _teamNameController.clear();
                   Navigator.pop(context);
                   _fetchTeams();

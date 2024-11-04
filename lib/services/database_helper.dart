@@ -58,9 +58,9 @@ class DatabaseHelper {
         // Create the Games table.
         await db.execute('''
           CREATE TABLE Games (
-            gameID INTEGER PRIMARY KEY,
+            gameID INTEGER PRIMARY KEY AUTOINCREMENT,
             gameTitle TEXT,
-            date TEXT,
+            date DATETIME,
             semester TEXT,
             teamID INTEGER,
             seasonID INTEGER,
@@ -151,13 +151,19 @@ class DatabaseHelper {
 
   // Game CRUD Operations
   // Insert a new game into the database.
-  Future<void> insertGame(Game game) async {
-    final db = await database;
-    await db.insert(
-      'Games',
-      game.toMap(), // Convert game object to map for insertion.
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+
+  Future<int> insertGame(Game game) async {
+    try {
+      final db = await database;
+      int id = await db.insert(
+        'Games',
+        game.toMap(), // Convert Game object to map, excluding gameID
+      );
+      return id; // Return the auto-generated seasonID
+    } catch (e) {
+      print("Error inserting game: $e");
+      return -1; // Indicate failure
+    }
   }
 
   // Retrieve all games from the database.
@@ -348,7 +354,6 @@ class DatabaseHelper {
       int id = await db.insert(
         'Seasons',
         season.toMap(), // Convert Season object to map, excluding seasonID
-        conflictAlgorithm: ConflictAlgorithm.replace,
       );
       return id; // Return the auto-generated seasonID
     } catch (e) {
