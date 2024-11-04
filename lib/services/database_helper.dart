@@ -44,6 +44,15 @@ class DatabaseHelper {
           )
         ''');
 
+        // Creates Seasons table with seasonID as primary key
+        await db.execute('''
+      CREATE TABLE Seasons (
+        seasonID INTEGER PRIMARY KEY,
+        startYear INTEGER NOT NULL,
+        endYear INTEGER NOT NULL
+      )
+    ''');
+
         // Create the Games table.
         await db.execute('''
           CREATE TABLE Games (
@@ -52,6 +61,9 @@ class DatabaseHelper {
             date TEXT,
             semester TEXT,
             teamID INTEGER
+            seasonID INTEGER,
+            FOREIGN KEY (seasonID) REFERENCES Seasons (seasonID)
+            
           )
         ''');
 
@@ -301,6 +313,47 @@ class DatabaseHelper {
       'PlayerStatistics',
       where: 'playerStatisticID = ?', // Specify which statistics to delete.
       whereArgs: [playerStatisticID],
+    );
+  }
+
+  // Season CRUD Operations
+  // Inserts a new Season record into the Seasons table
+  Future<void> insertSeason(Season season) async {
+    final db = await database;
+    await db.insert(
+      'Seasons',
+      season.toMap(), // Convert Season object to map for insertion.
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  // Retrieve all player statistics from the database.
+  Future<List<Season>> getSeasons() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('Seasons');
+    return List.generate(maps.length, (i) {
+      return Season.fromMap(maps[i]); // Convert map to Seasons object.
+    });
+  }
+
+  // Update existing Season in the database.
+  Future<void> updateSeasons(Season season) async {
+    final db = await database;
+    await db.update(
+      'Seasons',
+      season.toMap(), // Convert Season object to map for updating.
+      where: 'seasonID = ?', // Specify which Season to update.
+      whereArgs: [season.seasonID],
+    );
+  }
+
+  // Delete Season from the database by ID.
+  Future<void> deleteSeasons(int seasonID) async {
+    final db = await database;
+    await db.delete(
+      'Seasons',
+      where: 'seasonID = ?', // Specify which Season to delete.
+      whereArgs: [seasonID],
     );
   }
 }

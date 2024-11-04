@@ -231,7 +231,7 @@ class _StartRecordingState extends State<StartRecording> {
             SizedBox(height: 10),
 
             RecordingField(
-              speech: 'test',
+              speech: _keywordCombinations.join('-'),
               type: 'inputSpeechFieldType',
               gameQuarter: '',
             ),
