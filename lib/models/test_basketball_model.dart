@@ -70,7 +70,7 @@ class Player {
   }
 }
 
-// Stores general information about each game
+// Stores general information about each season
 class Season {
   final int seasonID;
   final int gameID;
@@ -106,15 +106,15 @@ class Game {
   final int gameID;
   final String gameTitle;
   final DateTime date;
-  final String semester;
-  final int teamID;
+  final String? semester;
+  final int? teamID;
 
   Game(
       {required this.gameID,
       required this.date,
       required this.gameTitle,
-      required this.semester,
-      required this.teamID});
+      this.semester,
+      this.teamID});
 
   Map<String, dynamic> toMap() {
     return {
