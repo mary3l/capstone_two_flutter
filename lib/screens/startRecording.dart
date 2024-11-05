@@ -1,3 +1,4 @@
+import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
@@ -203,9 +204,18 @@ class _StartRecordingState extends State<StartRecording> {
 
   @override
   Widget build(BuildContext context) {
+    // Retrieve the arguments passed from the previous screen
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String gameTitle = args['gameTitle'];
+    final DateTime date = args['date'];
+    final String semester =
+        args['semester'] ?? 'N/A'; // Use 'N/A' if semester is null
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: AppColors.lightOrange,
+      ),
       drawer: CustomDrawer(),
       body: GeneralScreenPadding(
         child: Column(
@@ -217,10 +227,16 @@ class _StartRecordingState extends State<StartRecording> {
               textType: TextType.header,
             ),
 
-            Label(text: 'Game Name', alignment: LabelAlignment.header),
-
             Label(
-              text: 'Date and Time Schedule',
+                text: 'Game Name: $gameTitle',
+                alignment: LabelAlignment.header),
+            Label(
+              text:
+                  'Date and Time Schedule: ${date.toLocal().toString().split(' ')[0]}', // Format the date if needed
+              alignment: LabelAlignment.header,
+            ),
+            Label(
+              text: 'Semester: $semester',
               alignment: LabelAlignment.header,
             ),
             SizedBox(height: 10),
@@ -234,7 +250,7 @@ class _StartRecordingState extends State<StartRecording> {
             SizedBox(height: 10),
 
             RecordingField(
-              speech: '',
+              speech: _keywordCombinations.join('-'),
               type: 'inputSpeechFieldType',
               gameQuarter: '',
             ),

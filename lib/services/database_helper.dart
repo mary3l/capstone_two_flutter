@@ -44,21 +44,35 @@ class DatabaseHelper {
           )
         ''');
 
+        // Creates Seasons table with seasonID as primary key
+        await db.execute('''
+      CREATE TABLE Seasons (
+        seasonID INTEGER PRIMARY KEY AUTOINCREMENT,
+        startYear INTEGER,
+        endYear INTEGER,
+        game_id INTEGER,
+       FOREIGN KEY (gameID) REFERENCES Games (gameID)
+      )
+    ''');
+
         // Create the Games table.
         await db.execute('''
           CREATE TABLE Games (
-            gameID INTEGER PRIMARY KEY,
+            gameID INTEGER PRIMARY KEY AUTOINCREMENT,
             gameTitle TEXT,
-            date TEXT,
+            date DATETIME,
             semester TEXT,
-            teamID INTEGER
+            teamID INTEGER,
+            seasonID INTEGER,
+            FOREIGN KEY (seasonID) REFERENCES Seasons (seasonID)
+            
           )
         ''');
 
         // Create the Teams table.
         await db.execute('''
           CREATE TABLE Teams (
-            teamID INTEGER PRIMARY KEY,
+            teamID INTEGER PRIMARY KEY AUTOINCREMENT,
             teamName TEXT
           )
         ''');
@@ -105,10 +119,12 @@ class DatabaseHelper {
 
   // Retrieve all players from the database.
   Future<List<Player>> getPlayers() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('Players');
+    final db = await database; // Access the database instance.
+    final List<Map<String, dynamic>> maps =
+        await db.query('Players'); // Query the 'Players' table.
     return List.generate(maps.length, (i) {
-      return Player.fromMap(maps[i]); // Convert map to Player object.
+      return Player.fromMap(
+          maps[i]); // Convert each row (map) to a Player object.
     });
   }
 
@@ -135,13 +151,19 @@ class DatabaseHelper {
 
   // Game CRUD Operations
   // Insert a new game into the database.
-  Future<void> insertGame(Game game) async {
-    final db = await database;
-    await db.insert(
-      'Games',
-      game.toMap(), // Convert game object to map for insertion.
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+
+  Future<int> insertGame(Game game) async {
+    try {
+      final db = await database;
+      int id = await db.insert(
+        'Games',
+        game.toMap(), // Convert Game object to map, excluding gameID
+      );
+      return id; // Return the auto-generated seasonID
+    } catch (e) {
+      print("Error inserting game: $e");
+      return -1; // Indicate failure
+    }
   }
 
   // Retrieve all games from the database.
@@ -176,16 +198,35 @@ class DatabaseHelper {
 
   // Team CRUD Operations
   // Insert a new team into the database.
-  Future<void> insertTeam(Team team) async {
-    final db = await database;
-    await db.insert(
-      'Teams',
-      {
-        'teamID': team.teamID,
-        'teamName': team.teamName
-      }, // Direct map literal for team.
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+
+// Method to insert a new team into the Teams table.
+// This method allows SQLite to auto-generate the teamID upon insertion.
+  Future<int> insertTeam(Team team) async {
+    try {
+      // Get a reference to the database.
+      final db = await database;
+
+      // Insert the team data into the Teams table.
+      // The 'teamName' is provided, but 'teamID' is excluded
+      // so that SQLite can automatically generate it.
+      int id = await db.insert(
+        'Teams',
+        {
+          'teamName': team.teamName, // Only insert the team name
+        },
+        conflictAlgorithm:
+            ConflictAlgorithm.ignore, // Ignore if a conflict occurs
+      );
+
+      // Return the auto-generated teamID for the newly inserted team.
+      return id;
+    } catch (e) {
+      // If an error occurs during insertion, print the error message.
+      print("Error inserting team: $e");
+
+      // Return -1 to indicate the insertion failed.
+      return -1;
+    }
   }
 
   // Retrieve all teams from the database.
@@ -301,6 +342,53 @@ class DatabaseHelper {
       'PlayerStatistics',
       where: 'playerStatisticID = ?', // Specify which statistics to delete.
       whereArgs: [playerStatisticID],
+    );
+  }
+
+  // Season CRUD Operations
+  // Inserts a new Season record into the Seasons table
+
+  Future<int> insertSeason(Season season) async {
+    try {
+      final db = await database;
+      int id = await db.insert(
+        'Seasons',
+        season.toMap(), // Convert Season object to map, excluding seasonID
+      );
+      return id; // Return the auto-generated seasonID
+    } catch (e) {
+      print("Error inserting season: $e");
+      return -1; // Indicate failure
+    }
+  }
+
+  // Retrieve all player statistics from the database.
+  Future<List<Season>> getSeasons() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('Seasons');
+    return List.generate(maps.length, (i) {
+      return Season.fromMap(maps[i]); // Convert map to Seasons object.
+    });
+  }
+
+  // Update existing Season in the database.
+  Future<void> updateSeasons(Season season) async {
+    final db = await database;
+    await db.update(
+      'Seasons',
+      season.toMap(), // Convert Season object to map for updating.
+      where: 'seasonID = ?', // Specify which Season to update.
+      whereArgs: [season.seasonID],
+    );
+  }
+
+  // Delete Season from the database by ID.
+  Future<void> deleteSeasons(int seasonID) async {
+    final db = await database;
+    await db.delete(
+      'Seasons',
+      where: 'seasonID = ?', // Specify which Season to delete.
+      whereArgs: [seasonID],
     );
   }
 }
