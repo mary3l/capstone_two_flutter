@@ -58,40 +58,37 @@ class AudioClassificationHelper {
     await _loadModel();
   }
 
-  Future<Map<String, double>> inference(Float32List input) async {
-    // Check input length
-    print('Input length: ${input.length}');
-
-    // Validate input length
-    if (input.length != 44100) {
-      print('Error: Expected 44100 samples, but got ${input.length}');
-      return {};
-    }
+  Future<Map<String, double>> inferenceWithOverlap(Float32List input) async {
     const int expectedLength = 44100; // Expected input length
-    int modelOutputSize = _modelSize;
+    int modelOutputSize = _modelSize; // Size of your model output
+    var classification = <String, double>{};
     var speechOutput =
         List<double>.filled(modelOutputSize, 0).reshape([1, modelOutputSize]);
+    // Validate input length
 
-    // Run inference
-    try {
-      // Run the model
-      _interpreter.run(input.reshape([1, expectedLength]), speechOutput);
-      print(speechOutput);
-    } catch (e) {
-      print('Error during inference: $e');
-      return {};
-    }
+    // Define overlap size (e.g., 22050 samples)
+    int overlapSize = expectedLength ~/ 2; // 22050
 
-    // Process output
-    var classification = <String, double>{};
-    for (var i = 0; i < speechOutput[0].length; i++) {
-      if (i < _labels.length) {
-        classification[_labels[i]] = speechOutput[0][i];
-      } else {
-        print('Warning: No label for index $i');
+    for (int i = 0; i <= input.length - expectedLength; i += overlapSize) {
+      // Extract chunk of 44100 samples
+      Float32List chunk = input.sublist(i, i + expectedLength);
+      try {
+        _interpreter.run(chunk.reshape([1, expectedLength]), speechOutput);
+        print(speechOutput);
+
+        // Handle the output based on the output structure of the model
+        for (var i = 0; i < speechOutput[0].length; i++) {
+          if (i < _labels.length) {
+            classification[_labels[i]] = speechOutput[0][i];
+          } else {
+            print('Warning: No label for index $i');
+          }
+        }
+        return classification;
+      } catch (e) {
+        print('Error during inference: $e');
       }
     }
-
     return classification;
   }
 

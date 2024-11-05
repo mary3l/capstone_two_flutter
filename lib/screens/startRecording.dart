@@ -34,6 +34,8 @@ class _StartRecordingState extends State<StartRecording> {
       1000; // milliseconds (you can adjust this as needed)
   final int _requiredInputBuffer =
       (_sampleRate * (_expectAudioLength / 1000)).toInt(); // Adjust as needed
+
+  int overlapSize = _sampleRate ~/ 2;
   late AudioClassificationHelper _helperSpeech;
   late AudioClassificationHelper _helperNoise;
   List<MapEntry<String, double>> _classificationSpeech = List.empty();
@@ -48,7 +50,7 @@ class _StartRecordingState extends State<StartRecording> {
   List<String> _keywordCombinations = List.empty(growable: true);
 
   Future<void> _startRecorder() async {
-    print('Starting recording');
+    log('Start recording');
     try {
       platform.invokeMethod('startRecord');
       if (_hasPermission) {
@@ -57,7 +59,7 @@ class _StartRecordingState extends State<StartRecording> {
           Duration(milliseconds: _expectAudioLength),
           (timer) {
             if (!_isRecording.value) {
-              timer.cancel(); // Stop the timer when recording ends
+              timer.cancel(); // Stop th-e timer when recording ends
             } else {
               _runInference();
             }
@@ -95,7 +97,7 @@ class _StartRecordingState extends State<StartRecording> {
     try {
       return await platform.invokeMethod('requestPermissionAndCreateRecorder', {
         "sampleRate": _sampleRate,
-        "requiredInputBuffer": _requiredInputBuffer
+        "requiredInputBuffer": _requiredInputBuffer,
       });
     } on Exception catch (e) {
       log("Failed to create recorder: '${e.toString()}'");
@@ -154,22 +156,20 @@ class _StartRecordingState extends State<StartRecording> {
 
   Future<void> _runInference() async {
     Float32List inputArray = await _getAudioFloatArray();
-
+    print(inputArray);
     // Adjust the input array to match your model's input tensor
-    final resultSpeech = await _helperSpeech
-        .inference(inputArray.sublist(0, _requiredInputBuffer));
-    final resultNoise = await _helperNoise
-        .inference(inputArray.sublist(0, _requiredInputBuffer));
-    _VoteBetweenModels(resultSpeech, resultNoise);
+    final resultSpeech = await _helperSpeech.inferenceWithOverlap(inputArray);
+    // final resultNoise = await _helperNoise.inferenceWithOverlap(inputArray);
+    _VoteBetweenModels(resultSpeech);
   }
 
-  void _VoteBetweenModels(resultSpeech, resultNoise) {
+  void _VoteBetweenModels(resultSpeech) {
     _classificationSpeech = [
       (resultSpeech.entries as Iterable<MapEntry<String, double>>)
           .reduce((a, b) => a.value > b.value ? a : b)
     ];
 
-    _classificationNoise = [
+    /* _classificationNoise = [
       (resultNoise.entries as Iterable<MapEntry<String, double>>)
           .reduce((a, b) => a.value > b.value ? a : b)
     ];
@@ -178,12 +178,11 @@ class _StartRecordingState extends State<StartRecording> {
       biggestValue = _classificationSpeech; // Speech classification wins
     } else {
       biggestValue = _classificationNoise; // Noise classification wins
-    }
+    } */
 
     if (_keywordCombinations.length < 4) {
-      _keywordCombinations.add(biggestValue[0].key);
+      _keywordCombinations.add(_classificationSpeech[0].key);
     } else {
-      _keywordCombinations.removeAt(0);
       _stopRecorder();
     }
 
