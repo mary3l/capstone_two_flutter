@@ -27,7 +27,7 @@ class Player {
   final String firstName;
   final String middleName;
   final int jerseyNumber;
-  final int teamID;
+  final int? teamID;
 
   Player(
       {
@@ -37,14 +37,14 @@ class Player {
       required this.firstName,
       required this.middleName,
       required this.jerseyNumber,
-      required this.teamID});
+      this.teamID});
 
   Map<String, dynamic> toMap() {
     // to map method
     // database operations for inserting or updating player records
     // making it easier to store and retrieve
     return {
-      'playerID': playerID,
+      // 'playerID': playerID,
       'lastName': lastName,
       'firstName': firstName,
       'middleName': middleName,
@@ -68,24 +68,64 @@ class Player {
       teamID: map['teamID'],
     );
   }
+  void printDetails() {
+    print('Players Details:');
+    print('Players ID: $playerID');
+    print('Last Name : $lastName');
+    print('First Name: $firstName');
+    print('Middle Name: $middleName');
+    print('Jersey Number: $jerseyNumber');
+    print('Team ID: ${teamID ?? "No teamID assigned"}');
+  }
 }
 
 // Stores general information about each season
+// class Season {
+//   final int? seasonID;
+//   final int? gameID;
+//   final DateTime startYear; // year of the season started
+//   final DateTime endYear; // year of the season ended
+
+//   Season(
+//       {this.seasonID,
+//       this.gameID,
+//       required this.startYear,
+//       required this.endYear});
+
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'seasonID': seasonID,
+//       'gameID': gameID,
+//       'startYear': startYear,
+//       'endYear': endYear
+//     };
+//   }
+
+//   factory Season.fromMap(Map<String, dynamic> map) {
+//     return Season(
+//         seasonID: map['seasonID'],
+//         gameID: map['gameID'],
+//         startYear: map['startYear'],
+//         endYear: map['endYear']);
+//   }
+// }
+
 class Season {
   final int? seasonID;
-  final int gameID;
+  final int? gameID;
   final int startYear; // year of the season started
   final int endYear; // year of the season ended
 
   Season(
       {this.seasonID,
-      required this.gameID,
+      this.gameID,
       required this.startYear,
       required this.endYear});
 
   Map<String, dynamic> toMap() {
     return {
-      'seasonID': seasonID,
+      // Omit 'seasonID' from toMap as it is auto-generated
+      // 'seasonID': seasonID,
       'gameID': gameID,
       'startYear': startYear,
       'endYear': endYear
@@ -94,10 +134,19 @@ class Season {
 
   factory Season.fromMap(Map<String, dynamic> map) {
     return Season(
-        seasonID: map['seasonID'],
-        gameID: map['gameID'],
-        startYear: map['startYear'],
-        endYear: map['endYear']);
+      seasonID: map['seasonID'],
+      gameID: map['gameID'],
+      startYear: int.tryParse(map['startYear'].toString()) ?? 0,
+      endYear: int.tryParse(map['endYear'].toString()) ?? 0,
+    );
+  }
+  // Print method to display the full details of the season
+  void printDetails() {
+    print('Season Details:');
+    print('Season ID: ${seasonID ?? "Not assigned yet"}');
+    print('Start Year: $startYear');
+    print('End Year: $endYear');
+    print('Game ID: ${gameID ?? "No game assigned yet"}');
   }
 }
 
@@ -108,13 +157,15 @@ class Game {
   final DateTime date; // date now of the game
   final String? semester;
   final int? teamID; // TEMPORARILY SETTED TO "?"
+  final int? seasonID; // TEMPORARILY SETTED TO "?"
 
   Game(
       {this.gameID,
       required this.date,
       required this.gameTitle,
       this.semester,
-      this.teamID}); // TEMPORARILY SETTED TO "?"
+      this.teamID,
+      this.seasonID}); // TEMPORARILY SETTED TO "?"
 
   Map<String, dynamic> toMap() {
     return {
@@ -122,7 +173,8 @@ class Game {
       'gameTitle': gameTitle,
       'date': date.toIso8601String(), // Convert DateTime to string
       'semester': semester,
-      'teamID': teamID
+      'teamID': teamID,
+      'seasonID': seasonID
     };
   }
 
@@ -132,18 +184,33 @@ class Game {
         gameTitle: map['gameTitle'],
         date: DateTime.parse(map['date']), // Convert back to DateTime
         semester: map['semester'],
-        teamID: map['teamID']);
+        teamID: map['teamID'],
+        seasonID: map['seasonID']);
+  }
+  // Print method to display the full details of the season
+  void printDetails() {
+    print('Games Details:');
+    print('Games ID: ${gameID ?? "Not assigned yet"}');
+    print('Game Title : $gameTitle');
+    print('Date: $date');
+    print('Semester: ${semester ?? "No game assigned yet"}');
+    print('Team ID: ${teamID ?? "No teams assigned yet"}');
+    print('Season ID: ${seasonID ?? "No seasonID assigned"}');
   }
 }
 
 class Team {
   final int? teamID;
   final String teamName;
+  final List<int> playerIDs; // List of player IDs belonging to the team
 
-  Team({this.teamID, required this.teamName});
+  Team({this.teamID, required this.teamName, this.playerIDs = const []});
 
   factory Team.fromMap(Map<String, dynamic> map) {
-    return Team(teamID: map['teamID'], teamName: map['teamName']);
+    return Team(
+        teamID: map['teamID'],
+        teamName: map['teamName'],
+        playerIDs: List<int>.from(map['playerIDs'] ?? []));
   }
 }
 
@@ -229,6 +296,7 @@ class PlayerStatistics {
   factory PlayerStatistics.fromMap(Map<String, dynamic> map) {
     return PlayerStatistics(
       playerStatisticID: map['playerStatisticID'],
+      // add seasonID
       gameID: map['gameID'],
       playerID: map['playerID'],
       quarterID: map['quarterID'],
