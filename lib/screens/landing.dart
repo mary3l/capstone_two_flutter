@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
 import 'package:audio_classification/widgets/button.dart';
+import 'package:audio_classification/helper/prisma.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -16,11 +17,21 @@ class _LandingState extends State<Landing> {
   // Instance of DatabaseHelper to interact with the database
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   List<Season> _seasons = [];
-
   @override
   void initState() {
     super.initState(); // Call the parent class's initState
+    samplePrisma();
     // _fetchSeasons(); // Fetch the season from the database when the state is initialized
+  }
+
+  Future<void> samplePrisma() async {
+    try {
+      print(await prisma.user.findMany());
+    } catch (e) {
+      print(e);
+    } finally {
+      //await prisma.$disconnect();
+    }
   }
 
 // Asynchronous function to fetch seasons from the database

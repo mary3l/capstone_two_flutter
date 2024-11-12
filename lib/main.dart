@@ -1,3 +1,4 @@
+import 'package:audio_classification/helper/prisma.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:audio_classification/screens/playerProfile.dart';
@@ -9,11 +10,7 @@ import 'package:audio_classification/screens/landing.dart';
 // import 'package:audio_classification/screens/teamPlayerProfile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-void main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); // Ensure Flutter bindings are initialized
-
-  // Fetch package info
+void loadPackageInfo() async {
   final packageInfo = await PackageInfo.fromPlatform();
 
   // Print app information to the terminal
@@ -21,8 +18,18 @@ void main() async {
   print("Package Name: ${packageInfo.packageName}");
   print("Version: ${packageInfo.version}");
   print("Build Number: ${packageInfo.buildNumber}");
+}
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializePrisma(); // Ensure Prisma is initialized first
+  loadPackageInfo();
   runApp(MyApp());
+}
+
+Future<void> initializePrisma() async {
+  await initPrismaClient();
 }
 
 class MyApp extends StatelessWidget {
