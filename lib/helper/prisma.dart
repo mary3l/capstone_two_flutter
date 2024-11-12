@@ -37,15 +37,18 @@ Future<void> initPrismaClient() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final supportDir = await getApplicationSupportDirectory();
-  final database = join(supportDir.path, 'basketball_stats.db');
-
-  prisma = PrismaClient(datasourceUrl: 'file:$database');
+  final database =
+      '/data/data/org.tensorflow.audio_classification.audio_classification/databases/basketball_stats.db';
+  //await dotenv.load(); // Ensure dotenv is loaded first
+  //final databaseUrl = dotenv.env['DATABASE_URL']!;
+  prisma = PrismaClient(datasourceUrl: 'file:${database}');
   final engine = switch (prisma.$engine) {
     LibraryEngine engine => engine,
     _ => null,
   };
 
   await prisma.$connect();
-  await engine?.applyMigrations(path: 'prisma/migrations');
+  await engine?.applyMigrations(path: 'lib/prisma/migrations');
+
   print('migrations?');
 }

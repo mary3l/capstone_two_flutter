@@ -70,7 +70,7 @@ flutter:
     - assets/models/intended-speech/labels.txt
     - assets/models/intended-noise/soundclassifier_with_metadata.tflite
     - assets/models/intended-noise/labels.txt
-    - lib/prisma/ # Migrations root dir
+    - lib/prisma/migrations/ # Migrations root dir
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
 
     ### mariel's assets
