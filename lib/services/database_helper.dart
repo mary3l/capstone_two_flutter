@@ -35,7 +35,7 @@ class DatabaseHelper {
         // Create the Players table.
         await db.execute('''
           CREATE TABLE Players (
-            playerID INTEGER PRIMARY KEY,
+            playerID INTEGER PRIMARY KEY AUTOINCREMENT,
             lastName TEXT,
             firstName TEXT,
             middleName TEXT,
@@ -60,7 +60,7 @@ class DatabaseHelper {
           CREATE TABLE Games (
             gameID INTEGER PRIMARY KEY AUTOINCREMENT,
             gameTitle TEXT,
-            date DATETIME,
+            date TEXT,
             semester TEXT,
             teamID INTEGER,
             seasonID INTEGER,
@@ -107,14 +107,24 @@ class DatabaseHelper {
   }
 
   // Player CRUD Operations
+
   // Insert a new player into the database.
-  Future<void> insertPlayer(Player player) async {
-    final db = await database;
-    await db.insert(
-      'Players',
-      player.toMap(), // Convert player object to map for database insertion.
-      conflictAlgorithm: ConflictAlgorithm.replace, // Replace on conflict.
-    );
+  Future<int> insertPlayers(Player player) async {
+    try {
+      final db = await database;
+
+      // Print the season details before inserting
+      player.printDetails();
+
+      int id = await db.insert(
+        'Players',
+        player.toMap(),
+      );
+      return id;
+    } catch (e) {
+      print("Error inserting season: $e");
+      return -1;
+    }
   }
 
   // Retrieve all players from the database.
@@ -351,24 +361,39 @@ class DatabaseHelper {
   Future<int> insertSeason(Season season) async {
     try {
       final db = await database;
+
+      // Print the season details before inserting
+      season.printDetails();
+
       int id = await db.insert(
         'Seasons',
-        season.toMap(), // Convert Season object to map, excluding seasonID
+        season.toMap(),
       );
-      return id; // Return the auto-generated seasonID
+      return id;
     } catch (e) {
       print("Error inserting season: $e");
-      return -1; // Indicate failure
+      return -1;
     }
   }
 
   // Retrieve all player statistics from the database.
   Future<List<Season>> getSeasons() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('Seasons');
-    return List.generate(maps.length, (i) {
-      return Season.fromMap(maps[i]); // Convert map to Seasons object.
-    });
+    try {
+      final db = await database;
+      final List<Map<String, dynamic>> maps = await db.query('Seasons');
+
+      // Convert each map to a Season object and print details
+      List<Season> seasons = List.generate(maps.length, (i) {
+        Season season = Season.fromMap(maps[i]);
+        season.printDetails(); // Print season details
+        return season;
+      });
+
+      return seasons;
+    } catch (e) {
+      print("Error fetching seasons: $e"); // Log any errors that occur
+      return []; // Return an empty list in case of an error
+    }
   }
 
   // Update existing Season in the database.

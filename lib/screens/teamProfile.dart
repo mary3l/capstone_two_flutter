@@ -22,11 +22,36 @@ class _TeamProfileState extends State<TeamProfile> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   // List to store the team objects fetched from the database
   List<Team> _teams = [];
+  List<Player> _players = [];
+
+// Track selected player IDs
+  List<int> _selectedPlayerIDs = [];
 
   @override
   void initState() {
     super.initState(); // Call the parent class's initState
     _fetchTeams(); // Fetch the teams from the database when the state is initialized
+    _fetchPlayers(); // Fetch the players from the database when the state is initialized
+  }
+
+  Future<void> _fetchPlayers() async {
+    try {
+      // Call the getgames method to retrieve the list of games
+      List<Player> players = await _databaseHelper.getPlayers();
+
+      // Print each season's details
+      for (var player in players) {
+        player.printDetails();
+      }
+
+      // Update the state with the fetched players
+      setState(() {
+        _players = players; // Assign the fetched games to the _games list
+      });
+    } catch (e) {
+      // Print any error that occurs during the fetching process
+      print("Error fetching games: $e");
+    }
   }
 
   // Asynchronous function to fetch teams from the database
@@ -62,27 +87,56 @@ class _TeamProfileState extends State<TeamProfile> {
               color: AppColors.lightOrange, // Adjust color to fit your theme
             ),
           ),
-          content: Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 10), // Add vertical padding
-            child: TextField(
-              controller: _teamNameController,
-              decoration: InputDecoration(
-                hintText: 'Enter team name',
-                hintStyle:
-                    TextStyle(color: Colors.grey[600]), // Hint text color
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                      8), // Rounded borders for the text field
-                  borderSide:
-                      BorderSide(color: AppColors.lightOrange), // Border color
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Team Name Input
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: TextField(
+                    controller: _teamNameController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter team name',
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: AppColors.lightOrange),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: AppColors.lightOrange),
+                      ),
+                    ),
+                  ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(
-                      color: AppColors.lightOrange), // Focused border color
+                // Player Selection
+                Text(
+                  'Select Players',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              ),
+                // Displaying the player selection checkboxes
+                _players.isEmpty
+                    ? Text(
+                        'No players available') // Show loading while fetching players
+                    : Column(
+                        children: _players.map((player) {
+                          return CheckboxListTile(
+                            title:
+                                Text('${player.firstName} ${player.lastName}'),
+                            value: _selectedPlayerIDs.contains(player.playerID),
+                            onChanged: (bool? selected) {
+                              setState(() {
+                                if (selected == true) {
+                                  _selectedPlayerIDs.add(player.playerID);
+                                } else {
+                                  _selectedPlayerIDs.remove(player.playerID);
+                                }
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+              ],
             ),
           ),
           actions: [

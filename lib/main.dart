@@ -7,8 +7,21 @@ import 'package:audio_classification/screens/startRecording.dart';
 import 'package:audio_classification/screens/dashboard.dart';
 import 'package:audio_classification/screens/landing.dart';
 // import 'package:audio_classification/screens/teamPlayerProfile.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure Flutter bindings are initialized
+
+  // Fetch package info
+  final packageInfo = await PackageInfo.fromPlatform();
+
+  // Print app information to the terminal
+  print("App Name: ${packageInfo.appName}");
+  print("Package Name: ${packageInfo.packageName}");
+  print("Version: ${packageInfo.version}");
+  print("Build Number: ${packageInfo.buildNumber}");
+
   runApp(MyApp());
 }
 
