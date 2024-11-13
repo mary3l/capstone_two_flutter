@@ -41,7 +41,6 @@ dependencies:
   package_info_plus: ^8.1.0
   orm: ^5.2.1
   path_provider: ^2.1.5
-  flutter_dotenv: ^5.2.1
   orm_flutter: ^0.4.0
 
 dev_dependencies:
