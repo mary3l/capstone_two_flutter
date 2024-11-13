@@ -1,11 +1,14 @@
 import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/models/test_basketball_model.dart';
+import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
 import 'package:audio_classification/screens/dashboard.dart';
 import 'package:audio_classification/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
 import 'package:audio_classification/widgets/button.dart';
+import 'package:audio_classification/helper/prisma.dart';
+import 'package:orm/orm.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -16,11 +19,33 @@ class _LandingState extends State<Landing> {
   // Instance of DatabaseHelper to interact with the database
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   List<Season> _seasons = [];
-
   @override
   void initState() {
     super.initState(); // Call the parent class's initState
+    samplePrisma();
     // _fetchSeasons(); // Fetch the season from the database when the state is initialized
+  }
+
+  Future<void> samplePrisma() async {
+    try {
+      final user = await prisma.user.create(
+        data: PrismaUnion.$1(UserCreateInput(
+          email: "seven@aaaa",
+          name: PrismaUnion.$1("Seven123123 Du"),
+        )),
+      );
+      final users = await prisma.user.findMany();
+      for (var user in users) {
+        print('User ID: ${user.id}');
+        print('Name: ${user.name}');
+        print('Email: ${user.email}');
+        // Add other fields as needed
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      //await prisma.$disconnect();
+    }
   }
 
 // Asynchronous function to fetch seasons from the database
