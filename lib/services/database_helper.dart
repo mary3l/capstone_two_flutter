@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:audio_classification/models/test_basketball_model.dart';
+import 'package:audio_classification/helper/prisma.dart';
 
 // A singleton class to manage the SQLite database connection and operations.
 class DatabaseHelper {

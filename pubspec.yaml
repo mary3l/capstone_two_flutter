@@ -71,6 +71,8 @@ flutter:
     - assets/models/intended-noise/labels.txt
     - lib/prisma/migrations/ # Migrations root dir
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
+    - lib/prisma/migrations/20241113052255_init_new_db_model/
+    - lib/prisma/migrations/20241113054355_added_quarter_table/
 
     ### mariel's assets
     - lib/data/gameData.json

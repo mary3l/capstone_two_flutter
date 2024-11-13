@@ -1,7 +1,8 @@
-import 'package:audio_classification/constants/colors.dart';
-import 'package:audio_classification/models/test_basketball_model.dart';
+/* import 'package:audio_classification/models/test_basketball_model.dart'; */
+import 'dart:developer';
+
 import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
-import 'package:audio_classification/screens/dashboard.dart';
+import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 import 'package:audio_classification/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
@@ -17,55 +18,55 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   // Instance of DatabaseHelper to interact with the database
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
   List<Season> _seasons = [];
   @override
   void initState() {
     super.initState(); // Call the parent class's initState
-    samplePrisma();
-    // _fetchSeasons(); // Fetch the season from the database when the state is initialized
-  }
-
-  Future<void> samplePrisma() async {
-    try {
-      final user = await prisma.user.create(
-        data: PrismaUnion.$1(UserCreateInput(
-          email: "seven@aaaa",
-          name: PrismaUnion.$1("Seven123123 Du"),
-        )),
-      );
-      final users = await prisma.user.findMany();
-      for (var user in users) {
-        print('User ID: ${user.id}');
-        print('Name: ${user.name}');
-        print('Email: ${user.email}');
-        // Add other fields as needed
-      }
-    } catch (e) {
-      print(e);
-    } finally {
-      //await prisma.$disconnect();
-    }
   }
 
 // Asynchronous function to fetch seasons from the database
-  Future<void> _fetchSeasons() async {
+  void _fetchSeasons() async {
     try {
-      // Call the getSeasons method to retrieve the list of seasons
-      List<Season> seasons = await _databaseHelper.getSeasons();
-
-      // Print each season's details
-      for (var season in seasons) {
-        season.printDetails();
-      }
-
-      // Update the state with the fetched seasons
-      setState(() {
-        _seasons = seasons; // Assign the fetched seasons to the _seasons list
-      });
+      final seasons = await prisma.season.findMany();
+      _seasons.addAll(seasons);
+      log('Successfully fetched seasons');
     } catch (e) {
-      // Print any error that occurs during the fetching process
-      print("Error fetching seasons: $e");
+      log('Failed to fetch seasons');
+    }
+  }
+
+  void _createSeason(int startYear, int endYear) async {
+    try {
+      await prisma.season.create(
+        data: PrismaUnion.$1(
+          SeasonCreateInput(
+            startYear: startYear,
+            endYear: endYear,
+          ),
+        ),
+      );
+      log('Successfully created season');
+    } catch (e) {
+      log('Failed to create season');
+    }
+  }
+
+  void _updateSeason(int newStartYear, int newEndYear) async {
+    /* 
+    Insert code
+     */
+  }
+
+  void _deleteSeason(int id) async {
+    try {
+      await prisma.season.delete(
+        where: SeasonWhereUniqueInput(
+          id: id,
+        ),
+      );
+      log('Successfully deleted season');
+    } catch (e) {
+      log('Failed to delete season');
     }
   }
 
@@ -107,19 +108,7 @@ class _LandingState extends State<Landing> {
                 int endYear = int.tryParse(endYearController.text) ?? 0;
 
                 if (startYear > 0 && endYear > 0 && endYear >= startYear) {
-                  Season newSeason = Season(
-                    startYear: startYear,
-                    endYear: endYear,
-                  );
-
-                  int seasonID = await _databaseHelper.insertSeason(newSeason);
-                  if (seasonID > 0) {
-                    print("Season added with ID: $seasonID");
-                    // Optionally, show a success message
-                  } else {
-                    print("Failed to add season");
-                  }
-
+                  _createSeason(startYear, endYear);
                   Navigator.of(context).pop(); // Close the dialog
                 } else {
                   print('Please enter valid years');
@@ -135,7 +124,7 @@ class _LandingState extends State<Landing> {
 
   void _showChooseSeasonDialog() async {
     // Ensure seasons are fetched before showing the dialog
-    await _fetchSeasons();
+    _fetchSeasons();
 
     showDialog(
       context: context,
