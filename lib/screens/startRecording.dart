@@ -1,4 +1,5 @@
 import 'package:audio_classification/constants/colors.dart';
+import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
@@ -8,6 +9,7 @@ import 'package:audio_classification/widgets/recording_button.dart';
 import 'package:audio_classification/widgets/recording_field.dart';
 import 'package:audio_classification/widgets/game_quarter.dart';
 import 'package:audio_classification/widgets/button.dart';
+import 'package:audio_classification/helper/prisma.dart';
 
 import 'package:audio_classification/helper/classification_list_helper.dart';
 
@@ -16,8 +18,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orm/orm.dart';
 
 class StartRecording extends StatefulWidget {
   @override
@@ -55,7 +57,7 @@ class _StartRecordingState extends State<StartRecording> {
       if (_hasPermission) {
         _isRecording.value = true;
         Timer.periodic(
-          Duration(milliseconds: _expectAudioLength),
+          const Duration(milliseconds: _expectAudioLength),
           (timer) {
             if (!_isRecording.value) {
               timer.cancel(); // Stop the timer when recording ends
@@ -79,17 +81,58 @@ class _StartRecordingState extends State<StartRecording> {
     }
     _isRecording.value = false;
     keywordList = KeywordList();
-    print('keywords ${_keywordCombinations.toString()}');
-    _isValidKeywordCombination = keywordList.matches(_keywordCombinations);
+    _checkKeyWordCombinations(_keywordCombinations);
     _keywordCombinations.clear();
+  }
 
-    /* final List<String> _keywordCombinations = [
-      "Player Fifty",
-      "Made",
-      "3",
-    ]; */
-    /* print('matches?${keywordList.matches(_keywordCombinations)}');
-    print('keyword combinations${_keywordCombinations}'); */
+  void _checkKeyWordCombinations(List<String> _keywordCombinations) {
+    keywordList = KeywordList();
+    _isValidKeywordCombination = keywordList.matches(_keywordCombinations);
+    // ADD THIS CHECK IF THE MODEL IS RELIABLE ENOUGH
+    /*    if (_isValidKeywordCombination) {
+      _processKeyWord(_keywordCombinations);
+    } else {
+      log('Invalid combination');
+      _processKeyWord(_keywordCombinations);
+    } */
+    _processKeyWord(_keywordCombinations);
+    _keywordCombinations.clear();
+  }
+
+  void _processKeyWord(List<String> _keywordCombinations) {
+    _createLog(_keywordCombinations, 1);
+  }
+
+  void _createLog(List<String> _keywordCombinations, int quarterNumber) async {
+    String first = _keywordCombinations[0];
+    String second = _keywordCombinations[1];
+    String third = _keywordCombinations[2];
+    try {
+      final quarter = await prisma.quarter.findMany();
+      for (var quarter in quarter) {
+        print('Quarter ID: ${quarter.id}');
+      }
+
+      await prisma.logs.create(
+        data: PrismaUnion.$1(
+          LogsCreateInput(
+            quarter: QuarterCreateNestedOneWithoutLogsInput(
+              connect: (QuarterWhereUniqueInput(id: 1)),
+            ),
+            keywordOne: first,
+            keywordTwo: second,
+            keywordThree: third,
+            timestamp: DateTime.now(),
+          ),
+        ),
+      );
+      log('Successfully created logs');
+    } catch (e) {
+      print(e);
+      log('Error ${e.toString()}');
+    } finally {
+      _keywordCombinations.clear();
+    }
   }
 
   Future<bool> _requestPermission() async {
@@ -190,7 +233,6 @@ class _StartRecordingState extends State<StartRecording> {
 
     setState(() {
       biggestValue = biggestValue;
-      print(biggestValue[0].key);
     });
   }
 
@@ -205,12 +247,12 @@ class _StartRecordingState extends State<StartRecording> {
   @override
   Widget build(BuildContext context) {
     // Retrieve the arguments passed from the previous screen
-    final Map<String, dynamic> args =
+    /* final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String gameTitle = args['gameTitle'];
     final DateTime date = args['date'];
     final String semester =
-        args['semester'] ?? 'N/A'; // Use 'N/A' if semester is null
+        args['semester'] ?? 'N/A';  */
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -221,13 +263,13 @@ class _StartRecordingState extends State<StartRecording> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Header(
+            const Header(
               title: 'RECORDING',
               alignment: HeaderAlignment.header,
               textType: TextType.header,
             ),
 
-            Label(
+            /*  Label(
                 text: 'Game Name: $gameTitle',
                 alignment: LabelAlignment.header),
             Label(
@@ -238,8 +280,8 @@ class _StartRecordingState extends State<StartRecording> {
             Label(
               text: 'Semester: $semester',
               alignment: LabelAlignment.header,
-            ),
-            SizedBox(height: 10),
+            ), */
+            const SizedBox(height: 10),
 
             // Pass the setter function to GameQuarter
             GameQuarter(onSelectQuarter: (quarter) {
@@ -247,24 +289,24 @@ class _StartRecordingState extends State<StartRecording> {
                 selectedQuarter = quarter;
               });
             }),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             RecordingField(
               speech: _keywordCombinations.join('-'),
               type: 'inputSpeechFieldType',
               gameQuarter: '',
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Center(
               child: RecordingButton(
                 onStartRecording: () async => await _startRecorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     RecordingField(

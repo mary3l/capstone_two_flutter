@@ -966,10 +966,12 @@ class QuarterDelegate {
   _i1.ActionClient<_i2.Quarter?> findUnique({
     required _i3.QuarterWhereUniqueInput where,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -992,10 +994,12 @@ class QuarterDelegate {
   _i1.ActionClient<_i2.Quarter> findUniqueOrThrow({
     required _i3.QuarterWhereUniqueInput where,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1025,6 +1029,7 @@ class QuarterDelegate {
     int? skip,
     _i1.PrismaUnion<_i3.QuarterScalar, Iterable<_i3.QuarterScalar>>? distinct,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
@@ -1034,6 +1039,7 @@ class QuarterDelegate {
       'skip': skip,
       'distinct': distinct,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1063,6 +1069,7 @@ class QuarterDelegate {
     int? skip,
     _i1.PrismaUnion<_i3.QuarterScalar, Iterable<_i3.QuarterScalar>>? distinct,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
@@ -1072,6 +1079,7 @@ class QuarterDelegate {
       'skip': skip,
       'distinct': distinct,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1101,6 +1109,7 @@ class QuarterDelegate {
     int? skip,
     _i1.PrismaUnion<_i3.QuarterScalar, Iterable<_i3.QuarterScalar>>? distinct,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
@@ -1110,6 +1119,7 @@ class QuarterDelegate {
       'skip': skip,
       'distinct': distinct,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1135,10 +1145,12 @@ class QuarterDelegate {
         .PrismaUnion<_i3.QuarterCreateInput, _i3.QuarterUncheckedCreateInput>
         data,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'data': data,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1217,11 +1229,13 @@ class QuarterDelegate {
         data,
     required _i3.QuarterWhereUniqueInput where,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'data': data,
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1278,12 +1292,14 @@ class QuarterDelegate {
         .PrismaUnion<_i3.QuarterUpdateInput, _i3.QuarterUncheckedUpdateInput>
         update,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
       'create': create,
       'update': update,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1306,10 +1322,12 @@ class QuarterDelegate {
   _i1.ActionClient<_i2.Quarter?> delete({
     required _i3.QuarterWhereUniqueInput where,
     _i3.QuarterSelect? select,
+    _i3.QuarterInclude? include,
   }) {
     final args = {
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -1422,6 +1440,490 @@ class QuarterDelegate {
       action: 'aggregateQuarter',
       result: result,
       factory: (e) => _i3.AggregateQuarter.fromJson(e),
+    );
+  }
+}
+
+class LogsDelegate {
+  const LogsDelegate._(this._client);
+
+  final PrismaClient _client;
+
+  _i1.ActionClient<_i2.Logs?> findUnique({
+    required _i3.LogsWhereUniqueInput where,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.findUnique,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs?>(
+      action: 'findUniqueLogs',
+      result: result,
+      factory: (e) => e != null ? _i2.Logs.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs> findUniqueOrThrow({
+    required _i3.LogsWhereUniqueInput where,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.findUniqueOrThrow,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs>(
+      action: 'findUniqueLogsOrThrow',
+      result: result,
+      factory: (e) => _i2.Logs.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs?> findFirst({
+    _i3.LogsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.LogsOrderByWithRelationInput>,
+            _i3.LogsOrderByWithRelationInput>?
+        orderBy,
+    _i3.LogsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.LogsScalar, Iterable<_i3.LogsScalar>>? distinct,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.findFirst,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs?>(
+      action: 'findFirstLogs',
+      result: result,
+      factory: (e) => e != null ? _i2.Logs.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs> findFirstOrThrow({
+    _i3.LogsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.LogsOrderByWithRelationInput>,
+            _i3.LogsOrderByWithRelationInput>?
+        orderBy,
+    _i3.LogsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.LogsScalar, Iterable<_i3.LogsScalar>>? distinct,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.findFirstOrThrow,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs>(
+      action: 'findFirstLogsOrThrow',
+      result: result,
+      factory: (e) => _i2.Logs.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i2.Logs>> findMany({
+    _i3.LogsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.LogsOrderByWithRelationInput>,
+            _i3.LogsOrderByWithRelationInput>?
+        orderBy,
+    _i3.LogsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.LogsScalar, Iterable<_i3.LogsScalar>>? distinct,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.findMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i2.Logs>>(
+      action: 'findManyLogs',
+      result: result,
+      factory: (values) =>
+          (values as Iterable).map((e) => _i2.Logs.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs> create({
+    required _i1.PrismaUnion<_i3.LogsCreateInput, _i3.LogsUncheckedCreateInput>
+        data,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.createOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs>(
+      action: 'createOneLogs',
+      result: result,
+      factory: (e) => _i2.Logs.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> createMany(
+      {required _i1.PrismaUnion<_i3.LogsCreateManyInput,
+              Iterable<_i3.LogsCreateManyInput>>
+          data}) {
+    final args = {'data': data};
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.createMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'createManyLogs',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i2.CreateManyLogsAndReturnOutputType>>
+      createManyAndReturn({
+    required _i1
+        .PrismaUnion<_i3.LogsCreateManyInput, Iterable<_i3.LogsCreateManyInput>>
+        data,
+    _i3.CreateManyLogsAndReturnOutputTypeSelect? select,
+    _i3.CreateManyLogsAndReturnOutputTypeInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.createManyAndReturn,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i2.CreateManyLogsAndReturnOutputType>>(
+      action: 'createManyLogsAndReturn',
+      result: result,
+      factory: (values) => (values as Iterable)
+          .map((e) => _i2.CreateManyLogsAndReturnOutputType.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs?> update({
+    required _i1.PrismaUnion<_i3.LogsUpdateInput, _i3.LogsUncheckedUpdateInput>
+        data,
+    required _i3.LogsWhereUniqueInput where,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.updateOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs?>(
+      action: 'updateOneLogs',
+      result: result,
+      factory: (e) => e != null ? _i2.Logs.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> updateMany({
+    required _i1.PrismaUnion<_i3.LogsUpdateManyMutationInput,
+            _i3.LogsUncheckedUpdateManyInput>
+        data,
+    _i3.LogsWhereInput? where,
+  }) {
+    final args = {
+      'data': data,
+      'where': where,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.updateMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'updateManyLogs',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs> upsert({
+    required _i3.LogsWhereUniqueInput where,
+    required _i1.PrismaUnion<_i3.LogsCreateInput, _i3.LogsUncheckedCreateInput>
+        create,
+    required _i1.PrismaUnion<_i3.LogsUpdateInput, _i3.LogsUncheckedUpdateInput>
+        update,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'create': create,
+      'update': update,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.upsertOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs>(
+      action: 'upsertOneLogs',
+      result: result,
+      factory: (e) => _i2.Logs.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Logs?> delete({
+    required _i3.LogsWhereUniqueInput where,
+    _i3.LogsSelect? select,
+    _i3.LogsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.deleteOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Logs?>(
+      action: 'deleteOneLogs',
+      result: result,
+      factory: (e) => e != null ? _i2.Logs.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> deleteMany(
+      {_i3.LogsWhereInput? where}) {
+    final args = {'where': where};
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.deleteMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'deleteManyLogs',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i3.LogsGroupByOutputType>> groupBy({
+    _i3.LogsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.LogsOrderByWithAggregationInput>,
+            _i3.LogsOrderByWithAggregationInput>?
+        orderBy,
+    required _i1.PrismaUnion<Iterable<_i3.LogsScalar>, _i3.LogsScalar> by,
+    _i3.LogsScalarWhereWithAggregatesInput? having,
+    int? take,
+    int? skip,
+    _i3.LogsGroupByOutputTypeSelect? select,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'by': _i1.JsonQuery.groupBySerializer(by),
+      'having': having,
+      'take': take,
+      'skip': skip,
+      'select': select ?? _i1.JsonQuery.groupBySelectSerializer(by),
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.groupBy,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i3.LogsGroupByOutputType>>(
+      action: 'groupByLogs',
+      result: result,
+      factory: (values) => (values as Iterable)
+          .map((e) => _i3.LogsGroupByOutputType.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i3.AggregateLogs> aggregate({
+    _i3.LogsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.LogsOrderByWithRelationInput>,
+            _i3.LogsOrderByWithRelationInput>?
+        orderBy,
+    _i3.LogsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i3.AggregateLogsSelect? select,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'select': select,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Logs',
+      action: _i1.JsonQueryAction.aggregate,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AggregateLogs>(
+      action: 'aggregateLogs',
+      result: result,
+      factory: (e) => _i3.AggregateLogs.fromJson(e),
     );
   }
 }
@@ -2746,6 +3248,130 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'isGenerated': false,
             'isUpdatedAt': false,
           },
+          {
+            'name': 'Logs',
+            'kind': 'object',
+            'isList': true,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Logs',
+            'relationName': 'LogsToQuarter',
+            'relationFromFields': [],
+            'relationToFields': [],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+        ],
+        'primaryKey': null,
+        'uniqueFields': [],
+        'uniqueIndexes': [],
+        'isGenerated': false,
+      },
+      {
+        'name': 'Logs',
+        'dbName': null,
+        'fields': [
+          {
+            'name': 'id',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': true,
+            'isReadOnly': false,
+            'hasDefaultValue': true,
+            'type': 'Int',
+            'default': {
+              'name': 'autoincrement',
+              'args': [],
+            },
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'keywordOne',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'String',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'keywordTwo',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'String',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'keywordThree',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'String',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'timestamp',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'DateTime',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'quarter',
+            'kind': 'object',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Quarter',
+            'relationName': 'LogsToQuarter',
+            'relationFromFields': ['quarterID'],
+            'relationToFields': ['id'],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'quarterID',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': true,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
         ],
         'primaryKey': null,
         'uniqueFields': [],
@@ -2973,6 +3599,14 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
         ],
       },
       {
+        'model': 'Logs',
+        'type': 'id',
+        'isDefinedOnField': true,
+        'fields': [
+          {'name': 'id'}
+        ],
+      },
+      {
         'model': 'Team',
         'type': 'id',
         'isDefinedOnField': true,
@@ -3018,7 +3652,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   @override
   get $engine => _engine ??= _i5.LibraryEngine(
         schema:
-            '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = "dart run orm"\n  engineType = "flutter"\n}\n\ndatasource db {\n  provider  = "sqlite"\n  url       = env("DATABASE_URL")\n  // Why need directUrl ?\n  // The Prisma CLI tool uses the file URL relative to the prisma directory when it is configured at runtime. The Dart runtime uses PWD\n  directUrl = env("DIRECT_DATABASE_URL")\n}\n\nmodel Season {\n  id        Int @id @default(autoincrement())\n  startYear Int\n  endYear   Int\n}\n\nmodel Game {\n  id       Int      @id @default(autoincrement())\n  title    String\n  date     DateTime\n  semester String\n  team     Team     @relation(fields: [teamID], references: [id])\n  teamID   Int\n}\n\nmodel Quarter {\n  id               Int @id @default(autoincrement())\n  number           Int\n  totalScore       Int\n  madeOne          Int\n  madeTwo          Int\n  madeThree        Int\n  miss             Int\n  reboundOffensive Int\n  reboundDefensive Int\n  foul             Int\n  turnover         Int\n  assist           Int\n  block            Int\n  steal            Int\n}\n\nmodel Team {\n  id     Int      @id @default(autoincrement())\n  name   String\n  Game   Game[]\n  Player Player[]\n}\n\nmodel Player {\n  id           Int    @id @default(autoincrement())\n  lastName     String\n  firstName    String\n  middleName   String\n  jerseyNumber Int\n  gamesPlayed  Int\n  team         Team   @relation(fields: [teamID], references: [id])\n  teamID       Int\n}\n',
+            '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = "dart run orm"\n  engineType = "flutter"\n}\n\ndatasource db {\n  provider  = "sqlite"\n  url       = env("DATABASE_URL")\n  // Why need directUrl ?\n  // The Prisma CLI tool uses the file URL relative to the prisma directory when it is configured at runtime. The Dart runtime uses PWD\n  directUrl = env("DIRECT_DATABASE_URL")\n}\n\nmodel Season {\n  id        Int @id @default(autoincrement())\n  startYear Int\n  endYear   Int\n}\n\nmodel Game {\n  id       Int      @id @default(autoincrement())\n  title    String\n  date     DateTime\n  semester String\n  team     Team     @relation(fields: [teamID], references: [id])\n  teamID   Int\n}\n\nmodel Quarter {\n  id               Int    @id @default(autoincrement())\n  number           Int\n  totalScore       Int\n  madeOne          Int\n  madeTwo          Int\n  madeThree        Int\n  miss             Int\n  reboundOffensive Int\n  reboundDefensive Int\n  foul             Int\n  turnover         Int\n  assist           Int\n  block            Int\n  steal            Int\n  Logs             Logs[]\n}\n\nmodel Logs {\n  id           Int      @id @default(autoincrement())\n  keywordOne   String\n  keywordTwo   String\n  keywordThree String\n  timestamp    DateTime\n  quarter      Quarter  @relation(fields: [quarterID], references: [id])\n  quarterID    Int\n}\n\nmodel Team {\n  id     Int      @id @default(autoincrement())\n  name   String\n  Game   Game[]\n  Player Player[]\n}\n\nmodel Player {\n  id           Int    @id @default(autoincrement())\n  lastName     String\n  firstName    String\n  middleName   String\n  jerseyNumber Int\n  gamesPlayed  Int\n  team         Team   @relation(fields: [teamID], references: [id])\n  teamID       Int\n}\n',
         datasources: const {
           'db': _i1.Datasource(
             _i1.DatasourceType.environment,
@@ -3036,6 +3670,8 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   GameDelegate get game => GameDelegate._(this);
 
   QuarterDelegate get quarter => QuarterDelegate._(this);
+
+  LogsDelegate get logs => LogsDelegate._(this);
 
   TeamDelegate get team => TeamDelegate._(this);
 

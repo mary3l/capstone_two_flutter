@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
 import 'package:audio_classification/prisma/generated_dart_client/model.dart';
-import 'package:audio_classification/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
