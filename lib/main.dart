@@ -120,7 +120,7 @@ void seedData() async {
         LogsCreateInput(
           keywordOne: 'Player One',
           keywordTwo: 'Made',
-          keywordThree: 'One',
+          keywordThree: null,
           timestamp: DateTime.now(),
           quarter: const QuarterCreateNestedOneWithoutLogsInput(
             connect: (QuarterWhereUniqueInput(id: 1)),

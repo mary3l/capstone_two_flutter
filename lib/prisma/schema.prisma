@@ -54,7 +54,7 @@ model Logs {
   id           Int      @id @default(autoincrement())
   keywordOne   String
   keywordTwo   String
-  keywordThree String
+  keywordThree String?
   timestamp    DateTime
   quarter      Quarter  @relation(fields: [quarterID], references: [id])
   quarterID    Int

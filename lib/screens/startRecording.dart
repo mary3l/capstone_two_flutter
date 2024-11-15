@@ -121,7 +121,9 @@ class _StartRecordingState extends State<StartRecording> {
             ),
             keywordOne: first,
             keywordTwo: second,
-            keywordThree: third,
+            keywordThree: third.isNotEmpty
+                ? PrismaUnion.$1(third)
+                : const PrismaUnion.$2(PrismaNull()),
             timestamp: DateTime.now(),
           ),
         ),
@@ -223,11 +225,13 @@ class _StartRecordingState extends State<StartRecording> {
     } else {
       biggestValue = _classificationNoise; // Noise classification wins
     }
+    print(biggestValue);
 
     if (_keywordCombinations.length < 4) {
       _keywordCombinations.add(biggestValue[0].key);
     } else {
       _keywordCombinations.removeAt(0);
+      log('Keywords: $_keywordCombinations');
       _stopRecorder();
     }
 
