@@ -1,6 +1,7 @@
 import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/services/database_helper.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
+import 'package:audio_classification/widgets/label.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
@@ -10,13 +11,18 @@ import 'package:audio_classification/widgets/game_card.dart'; // Import GameCard
 import 'package:audio_classification/models/test_basketball_model.dart'; // Import Team and Game model
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  // Constructor requires startYear and endYear to be passed
+  const Dashboard({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
+  int? startYear;
+  int? endYear;
   // Sample Game and Team Data
   final List<Game> games = [
     Game(
@@ -46,9 +52,9 @@ class _DashboardState extends State<Dashboard> {
   ];
 
   //to capture user input, access it easily, and manage it
-  final TextEditingController _gameTitleController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _semesterController = TextEditingController();
+  // final TextEditingController _gameTitleController = TextEditingController();
+  // final TextEditingController _dateController = TextEditingController();
+  // final TextEditingController _semesterController = TextEditingController();
   // final TextEditingController _teamIDController = TextEditingController();
   // Instance of DatabaseHelper to interact with the database
   final DatabaseHelper _databaseHelper = DatabaseHelper();
@@ -67,6 +73,11 @@ class _DashboardState extends State<Dashboard> {
       // Call the getgames method to retrieve the list of games
       List<Game> games = await _databaseHelper.getGames();
 
+      // Print each season's details
+      for (var game in games) {
+        game.printDetails();
+      }
+
       // Update the state with the fetched games
       setState(() {
         _games = games; // Assign the fetched games to the _games list
@@ -78,6 +89,9 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void _showAddGameDialog() {
+    final TextEditingController _gameTitleController = TextEditingController();
+    final TextEditingController _dateController = TextEditingController();
+    final TextEditingController _semesterController = TextEditingController();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -257,6 +271,12 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    int? startYear = args?['startYear'];
+    int? endYear = args?['endYear'];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.lightOrange,
@@ -273,6 +293,11 @@ class _DashboardState extends State<Dashboard> {
                 title: "DASHBOARD",
                 alignment: HeaderAlignment.header,
                 textType: TextType.header,
+              ),
+              Label(
+                text:
+                    'Season Year: ${startYear ?? "N/A"} - ${endYear ?? "N/A"}',
+                alignment: LabelAlignment.header,
               ),
               SizedBox(height: 20), // Space below the header
 
@@ -305,18 +330,14 @@ class _DashboardState extends State<Dashboard> {
                 shrinkWrap:
                     true, // Allows ListView to work inside SingleChildScrollView
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: games.length,
+                itemCount: _games.length, // Use _games instead of games
                 itemBuilder: (context, index) {
-                  final game = games[index];
-                  // final teams = [
-                  //   Team(teamID: game.teamID),
-                  // ];
-
+                  final game = _games[index];
                   return Column(
                     children: [
                       GameCard(
                         game: game,
-                        listTeams: teams,
+                        listTeams: teams, // Pass teams list as needed
                         onPress: () {
                           Navigator.pushNamed(
                             context,
