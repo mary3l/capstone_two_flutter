@@ -20,6 +20,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class StartRecording extends StatefulWidget {
+  final String? gameTitle;
+  final DateTime? date;
+  final String? semester;
+  final int? teamID;
+  final int? startYear;
+  final int? endYear;
+  final int? seasonID; // Added seasonID here
+
+  const StartRecording({
+    Key? key,
+    this.gameTitle,
+    this.date,
+    this.semester,
+    this.teamID,
+    this.startYear,
+    this.endYear,
+    this.seasonID,
+  }) : super(key: key);
+
   @override
   _StartRecordingState createState() => _StartRecordingState();
 }
@@ -204,13 +223,6 @@ class _StartRecordingState extends State<StartRecording> {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the arguments passed from the previous screen
-    final Map<String, dynamic> args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final String gameTitle = args['gameTitle'];
-    final DateTime date = args['date'];
-    final String semester =
-        args['semester'] ?? 'N/A'; // Use 'N/A' if semester is null
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -228,15 +240,20 @@ class _StartRecordingState extends State<StartRecording> {
             ),
 
             Label(
-                text: 'Game Name: $gameTitle',
-                alignment: LabelAlignment.header),
-            Label(
-              text:
-                  'Date and Time Schedule: ${date.toLocal().toString().split(' ')[0]}', // Format the date if needed
+              text: widget.gameTitle != null
+                  ? 'Opponent Name: ${widget.gameTitle}'
+                  : 'Opponent Name: Not available',
               alignment: LabelAlignment.header,
             ),
             Label(
-              text: 'Semester: $semester',
+              text: widget.date != null
+                  ? 'Date: ${widget.date!.toLocal().toString().split(' ')[0]}'
+                  : 'Date: Not available', // Handle null case if needed
+              alignment: LabelAlignment.header,
+            ),
+            Label(
+              text:
+                  'School Year ${widget.startYear}-${widget.endYear} | ${widget.semester} Semester',
               alignment: LabelAlignment.header,
             ),
             SizedBox(height: 10),

@@ -1,140 +1,105 @@
+import 'package:audio_classification/screens/startRecording.dart';
+import 'package:audio_classification/services/service_methods.dart';
 import 'package:audio_classification/constants/colors.dart';
-import 'package:audio_classification/services/database_helper.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:audio_classification/widgets/label.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
-import 'package:audio_classification/widgets/recording_button.dart';
 import 'package:audio_classification/widgets/button.dart';
-import 'package:audio_classification/widgets/game_card.dart'; // Import GameCard widget
-import 'package:audio_classification/models/test_basketball_model.dart'; // Import Team and Game model
+import 'package:audio_classification/widgets/game_card.dart';
+import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 
 class Dashboard extends StatefulWidget {
-  // Constructor requires startYear and endYear to be passed
-  const Dashboard({
-    Key? key,
-  }) : super(key: key);
+  final int? selectedSeasonID;
+  final int? startYear;
+  final int? endYear;
+
+  const Dashboard(
+      {Key? key, this.selectedSeasonID, this.startYear, this.endYear})
+      : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  int? startYear;
-  int? endYear;
-  // Sample Game and Team Data
-  final List<Game> games = [
-    Game(
-      gameID: 1,
-      gameTitle: 'Championship Game',
-      date: DateTime.now(),
-      teamID: 1,
-    ),
-    Game(
-      gameID: 2,
-      gameTitle: 'Friendly Match',
-      date: DateTime.now(),
-      teamID: 2,
-    ),
-    Game(
-      gameID: 3,
-      gameTitle: 'Season Opener',
-      date: DateTime.now(),
-      teamID: 3,
-    ),
-  ];
-
-  final List<Team> teams = [
-    Team(teamID: 1, teamName: 'Team A'),
-    Team(teamID: 2, teamName: 'Team B'),
-    Team(teamID: 3, teamName: 'Team C')
-  ];
-
-  //to capture user input, access it easily, and manage it
-  // final TextEditingController _gameTitleController = TextEditingController();
-  // final TextEditingController _dateController = TextEditingController();
-  // final TextEditingController _semesterController = TextEditingController();
-  // final TextEditingController _teamIDController = TextEditingController();
-  // Instance of DatabaseHelper to interact with the database
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
-  // List to store the game objects fetched from the database
+  // Declare a list of games and teams
   List<Game> _games = [];
+  List<Team> _teams = [];
 
   @override
   void initState() {
-    super.initState(); // Call the parent class's initState
-    _fetchGames(); // Fetch the games from the database when the state is initialized
+    super.initState();
   }
 
-  // Asynchronous function to fetch games from the database
-  Future<void> _fetchGames() async {
-    try {
-      // Call the getgames method to retrieve the list of games
-      List<Game> games = await _databaseHelper.getGames();
+  final serviceMethod = ServiceMethod();
 
-      // Print each season's details
-      for (var game in games) {
-        game.printDetails();
-      }
+  // Function to show a dialog to add a new game
+  void _showAddGameDialog(BuildContext context) async {
+    // Fetch teams before showing the dialog
+    List<Team> teams = await serviceMethod.fetchTeams();
 
-      // Update the state with the fetched games
-      setState(() {
-        _games = games; // Assign the fetched games to the _games list
-      });
-    } catch (e) {
-      // Print any error that occurs during the fetching process
-      print("Error fetching games: $e");
+    if (teams.isEmpty) {
+      // Handle empty teams, if necessary
+      print('No teams available');
     }
-  }
 
-  void _showAddGameDialog() {
+    setState(() {
+      _teams = teams; // Update the _teams list after fetching
+    });
+
     final TextEditingController _gameTitleController = TextEditingController();
     final TextEditingController _dateController = TextEditingController();
     final TextEditingController _semesterController = TextEditingController();
+    final TextEditingController _seasonIDController = TextEditingController();
+    final TextEditingController _teamIDController = TextEditingController();
+
+    DateTime? selectedDate;
+    String? selectedSemester;
+    String? selectedTeam;
+    _seasonIDController.text = widget.selectedSeasonID.toString();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        DateTime? selectedDate; // Variable to store the selected date
-        String? selectedSemester; // Variable to store the selected semester
-
         return AlertDialog(
           title: Text(
             'Add New Game',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: AppColors.lightOrange, // Match color styling
+              color: AppColors.lightOrange,
             ),
           ),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Text(
+                    'Selected Season ID: ${widget.selectedSeasonID}'), // Display selected season ID
+                // Input fields for the game title, date, semester, season ID, and team ID
                 TextField(
                   controller: _gameTitleController,
                   decoration: InputDecoration(
                     labelText: 'Game Title',
                     labelStyle: TextStyle(color: AppColors.lightOrange),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.lightOrange),
-                    ),
                   ),
                 ),
-                // Button to pick a date from a calendar
                 TextField(
-                  readOnly: true, // Prevent manual input
+                  readOnly: true,
                   onTap: () async {
+                    // Show date picker when the date field is tapped
                     final DateTime? picked = await showDatePicker(
                       context: context,
                       initialDate: selectedDate ?? DateTime.now(),
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2101),
                     );
-                    if (picked != null && picked != selectedDate) {
+                    if (picked != null) {
                       setState(() {
-                        selectedDate = picked; // Update the selected date
-                        _dateController.text = "${picked.toLocal()}"
-                            .split(' ')[0]; // Set the date in the TextField
+                        selectedDate = picked;
+                        _dateController.text =
+                            "${picked.toLocal()}".split(' ')[0];
                       });
                     }
                   },
@@ -142,12 +107,8 @@ class _DashboardState extends State<Dashboard> {
                   decoration: InputDecoration(
                     labelText: 'Date',
                     labelStyle: TextStyle(color: AppColors.lightOrange),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.lightOrange),
-                    ),
                   ),
                 ),
-                // Dropdown for selecting semester
                 DropdownButtonFormField<String>(
                   value: selectedSemester,
                   hint: Text('Select Semester'),
@@ -159,109 +120,115 @@ class _DashboardState extends State<Dashboard> {
                   }).toList(),
                   onChanged: (String? newValue) {
                     setState(() {
-                      selectedSemester =
-                          newValue; // Update the selected semester
-                      _semesterController.text =
-                          newValue ?? ""; // Set the semester in the TextField
+                      selectedSemester = newValue;
+                      _semesterController.text = newValue ?? "";
                     });
                   },
                   decoration: InputDecoration(
                     labelText: 'Semester',
                     labelStyle: TextStyle(color: AppColors.lightOrange),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.lightOrange),
-                    ),
                   ),
                 ),
-                // Uncomment the following to include Team ID field
-                // TextField(
-                //   controller: _teamIDController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Team ID',
-                //     labelStyle: TextStyle(color: AppColors.lightOrange),
-                //     focusedBorder: UnderlineInputBorder(
-                //       borderSide: BorderSide(color: AppColors.lightOrange),
-                //     ),
-                //   ),
-                //   keyboardType: TextInputType.number,
-                // ),
+                DropdownButtonFormField<String>(
+                  value: selectedTeam,
+                  hint: Text('Select Team'),
+                  items: _teams.map((Team team) {
+                    return DropdownMenuItem<String>(
+                      value: team.id.toString(),
+                      child: Text(team.name ?? "No Team Name"),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedTeam = newValue;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Team',
+                    labelStyle: TextStyle(color: AppColors.lightOrange),
+                  ),
+                ),
               ],
             ),
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context)
-                    .pop(); // Close dialog without clearing controllers
+                Navigator.of(context).pop();
               },
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: AppColors.lightOrange,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text('Cancel',
+                  style: TextStyle(color: AppColors.lightOrange)),
             ),
             TextButton(
               onPressed: () async {
+                // Get the values entered in the dialog fields
                 String gameTitle = _gameTitleController.text.trim();
                 String dateText = _dateController.text.trim();
-                // int teamID = int.tryParse(_teamIDController.text.trim()) ?? 0;
+                int seasonID = widget.selectedSeasonID ?? 0;
+                int teamID = int.tryParse(selectedTeam ?? "0") ??
+                    0; // Pass the selected team ID
 
+                // Validate that all required fields are filled
                 if (gameTitle.isNotEmpty &&
                     dateText.isNotEmpty &&
-                    selectedSemester != null) {
+                    selectedSemester != null &&
+                    seasonID != 0 &&
+                    teamID != 0) {
                   try {
-                    // Parse the dateText as a DateTime object
-                    DateTime date =
-                        DateTime.parse(dateText); // Ensure valid date
+                    DateTime date = DateTime.parse(dateText);
 
-                    // Create Game object without gameID
-                    Game newGame = Game(
-                      gameTitle: gameTitle,
-                      date: date, // Use the selected date
-                      semester: selectedSemester, // Use the selected semester
-                      // teamID: teamID,
+                    // Create a new game by calling the service method
+                    await serviceMethod.createGame(
+                      seasonID,
+                      gameTitle,
+                      date,
+                      selectedSemester!,
+                      teamID,
                     );
 
-                    // Insert game into database
-                    await _databaseHelper.insertGame(newGame);
-
-                    // Clear controllers after successful addition
+                    // Clear the text controllers after the game is added
                     _gameTitleController.clear();
                     _dateController.clear();
                     _semesterController.clear();
-                    // _teamIDController.clear();
+                    _seasonIDController.clear();
+                    _teamIDController.clear();
 
-                    // Close dialog
-                    Navigator.pop(context);
+                    Navigator.pop(context); // Close the dialog
 
-                    // Fetch and update games list if necessary
-                    _fetchGames();
+                    // Print the arguments to check before passing them to the next screen
+                    print(
+                        "Navigating to StartRecording screen with arguments:");
+                    print('Game Title: $gameTitle');
+                    print('Date: $date');
+                    print('Semester: $selectedSemester');
+                    print('Team ID: $teamID');
+                    print('Season ID: $seasonID');
+                    print('Start Year: ${widget.startYear}');
+                    print('End Year: ${widget.endYear}');
 
-                    // Once data has been succesfully inputted
-                    // Navigate to the start recording screen with arguments
-                    Navigator.pushNamed(
+                    Navigator.push(
                       context,
-                      '/screens/startRecording',
-                      arguments: {
-                        'gameTitle': gameTitle,
-                        'date': date,
-                        'semester': selectedSemester,
-                      },
+                      MaterialPageRoute(
+                        builder: (context) => StartRecording(
+                          gameTitle: gameTitle,
+                          date: date,
+                          semester: selectedSemester ?? "No selected semester",
+                          teamID: teamID,
+                          seasonID: seasonID,
+                          startYear: widget.startYear ?? 0, // Pass start year
+                          endYear: widget.endYear ?? 0, // Pass end year
+                        ),
+                      ),
                     );
                   } catch (e) {
                     print("Error adding game: $e");
                   }
+                } else {
+                  print("Validation failed: Please fill all the fields.");
                 }
               },
-              child: Text(
-                'Add',
-                style: TextStyle(
-                  color: AppColors.lightOrange, // Button color
-                  fontWeight: FontWeight.bold, // Bold text
-                ),
-              ),
+              child:
+                  Text('Add', style: TextStyle(color: AppColors.lightOrange)),
             ),
           ],
         );
@@ -271,12 +238,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic>? args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-    int? startYear = args?['startYear'];
-    int? endYear = args?['endYear'];
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.lightOrange,
@@ -285,7 +246,6 @@ class _DashboardState extends State<Dashboard> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: GeneralScreenPadding(
         child: SingleChildScrollView(
-          // Wrap the Column in a SingleChildScrollView
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -296,49 +256,51 @@ class _DashboardState extends State<Dashboard> {
               ),
               Label(
                 text:
-                    'Season Year: ${startYear ?? "N/A"} - ${endYear ?? "N/A"}',
+                    'Season Year: ${widget.startYear ?? "N/A"} - ${widget.endYear ?? "N/A"}',
                 alignment: LabelAlignment.header,
               ),
-              SizedBox(height: 20), // Space below the header
+              SizedBox(height: 20),
 
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/screens/startRecording');
+                    _showAddGameDialog(context); // Show the dialog
                   },
                   child: Button(
                     icon: Icon(Icons.mic, color: Colors.white),
                     text: 'Start Recording',
-                    onPress: _showAddGameDialog,
-                    // () {
-                    //   Navigator.pushNamed(context, '/screens/startRecording');
-                    // },
+                    onPress: () {
+                      // Show dialog to add a new game when this button is pressed
+                      _showAddGameDialog(context);
+                    },
                   ),
                 ),
               ),
-              SizedBox(height: 30), // Space below the RecordingButton
+              SizedBox(height: 30),
 
               const Header(
                 title: "Games History",
                 alignment: HeaderAlignment.sectionTitle,
                 textType: TextType.section,
               ),
-              SizedBox(height: 10), // Space below the Games History header
+              SizedBox(height: 10),
 
-              // Use ListView.builder for dynamic rendering of games
+              // Use ListView.builder to display the games dynamically
               ListView.builder(
                 shrinkWrap:
-                    true, // Allows ListView to work inside SingleChildScrollView
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _games.length, // Use _games instead of games
+                    true, // Allow ListView to take up only the required space
+                physics:
+                    NeverScrollableScrollPhysics(), // Disable scrolling here
+                itemCount: _games.length, // Number of games to display
                 itemBuilder: (context, index) {
                   final game = _games[index];
                   return Column(
                     children: [
                       GameCard(
-                        game: game,
-                        listTeams: teams, // Pass teams list as needed
+                        game:
+                            game, // Pass the current game to the GameCard widget
                         onPress: () {
+                          // Navigate to the team statistics screen when the game card is pressed
                           Navigator.pushNamed(
                             context,
                             '/screens/teamStatistics',

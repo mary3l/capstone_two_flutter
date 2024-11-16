@@ -2,59 +2,6 @@
 import 'model.dart' as _i1;
 import 'prisma.dart' as _i2;
 
-class Season {
-  const Season({
-    this.id,
-    this.startYear,
-    this.endYear,
-  });
-
-  factory Season.fromJson(Map json) => Season(
-        id: json['id'],
-        startYear: json['startYear'],
-        endYear: json['endYear'],
-      );
-
-  final int? id;
-
-  final int? startYear;
-
-  final int? endYear;
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'startYear': startYear,
-        'endYear': endYear,
-      };
-}
-
-class CreateManySeasonAndReturnOutputType {
-  const CreateManySeasonAndReturnOutputType({
-    this.id,
-    this.startYear,
-    this.endYear,
-  });
-
-  factory CreateManySeasonAndReturnOutputType.fromJson(Map json) =>
-      CreateManySeasonAndReturnOutputType(
-        id: json['id'],
-        startYear: json['startYear'],
-        endYear: json['endYear'],
-      );
-
-  final int? id;
-
-  final int? startYear;
-
-  final int? endYear;
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'startYear': startYear,
-        'endYear': endYear,
-      };
-}
-
 class Player {
   const Player({
     this.id,
@@ -153,7 +100,9 @@ class Game {
     this.date,
     this.semester,
     this.teamID,
+    this.seasonID,
     this.team,
+    this.season,
   });
 
   factory Game.fromJson(Map json) => Game(
@@ -166,7 +115,10 @@ class Game {
         },
         semester: json['semester'],
         teamID: json['teamID'],
+        seasonID: json['seasonID'],
         team: json['team'] is Map ? _i1.Team.fromJson(json['team']) : null,
+        season:
+            json['season'] is Map ? _i1.Season.fromJson(json['season']) : null,
       );
 
   final int? id;
@@ -179,7 +131,11 @@ class Game {
 
   final int? teamID;
 
+  final int? seasonID;
+
   final _i1.Team? team;
+
+  final _i1.Season? season;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -187,7 +143,75 @@ class Game {
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,
+        'seasonID': seasonID,
         'team': team?.toJson(),
+        'season': season?.toJson(),
+      };
+}
+
+class Season {
+  const Season({
+    this.id,
+    this.startYear,
+    this.endYear,
+    this.games,
+    this.$count,
+  });
+
+  factory Season.fromJson(Map json) => Season(
+        id: json['id'],
+        startYear: json['startYear'],
+        endYear: json['endYear'],
+        games: (json['games'] as Iterable?)
+            ?.map((json) => _i1.Game.fromJson(json)),
+        $count: json['_count'] is Map
+            ? _i2.SeasonCountOutputType.fromJson(json['_count'])
+            : null,
+      );
+
+  final int? id;
+
+  final int? startYear;
+
+  final int? endYear;
+
+  final Iterable<_i1.Game>? games;
+
+  final _i2.SeasonCountOutputType? $count;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'startYear': startYear,
+        'endYear': endYear,
+        'games': games?.map((e) => e.toJson()),
+        '_count': $count?.toJson(),
+      };
+}
+
+class CreateManySeasonAndReturnOutputType {
+  const CreateManySeasonAndReturnOutputType({
+    this.id,
+    this.startYear,
+    this.endYear,
+  });
+
+  factory CreateManySeasonAndReturnOutputType.fromJson(Map json) =>
+      CreateManySeasonAndReturnOutputType(
+        id: json['id'],
+        startYear: json['startYear'],
+        endYear: json['endYear'],
+      );
+
+  final int? id;
+
+  final int? startYear;
+
+  final int? endYear;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'startYear': startYear,
+        'endYear': endYear,
       };
 }
 
@@ -198,7 +222,9 @@ class CreateManyGameAndReturnOutputType {
     this.date,
     this.semester,
     this.teamID,
+    this.seasonID,
     this.team,
+    this.season,
   });
 
   factory CreateManyGameAndReturnOutputType.fromJson(Map json) =>
@@ -212,7 +238,10 @@ class CreateManyGameAndReturnOutputType {
         },
         semester: json['semester'],
         teamID: json['teamID'],
+        seasonID: json['seasonID'],
         team: json['team'] is Map ? _i1.Team.fromJson(json['team']) : null,
+        season:
+            json['season'] is Map ? _i1.Season.fromJson(json['season']) : null,
       );
 
   final int? id;
@@ -225,7 +254,11 @@ class CreateManyGameAndReturnOutputType {
 
   final int? teamID;
 
+  final int? seasonID;
+
   final _i1.Team? team;
+
+  final _i1.Season? season;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -233,7 +266,9 @@ class CreateManyGameAndReturnOutputType {
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,
+        'seasonID': seasonID,
         'team': team?.toJson(),
+        'season': season?.toJson(),
       };
 }
 

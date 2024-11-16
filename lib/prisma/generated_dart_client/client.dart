@@ -14,10 +14,12 @@ class SeasonDelegate {
   _i1.ActionClient<_i2.Season?> findUnique({
     required _i3.SeasonWhereUniqueInput where,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -40,10 +42,12 @@ class SeasonDelegate {
   _i1.ActionClient<_i2.Season> findUniqueOrThrow({
     required _i3.SeasonWhereUniqueInput where,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -73,6 +77,7 @@ class SeasonDelegate {
     int? skip,
     _i1.PrismaUnion<_i3.SeasonScalar, Iterable<_i3.SeasonScalar>>? distinct,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
@@ -82,6 +87,7 @@ class SeasonDelegate {
       'skip': skip,
       'distinct': distinct,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -111,6 +117,7 @@ class SeasonDelegate {
     int? skip,
     _i1.PrismaUnion<_i3.SeasonScalar, Iterable<_i3.SeasonScalar>>? distinct,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
@@ -120,6 +127,7 @@ class SeasonDelegate {
       'skip': skip,
       'distinct': distinct,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -149,6 +157,7 @@ class SeasonDelegate {
     int? skip,
     _i1.PrismaUnion<_i3.SeasonScalar, Iterable<_i3.SeasonScalar>>? distinct,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
@@ -158,6 +167,7 @@ class SeasonDelegate {
       'skip': skip,
       'distinct': distinct,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -183,10 +193,12 @@ class SeasonDelegate {
         .PrismaUnion<_i3.SeasonCreateInput, _i3.SeasonUncheckedCreateInput>
         data,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'data': data,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -265,11 +277,13 @@ class SeasonDelegate {
         data,
     required _i3.SeasonWhereUniqueInput where,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'data': data,
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -326,12 +340,14 @@ class SeasonDelegate {
         .PrismaUnion<_i3.SeasonUpdateInput, _i3.SeasonUncheckedUpdateInput>
         update,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
       'create': create,
       'update': update,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -354,10 +370,12 @@ class SeasonDelegate {
   _i1.ActionClient<_i2.Season?> delete({
     required _i3.SeasonWhereUniqueInput where,
     _i3.SeasonSelect? select,
+    _i3.SeasonInclude? include,
   }) {
     final args = {
       'where': where,
       'select': select,
+      'include': include,
     };
     final query = _i1.serializeJsonQuery(
       args: args,
@@ -2455,6 +2473,22 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'isGenerated': false,
             'isUpdatedAt': false,
           },
+          {
+            'name': 'games',
+            'kind': 'object',
+            'isList': true,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Game',
+            'relationName': 'GameToSeason',
+            'relationFromFields': [],
+            'relationToFields': [],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
         ],
         'primaryKey': null,
         'uniqueFields': [],
@@ -2525,7 +2559,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'name': 'team',
             'kind': 'object',
             'isList': false,
-            'isRequired': true,
+            'isRequired': false,
             'isUnique': false,
             'isId': false,
             'isReadOnly': false,
@@ -2539,6 +2573,35 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
           },
           {
             'name': 'teamID',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': true,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'season',
+            'kind': 'object',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Season',
+            'relationName': 'GameToSeason',
+            'relationFromFields': ['seasonID'],
+            'relationToFields': ['id'],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'seasonID',
             'kind': 'scalar',
             'isList': false,
             'isRequired': true,
@@ -2901,7 +2964,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'name': 'gamesPlayed',
             'kind': 'scalar',
             'isList': false,
-            'isRequired': true,
+            'isRequired': false,
             'isUnique': false,
             'isId': false,
             'isReadOnly': false,
@@ -2914,7 +2977,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'name': 'team',
             'kind': 'object',
             'isList': false,
-            'isRequired': true,
+            'isRequired': false,
             'isUnique': false,
             'isId': false,
             'isReadOnly': false,
@@ -2930,7 +2993,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'name': 'teamID',
             'kind': 'scalar',
             'isList': false,
-            'isRequired': true,
+            'isRequired': false,
             'isUnique': false,
             'isId': false,
             'isReadOnly': true,
@@ -3018,7 +3081,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   @override
   get $engine => _engine ??= _i5.LibraryEngine(
         schema:
-            '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = "dart run orm"\n  engineType = "flutter"\n}\n\ndatasource db {\n  provider  = "sqlite"\n  url       = env("DATABASE_URL")\n  // Why need directUrl ?\n  // The Prisma CLI tool uses the file URL relative to the prisma directory when it is configured at runtime. The Dart runtime uses PWD\n  directUrl = env("DIRECT_DATABASE_URL")\n}\n\nmodel Season {\n  id        Int @id @default(autoincrement())\n  startYear Int\n  endYear   Int\n}\n\nmodel Game {\n  id       Int      @id @default(autoincrement())\n  title    String\n  date     DateTime\n  semester String\n  team     Team     @relation(fields: [teamID], references: [id])\n  teamID   Int\n}\n\nmodel Quarter {\n  id               Int @id @default(autoincrement())\n  number           Int\n  totalScore       Int\n  madeOne          Int\n  madeTwo          Int\n  madeThree        Int\n  miss             Int\n  reboundOffensive Int\n  reboundDefensive Int\n  foul             Int\n  turnover         Int\n  assist           Int\n  block            Int\n  steal            Int\n}\n\nmodel Team {\n  id     Int      @id @default(autoincrement())\n  name   String\n  Game   Game[]\n  Player Player[]\n}\n\nmodel Player {\n  id           Int    @id @default(autoincrement())\n  lastName     String\n  firstName    String\n  middleName   String\n  jerseyNumber Int\n  gamesPlayed  Int\n  team         Team   @relation(fields: [teamID], references: [id])\n  teamID       Int\n}\n',
+            '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = "dart run orm"\n  engineType = "flutter"\n}\n\ndatasource db {\n  provider  = "sqlite"\n  url       = env("DATABASE_URL")\n  // Why need directUrl ?\n  // The Prisma CLI tool uses the file URL relative to the prisma directory when it is configured at runtime. The Dart runtime uses PWD\n  directUrl = env("DIRECT_DATABASE_URL")\n}\n\nmodel Season {\n  id        Int    @id @default(autoincrement())\n  startYear Int\n  endYear   Int\n  games     Game[]\n}\n\nmodel Game {\n  id       Int      @id @default(autoincrement())\n  title    String\n  date     DateTime\n  semester String\n  team     Team?    @relation(fields: [teamID], references: [id])\n  teamID   Int?\n  season   Season   @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season\n  seasonID Int\n}\n\nmodel Quarter {\n  id               Int @id @default(autoincrement())\n  number           Int\n  totalScore       Int\n  madeOne          Int\n  madeTwo          Int\n  madeThree        Int\n  miss             Int\n  reboundOffensive Int\n  reboundDefensive Int\n  foul             Int\n  turnover         Int\n  assist           Int\n  block            Int\n  steal            Int\n}\n\nmodel Team {\n  id     Int      @id @default(autoincrement())\n  name   String\n  Game   Game[]\n  Player Player[]\n}\n\nmodel Player {\n  id           Int    @id @default(autoincrement())\n  lastName     String\n  firstName    String\n  middleName   String\n  jerseyNumber Int\n  gamesPlayed  Int?\n  team         Team?  @relation(fields: [teamID], references: [id])\n  teamID       Int?\n}\n',
         datasources: const {
           'db': _i1.Datasource(
             _i1.DatasourceType.environment,

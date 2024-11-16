@@ -1,14 +1,16 @@
 import 'package:audio_classification/services/database_helper.dart';
+import 'package:audio_classification/services/service_methods.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 
-import 'package:audio_classification/models/test_basketball_model.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
 import 'package:audio_classification/widgets/game_card.dart';
 import 'package:audio_classification/widgets/button.dart';
 import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/widgets/filterButton.dart';
+import 'package:audio_classification/prisma/generated_dart_client/model.dart';
+import 'package:audio_classification/services/service_methods.dart';
 
 class TeamProfile extends StatefulWidget {
   @override
@@ -18,9 +20,8 @@ class TeamProfile extends StatefulWidget {
 class _TeamProfileState extends State<TeamProfile> {
   //to capture user input, access it easily, and manage it
   final TextEditingController _teamNameController = TextEditingController();
-  // Instance of DatabaseHelper to interact with the database
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
-  // List to store the team objects fetched from the database
+
+  final ServiceMethod _serviceMethod = ServiceMethod();
   List<Team> _teams = [];
   List<Player> _players = [];
 
@@ -30,67 +31,45 @@ class _TeamProfileState extends State<TeamProfile> {
   @override
   void initState() {
     super.initState(); // Call the parent class's initState
-    _fetchTeams(); // Fetch the teams from the database when the state is initialized
-    _fetchPlayers(); // Fetch the players from the database when the state is initialized
   }
 
-  Future<void> _fetchPlayers() async {
-    try {
-      // Call the getgames method to retrieve the list of games
-      List<Player> players = await _databaseHelper.getPlayers();
-
-      // Print each season's details
-      for (var player in players) {
-        player.printDetails();
-      }
-
-      // Update the state with the fetched players
-      setState(() {
-        _players = players; // Assign the fetched games to the _games list
-      });
-    } catch (e) {
-      // Print any error that occurs during the fetching process
-      print("Error fetching games: $e");
-    }
-  }
-
-  // Asynchronous function to fetch teams from the database
-  Future<void> _fetchTeams() async {
-    try {
-      // Call the getTeams method to retrieve the list of teams
-      List<Team> teams = await _databaseHelper.getTeams();
-
-      // Update the state with the fetched teams
-      setState(() {
-        _teams = teams; // Assign the fetched teams to the _teams list
-      });
-    } catch (e) {
-      // Print any error that occurs during the fetching process
-      print("Error fetching teams: $e");
-    }
-  }
+  final serviceMethod = ServiceMethod();
 
 // for showing a form when user clicks "add new team" button
-  void _showAddTeamDialog() {
+  void _showAddTeamDialog() async {
+    // Fetch players asynchronously before showing the dialog
+    List<Player> players =
+        await serviceMethod.fetchPlayers(); // Ensure players are fetched first
+
+    if (players.isEmpty) {
+      // Handle empty players, if necessary (e.g., show a message)
+      print('No players available');
+    }
+
+    // After fetching, update the _players list
+    setState(() {
+      _players = players;
+    });
+
+    // Show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16), // Rounded corners
+            borderRadius: BorderRadius.circular(16),
           ),
           title: Text(
             'Add New Team',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: AppColors.lightOrange, // Adjust color to fit your theme
+              color: AppColors.lightOrange,
             ),
           ),
           content: SingleChildScrollView(
             child: Column(
               children: [
-                // Team Name Input
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: TextField(
@@ -109,27 +88,25 @@ class _TeamProfileState extends State<TeamProfile> {
                     ),
                   ),
                 ),
-                // Player Selection
                 Text(
                   'Select Players',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                // Displaying the player selection checkboxes
                 _players.isEmpty
                     ? Text(
-                        'No players available') // Show loading while fetching players
+                        'No players available') // Show loading if no players are fetched
                     : Column(
                         children: _players.map((player) {
                           return CheckboxListTile(
                             title:
                                 Text('${player.firstName} ${player.lastName}'),
-                            value: _selectedPlayerIDs.contains(player.playerID),
+                            value: _selectedPlayerIDs.contains(player.id),
                             onChanged: (bool? selected) {
                               setState(() {
-                                if (selected == true) {
-                                  _selectedPlayerIDs.add(player.playerID);
+                                if (selected == true && player.id != null) {
+                                  _selectedPlayerIDs.add(player.id!);
                                 } else {
-                                  _selectedPlayerIDs.remove(player.playerID);
+                                  _selectedPlayerIDs.remove(player.id);
                                 }
                               });
                             },
@@ -147,36 +124,45 @@ class _TeamProfileState extends State<TeamProfile> {
               child: Text(
                 'Cancel',
                 style: TextStyle(
-                  color: AppColors.lightOrange, // Button color
-                  fontWeight: FontWeight.bold, // Bold text
+                  color: AppColors.lightOrange,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             TextButton(
               onPressed: () async {
-                String teamName = _teamNameController.text.trim();
+                try {
+                  String teamName = _teamNameController.text.trim();
 
-                if (teamName.isNotEmpty) {
-                  // Create Team object without teamID
-                  Team newTeam = Team(teamName: teamName);
+                  if (teamName.isNotEmpty && _selectedPlayerIDs.isNotEmpty) {
+                    // Call the service method to create the team with selected players
+                    await _serviceMethod.createTeam(
+                        teamName, _selectedPlayerIDs);
 
-                  // Insert team into database
-                  await _databaseHelper.insertTeam(newTeam);
+                    // Print the details of the newly created team (if insertion is successful)
+                    print('Team added successfully!');
+                    print('Team Name: $teamName');
+                    print('Player IDs: ${_selectedPlayerIDs.join(", ")}');
 
-                  // Clear controllers and close dialog
-                  _teamNameController.clear();
-                  Navigator.pop(context);
-                  _fetchTeams();
+                    // Clear the team name input and close the dialog
+                    _teamNameController.clear();
+                    Navigator.pop(context);
+                  } else {
+                    print('Please provide a team name and select players.');
+                  }
+                } catch (e) {
+                  // Handle errors if the team insertion fails
+                  print('Error adding team: $e');
                 }
               },
               child: Text(
                 'Add',
                 style: TextStyle(
-                  color: AppColors.lightOrange, // Button color
-                  fontWeight: FontWeight.bold, // Bold text
+                  color: AppColors.lightOrange,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+            )
           ],
         );
       },

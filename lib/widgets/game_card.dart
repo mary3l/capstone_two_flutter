@@ -1,21 +1,22 @@
 import 'package:audio_classification/constants/colors.dart';
-import 'package:audio_classification/models/test_basketball_model.dart';
+import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 import 'package:flutter/material.dart';
 
 class GameCard extends StatelessWidget {
-  final Game? game; // Game object
-  final Team? team;
-  final List<Team>? listTeams; // List of teams for this game
-  final Player? player; // Player object
-  final VoidCallback? onPress; // Optional callback for tap
+  final Game? game; // Nullable Game object
+  final Team? team; // Nullable Team object
+  // final List<Team>? listTeams; // Nullable List of teams for this game
+  final Player? player; // Nullable Player object
+  final VoidCallback? onPress; // Nullable callback for tap
   final bool showStats; // Whether to show stats
-  final bool againstTeam; // Flag for against team
+  final bool
+      againstTeam; // Flag to indicate if the player is playing against a team
 
   const GameCard({
     Key? key,
     this.game,
     this.team,
-    this.listTeams,
+    // this.listTeams,
     this.player,
     this.onPress,
     this.showStats = false,
@@ -24,22 +25,13 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Convert the date to a readable format
+    // Handling nullable Game, Team, and Player objects
     String formattedDate = game != null
-        ? "${game!.date.year}-${game!.date.month}-${game!.date.day}"
-        : '';
-
-    // Find the team name using teamID
-    String teamName = listTeams
-            ?.firstWhere(
-              (team) => team.teamID == game?.teamID,
-              orElse: () => Team(teamID: 0, teamName: 'No Team Available'),
-            )
-            .teamName ??
-        'No Team Available';
+        ? "${game!.date!.year}-${game!.date!.month}-${game!.date!.day}" // Format game date
+        : 'No Date Available'; // Default text if no date is available
 
     return GestureDetector(
-      onTap: onPress, // Reference the onPress function
+      onTap: onPress, // Trigger the onPress callback when the card is tapped
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -50,8 +42,8 @@ class GameCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         child: Column(
           children: [
+            // If game data is available, display game details
             if (game != null) ...[
-              // Game Card Layout
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -61,7 +53,8 @@ class GameCard extends StatelessWidget {
                       children: [
                         // Displaying the game title
                         Text(
-                          game!.gameTitle,
+                          game!.title ??
+                              'No Game Title', // Fallback text if title is null
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
@@ -71,7 +64,8 @@ class GameCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          teamName, // Display the team name here
+                          game!.team!.name ??
+                              'No Team Name', // Fallback text if team name is null
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.normal,
@@ -81,7 +75,7 @@ class GameCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          formattedDate,
+                          formattedDate, // Display formatted date
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -92,6 +86,7 @@ class GameCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
+                  // Eye icon to view more details (common for all layouts)
                   Icon(
                     Icons.remove_red_eye_outlined,
                     color: AppColors.darkOrange,
@@ -99,8 +94,9 @@ class GameCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ] else if (player != null) ...[
-              // Player Card Layout
+            ]
+            // If player data is available, display player details
+            else if (player != null) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -110,8 +106,8 @@ class GameCard extends StatelessWidget {
                       children: [
                         Text(
                           againstTeam
-                              ? "${player!.lastName?.toUpperCase()}, ${player!.firstName}"
-                              : 'Against Team',
+                              ? "${player!.lastName?.toUpperCase()}, ${player!.firstName}" // Player name if playing against a team
+                              : 'Against Team', // Fallback text when not playing against a specific team
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
@@ -121,8 +117,8 @@ class GameCard extends StatelessWidget {
                         ),
                         Text(
                           againstTeam
-                              ? 'Player No. 123' // Replace with actual player number
-                              : 'Game Title - Date and Time Schedule',
+                              ? 'Player No. 123' // Placeholder for player number
+                              : 'Game Title - Date and Time Schedule', // Fallback text
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -132,6 +128,7 @@ class GameCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // If showStats is true, display stats
                   if (showStats) ...[
                     Container(
                       padding: const EdgeInsets.all(10),
@@ -140,7 +137,7 @@ class GameCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
-                        "0", // Placeholder for stats; replace with actual value if available
+                        "0", // Placeholder for stats; replace with actual value
                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Inter',
@@ -149,7 +146,9 @@ class GameCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ] else ...[
+                  ]
+                  // Otherwise, show the eye icon
+                  else ...[
                     Icon(
                       Icons.remove_red_eye_outlined,
                       color: AppColors.darkOrange,
@@ -158,14 +157,16 @@ class GameCard extends StatelessWidget {
                   ],
                 ],
               ),
-            ] else if (team != null) ...[
-              // Team Card Layout
+            ]
+            // If team data is available, display team details
+            else if (team != null) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Text(
-                      team?.teamName ?? 'No Team Available', // Handle null case
+                      team!.name ??
+                          'No Team Available', // Fallback text if team is null
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.bold,
@@ -174,12 +175,25 @@ class GameCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Eye icon to view more details
                   Icon(
                     Icons.remove_red_eye_outlined,
                     color: AppColors.darkOrange,
                     size: 35,
                   ),
                 ],
+              ),
+            ]
+            // Default case when no game, player, or team is available
+            else ...[
+              Text(
+                'No Data Available', // Fallback text for missing data
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: AppColors.grey,
+                ),
               ),
             ],
           ],
