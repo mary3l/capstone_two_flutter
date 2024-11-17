@@ -17,8 +17,63 @@ datasource db {
   directUrl = env("DIRECT_DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Season {
+  id        Int @id @default(autoincrement())
+  startYear Int
+  endYear   Int
+}
+
+model Game {
+  id       Int      @id @default(autoincrement())
+  title    String
+  date     DateTime
+  semester String
+  team     Team     @relation(fields: [teamID], references: [id])
+  teamID   Int
+}
+
+model Quarter {
+  id               Int    @id @default(autoincrement())
+  number           Int
+  totalScore       Int    @default(0)
+  madeOne          Int    @default(0)
+  madeTwo          Int    @default(0)
+  madeThree        Int    @default(0)
+  miss             Int    @default(0)
+  reboundOffensive Int    @default(0)
+  reboundDefensive Int    @default(0)
+  foul             Int    @default(0)
+  turnover         Int    @default(0)
+  assist           Int    @default(0)
+  block            Int    @default(0)
+  steal            Int    @default(0)
+  Logs             Logs[]
+}
+
+model Logs {
+  id           Int      @id @default(autoincrement())
+  keywordOne   String
+  keywordTwo   String
+  keywordThree String?
+  timestamp    DateTime
+  quarter      Quarter  @relation(fields: [quarterID], references: [id])
+  quarterID    Int
+}
+
+model Team {
+  id     Int      @id @default(autoincrement())
+  name   String
+  Game   Game[]
+  Player Player[]
+}
+
+model Player {
+  id           Int    @id @default(autoincrement())
+  lastName     String
+  firstName    String
+  middleName   String
+  jerseyNumber Int
+  gamesPlayed  Int
+  team         Team   @relation(fields: [teamID], references: [id])
+  teamID       Int
 }
