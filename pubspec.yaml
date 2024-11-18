@@ -73,6 +73,7 @@ flutter:
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
     - lib/prisma/migrations/20241113052255_init_new_db_model/
     - lib/prisma/migrations/20241113054355_added_quarter_table/
+    - lib/prisma/migrations//20241113173915_added_logs_table/
     - lib/prisma/migrations/20241114054819_mariel_added_relations_with_season_and_game/
     - lib/prisma/migrations/20241114075233_mariel_changed_season_and_games_into_one_to_many_relationship/
     - lib/prisma/migrations/20241114151915_mariel_made_games_played_and_team_id_nullable/

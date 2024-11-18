@@ -6014,6 +6014,220 @@ class AggregateGameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
+class QuarterCountOutputType {
+  const QuarterCountOutputType({this.logs});
+
+  factory QuarterCountOutputType.fromJson(Map json) =>
+      QuarterCountOutputType(logs: json['Logs']);
+
+  final int? logs;
+
+  Map<String, dynamic> toJson() => {'Logs': logs};
+}
+
+class NestedStringNullableFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const NestedStringNullableFilter({
+    this.equals,
+    this.$in,
+    this.notIn,
+    this.lt,
+    this.lte,
+    this.gt,
+    this.gte,
+    this.contains,
+    this.startsWith,
+    this.endsWith,
+    this.not,
+  });
+
+  final _i1.PrismaUnion<String,
+      _i1.PrismaUnion<_i1.Reference<String>, _i1.PrismaNull>>? equals;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? $in;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? notIn;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? contains;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? startsWith;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? endsWith;
+
+  final _i1.PrismaUnion<String,
+      _i1.PrismaUnion<_i2.NestedStringNullableFilter, _i1.PrismaNull>>? not;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'in': $in,
+        'notIn': notIn,
+        'lt': lt,
+        'lte': lte,
+        'gt': gt,
+        'gte': gte,
+        'contains': contains,
+        'startsWith': startsWith,
+        'endsWith': endsWith,
+        'not': not,
+      };
+}
+
+class StringNullableFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const StringNullableFilter({
+    this.equals,
+    this.$in,
+    this.notIn,
+    this.lt,
+    this.lte,
+    this.gt,
+    this.gte,
+    this.contains,
+    this.startsWith,
+    this.endsWith,
+    this.not,
+  });
+
+  final _i1.PrismaUnion<String,
+      _i1.PrismaUnion<_i1.Reference<String>, _i1.PrismaNull>>? equals;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? $in;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? notIn;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? contains;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? startsWith;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? endsWith;
+
+  final _i1.PrismaUnion<String,
+      _i1.PrismaUnion<_i2.NestedStringNullableFilter, _i1.PrismaNull>>? not;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'in': $in,
+        'notIn': notIn,
+        'lt': lt,
+        'lte': lte,
+        'gt': gt,
+        'gte': gte,
+        'contains': contains,
+        'startsWith': startsWith,
+        'endsWith': endsWith,
+        'not': not,
+      };
+}
+
+class QuarterRelationFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterRelationFilter({
+    this.$is,
+    this.isNot,
+  });
+
+  final _i2.QuarterWhereInput? $is;
+
+  final _i2.QuarterWhereInput? isNot;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'is': $is,
+        'isNot': isNot,
+      };
+}
+
+class LogsWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsWhereInput({
+    this.AND,
+    this.OR,
+    this.NOT,
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.quarter,
+  });
+
+  final _i1.PrismaUnion<_i2.LogsWhereInput, Iterable<_i2.LogsWhereInput>>? AND;
+
+  final Iterable<_i2.LogsWhereInput>? OR;
+
+  final _i1.PrismaUnion<_i2.LogsWhereInput, Iterable<_i2.LogsWhereInput>>? NOT;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? id;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? keywordOne;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? keywordTwo;
+
+  final _i1.PrismaUnion<_i2.StringNullableFilter,
+      _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? timestamp;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
+
+  final _i1.PrismaUnion<_i2.QuarterRelationFilter, _i2.QuarterWhereInput>?
+      quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'AND': AND,
+        'OR': OR,
+        'NOT': NOT,
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        'quarter': quarter,
+      };
+}
+
+class LogsListRelationFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsListRelationFilter({
+    this.every,
+    this.some,
+    this.none,
+  });
+
+  final _i2.LogsWhereInput? every;
+
+  final _i2.LogsWhereInput? some;
+
+  final _i2.LogsWhereInput? none;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'every': every,
+        'some': some,
+        'none': none,
+      };
+}
+
 class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterWhereInput({
     this.AND,
@@ -6033,6 +6247,7 @@ class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.assist,
     this.block,
     this.steal,
+    this.logs,
   });
 
   final _i1.PrismaUnion<_i2.QuarterWhereInput, Iterable<_i2.QuarterWhereInput>>?
@@ -6071,6 +6286,8 @@ class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
 
+  final _i2.LogsListRelationFilter? logs;
+
   @override
   Map<String, dynamic> toJson() => {
         'AND': AND,
@@ -6090,6 +6307,7 @@ class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
       };
 }
 
@@ -6113,6 +6331,7 @@ class QuarterWhereUniqueInput
     this.assist,
     this.block,
     this.steal,
+    this.logs,
   });
 
   final int? id;
@@ -6151,6 +6370,8 @@ class QuarterWhereUniqueInput
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
 
+  final _i2.LogsListRelationFilter? logs;
+
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -6170,72 +6391,44 @@ class QuarterWhereUniqueInput
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
       };
 }
 
-class QuarterSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterSelect({
-    this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+class LogsQuarterArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsQuarterArgs({
+    this.select,
+    this.include,
   });
 
-  final bool? id;
+  final _i2.QuarterSelect? select;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final _i2.QuarterInclude? include;
 
   @override
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'select': select,
+        'include': include,
       };
+}
+
+class LogsInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsInclude({this.quarter});
+
+  final _i1.PrismaUnion<bool, _i2.LogsQuarterArgs>? quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {'quarter': quarter};
+}
+
+class LogsOrderByRelationAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsOrderByRelationAggregateInput({this.$count});
+
+  final _i2.SortOrder? $count;
+
+  @override
+  Map<String, dynamic> toJson() => {'_count': $count};
 }
 
 class QuarterOrderByWithRelationInput
@@ -6255,6 +6448,7 @@ class QuarterOrderByWithRelationInput
     this.assist,
     this.block,
     this.steal,
+    this.logs,
   });
 
   final _i2.SortOrder? id;
@@ -6285,6 +6479,8 @@ class QuarterOrderByWithRelationInput
 
   final _i2.SortOrder? steal;
 
+  final _i2.LogsOrderByRelationAggregateInput? logs;
+
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -6301,6 +6497,305 @@ class QuarterOrderByWithRelationInput
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
+      };
+}
+
+class LogsOrderByWithRelationInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsOrderByWithRelationInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.quarter,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? keywordOne;
+
+  final _i2.SortOrder? keywordTwo;
+
+  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? keywordThree;
+
+  final _i2.SortOrder? timestamp;
+
+  final _i2.SortOrder? quarterID;
+
+  final _i2.QuarterOrderByWithRelationInput? quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        'quarter': quarter,
+      };
+}
+
+class LogsWhereUniqueInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsWhereUniqueInput({
+    this.id,
+    this.AND,
+    this.OR,
+    this.NOT,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.quarter,
+  });
+
+  final int? id;
+
+  final _i1.PrismaUnion<_i2.LogsWhereInput, Iterable<_i2.LogsWhereInput>>? AND;
+
+  final Iterable<_i2.LogsWhereInput>? OR;
+
+  final _i1.PrismaUnion<_i2.LogsWhereInput, Iterable<_i2.LogsWhereInput>>? NOT;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? keywordOne;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? keywordTwo;
+
+  final _i1.PrismaUnion<_i2.StringNullableFilter,
+      _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? timestamp;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
+
+  final _i1.PrismaUnion<_i2.QuarterRelationFilter, _i2.QuarterWhereInput>?
+      quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'AND': AND,
+        'OR': OR,
+        'NOT': NOT,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        'quarter': quarter,
+      };
+}
+
+enum LogsScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
+  id<int>('id', 'Logs'),
+  keywordOne<String>('keywordOne', 'Logs'),
+  keywordTwo<String>('keywordTwo', 'Logs'),
+  keywordThree<String>('keywordThree', 'Logs'),
+  timestamp<DateTime>('timestamp', 'Logs'),
+  quarterID<int>('quarterID', 'Logs');
+
+  const LogsScalar(
+    this.name,
+    this.model,
+  );
+
+  @override
+  final String name;
+
+  @override
+  final String model;
+}
+
+class QuarterLogsArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterLogsArgs({
+    this.where,
+    this.orderBy,
+    this.cursor,
+    this.take,
+    this.skip,
+    this.distinct,
+    this.select,
+    this.include,
+  });
+
+  final _i2.LogsWhereInput? where;
+
+  final _i1.PrismaUnion<Iterable<_i2.LogsOrderByWithRelationInput>,
+      _i2.LogsOrderByWithRelationInput>? orderBy;
+
+  final _i2.LogsWhereUniqueInput? cursor;
+
+  final int? take;
+
+  final int? skip;
+
+  final _i1.PrismaUnion<_i2.LogsScalar, Iterable<_i2.LogsScalar>>? distinct;
+
+  final _i2.LogsSelect? select;
+
+  final _i2.LogsInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'orderBy': orderBy,
+        'cursor': cursor,
+        'take': take,
+        'skip': skip,
+        'distinct': distinct,
+        'select': select,
+        'include': include,
+      };
+}
+
+class QuarterCountOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCountOutputTypeSelect({this.logs});
+
+  final bool? logs;
+
+  @override
+  Map<String, dynamic> toJson() => {'Logs': logs};
+}
+
+class QuarterCountArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCountArgs({this.select});
+
+  final _i2.QuarterCountOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class QuarterInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterInclude({
+    this.logs,
+    this.$count,
+  });
+
+  final _i1.PrismaUnion<bool, _i2.QuarterLogsArgs>? logs;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterCountArgs>? $count;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'Logs': logs,
+        '_count': $count,
+      };
+}
+
+class LogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.quarter,
+  });
+
+  final bool? id;
+
+  final bool? keywordOne;
+
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? timestamp;
+
+  final bool? quarterID;
+
+  final _i1.PrismaUnion<bool, _i2.LogsQuarterArgs>? quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        'quarter': quarter,
+      };
+}
+
+class QuarterSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterSelect({
+    this.id,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    this.logs,
+    this.$count,
+  });
+
+  final bool? id;
+
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? reboundOffensive;
+
+  final bool? reboundDefensive;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterLogsArgs>? logs;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterCountArgs>? $count;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'reboundOffensive': reboundOffensive,
+        'reboundDefensive': reboundDefensive,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
+        'Logs': logs,
+        '_count': $count,
       };
 }
 
@@ -6332,48 +6827,200 @@ enum QuarterScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
   final String model;
 }
 
+class LogsCreateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateWithoutQuarterInput({
+    required this.keywordOne,
+    required this.keywordTwo,
+    this.keywordThree,
+    required this.timestamp,
+  });
+
+  final String keywordOne;
+
+  final String keywordTwo;
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
+
+  final DateTime timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsUncheckedCreateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedCreateWithoutQuarterInput({
+    this.id,
+    required this.keywordOne,
+    required this.keywordTwo,
+    this.keywordThree,
+    required this.timestamp,
+  });
+
+  final int? id;
+
+  final String keywordOne;
+
+  final String keywordTwo;
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
+
+  final DateTime timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsCreateOrConnectWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateOrConnectWithoutQuarterInput({
+    required this.where,
+    required this.create,
+  });
+
+  final _i2.LogsWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.LogsCreateWithoutQuarterInput,
+      _i2.LogsUncheckedCreateWithoutQuarterInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'create': create,
+      };
+}
+
+class LogsCreateManyQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateManyQuarterInput({
+    this.id,
+    required this.keywordOne,
+    required this.keywordTwo,
+    this.keywordThree,
+    required this.timestamp,
+  });
+
+  final int? id;
+
+  final String keywordOne;
+
+  final String keywordTwo;
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
+
+  final DateTime timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsCreateManyQuarterInputEnvelope
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateManyQuarterInputEnvelope({required this.data});
+
+  final _i1.PrismaUnion<_i2.LogsCreateManyQuarterInput,
+      Iterable<_i2.LogsCreateManyQuarterInput>> data;
+
+  @override
+  Map<String, dynamic> toJson() => {'data': data};
+}
+
+class LogsCreateNestedManyWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateNestedManyWithoutQuarterInput({
+    this.create,
+    this.connectOrCreate,
+    this.createMany,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.LogsCreateWithoutQuarterInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.LogsCreateWithoutQuarterInput>,
+          _i1.PrismaUnion<_i2.LogsUncheckedCreateWithoutQuarterInput,
+              Iterable<_i2.LogsUncheckedCreateWithoutQuarterInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.LogsCreateOrConnectWithoutQuarterInput,
+      Iterable<_i2.LogsCreateOrConnectWithoutQuarterInput>>? connectOrCreate;
+
+  final _i2.LogsCreateManyQuarterInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'createMany': createMany,
+        'connect': connect,
+      };
+}
+
 class QuarterCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterCreateInput({
     required this.number,
-    required this.totalScore,
-    required this.madeOne,
-    required this.madeTwo,
-    required this.madeThree,
-    required this.miss,
-    required this.reboundOffensive,
-    required this.reboundDefensive,
-    required this.foul,
-    required this.turnover,
-    required this.assist,
-    required this.block,
-    required this.steal,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    this.logs,
   });
 
   final int number;
 
-  final int totalScore;
+  final int? totalScore;
 
-  final int madeOne;
+  final int? madeOne;
 
-  final int madeTwo;
+  final int? madeTwo;
 
-  final int madeThree;
+  final int? madeThree;
 
-  final int miss;
+  final int? miss;
 
-  final int reboundOffensive;
+  final int? reboundOffensive;
 
-  final int reboundDefensive;
+  final int? reboundDefensive;
 
-  final int foul;
+  final int? foul;
 
-  final int turnover;
+  final int? turnover;
 
-  final int assist;
+  final int? assist;
 
-  final int block;
+  final int? block;
 
-  final int steal;
+  final int? steal;
+
+  final _i2.LogsCreateNestedManyWithoutQuarterInput? logs;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -6390,6 +7037,40 @@ class QuarterCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
+      };
+}
+
+class LogsUncheckedCreateNestedManyWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedCreateNestedManyWithoutQuarterInput({
+    this.create,
+    this.connectOrCreate,
+    this.createMany,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.LogsCreateWithoutQuarterInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.LogsCreateWithoutQuarterInput>,
+          _i1.PrismaUnion<_i2.LogsUncheckedCreateWithoutQuarterInput,
+              Iterable<_i2.LogsUncheckedCreateWithoutQuarterInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.LogsCreateOrConnectWithoutQuarterInput,
+      Iterable<_i2.LogsCreateOrConnectWithoutQuarterInput>>? connectOrCreate;
+
+  final _i2.LogsCreateManyQuarterInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'createMany': createMany,
+        'connect': connect,
       };
 }
 
@@ -6398,47 +7079,50 @@ class QuarterUncheckedCreateInput
   const QuarterUncheckedCreateInput({
     this.id,
     required this.number,
-    required this.totalScore,
-    required this.madeOne,
-    required this.madeTwo,
-    required this.madeThree,
-    required this.miss,
-    required this.reboundOffensive,
-    required this.reboundDefensive,
-    required this.foul,
-    required this.turnover,
-    required this.assist,
-    required this.block,
-    required this.steal,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    this.logs,
   });
 
   final int? id;
 
   final int number;
 
-  final int totalScore;
+  final int? totalScore;
 
-  final int madeOne;
+  final int? madeOne;
 
-  final int madeTwo;
+  final int? madeTwo;
 
-  final int madeThree;
+  final int? madeThree;
 
-  final int miss;
+  final int? miss;
 
-  final int reboundOffensive;
+  final int? reboundOffensive;
 
-  final int reboundDefensive;
+  final int? reboundDefensive;
 
-  final int foul;
+  final int? foul;
 
-  final int turnover;
+  final int? turnover;
 
-  final int assist;
+  final int? assist;
 
-  final int block;
+  final int? block;
 
-  final int steal;
+  final int? steal;
+
+  final _i2.LogsUncheckedCreateNestedManyWithoutQuarterInput? logs;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -6456,6 +7140,7 @@ class QuarterUncheckedCreateInput
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
       };
 }
 
@@ -6464,47 +7149,47 @@ class QuarterCreateManyInput
   const QuarterCreateManyInput({
     this.id,
     required this.number,
-    required this.totalScore,
-    required this.madeOne,
-    required this.madeTwo,
-    required this.madeThree,
-    required this.miss,
-    required this.reboundOffensive,
-    required this.reboundDefensive,
-    required this.foul,
-    required this.turnover,
-    required this.assist,
-    required this.block,
-    required this.steal,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
   final int number;
 
-  final int totalScore;
+  final int? totalScore;
 
-  final int madeOne;
+  final int? madeOne;
 
-  final int madeTwo;
+  final int? madeTwo;
 
-  final int madeThree;
+  final int? madeThree;
 
-  final int miss;
+  final int? miss;
 
-  final int reboundOffensive;
+  final int? reboundOffensive;
 
-  final int reboundDefensive;
+  final int? reboundDefensive;
 
-  final int foul;
+  final int? foul;
 
-  final int turnover;
+  final int? turnover;
 
-  final int assist;
+  final int? assist;
 
-  final int block;
+  final int? block;
 
-  final int steal;
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -6591,6 +7276,331 @@ class CreateManyQuarterAndReturnOutputTypeSelect
       };
 }
 
+class NullableStringFieldUpdateOperationsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const NullableStringFieldUpdateOperationsInput({this.set});
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? set;
+
+  @override
+  Map<String, dynamic> toJson() => {'set': set};
+}
+
+class LogsUpdateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpdateWithoutQuarterInput({
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+  });
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsUncheckedUpdateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedUpdateWithoutQuarterInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsUpsertWithWhereUniqueWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpsertWithWhereUniqueWithoutQuarterInput({
+    required this.where,
+    required this.update,
+    required this.create,
+  });
+
+  final _i2.LogsWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateWithoutQuarterInput,
+      _i2.LogsUncheckedUpdateWithoutQuarterInput> update;
+
+  final _i1.PrismaUnion<_i2.LogsCreateWithoutQuarterInput,
+      _i2.LogsUncheckedCreateWithoutQuarterInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'update': update,
+        'create': create,
+      };
+}
+
+class LogsUpdateWithWhereUniqueWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpdateWithWhereUniqueWithoutQuarterInput({
+    required this.where,
+    required this.data,
+  });
+
+  final _i2.LogsWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateWithoutQuarterInput,
+      _i2.LogsUncheckedUpdateWithoutQuarterInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class LogsScalarWhereInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsScalarWhereInput({
+    this.AND,
+    this.OR,
+    this.NOT,
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i1.PrismaUnion<_i2.LogsScalarWhereInput,
+      Iterable<_i2.LogsScalarWhereInput>>? AND;
+
+  final Iterable<_i2.LogsScalarWhereInput>? OR;
+
+  final _i1.PrismaUnion<_i2.LogsScalarWhereInput,
+      Iterable<_i2.LogsScalarWhereInput>>? NOT;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? id;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? keywordOne;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? keywordTwo;
+
+  final _i1.PrismaUnion<_i2.StringNullableFilter,
+      _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? timestamp;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'AND': AND,
+        'OR': OR,
+        'NOT': NOT,
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsUpdateManyMutationInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpdateManyMutationInput({
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+  });
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsUncheckedUpdateManyWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedUpdateManyWithoutQuarterInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+      };
+}
+
+class LogsUpdateManyWithWhereWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpdateManyWithWhereWithoutQuarterInput({
+    required this.where,
+    required this.data,
+  });
+
+  final _i2.LogsScalarWhereInput where;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateManyMutationInput,
+      _i2.LogsUncheckedUpdateManyWithoutQuarterInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class LogsUpdateManyWithoutQuarterNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpdateManyWithoutQuarterNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.createMany,
+    this.set,
+    this.disconnect,
+    this.delete,
+    this.connect,
+    this.update,
+    this.updateMany,
+    this.deleteMany,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.LogsCreateWithoutQuarterInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.LogsCreateWithoutQuarterInput>,
+          _i1.PrismaUnion<_i2.LogsUncheckedCreateWithoutQuarterInput,
+              Iterable<_i2.LogsUncheckedCreateWithoutQuarterInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.LogsCreateOrConnectWithoutQuarterInput,
+      Iterable<_i2.LogsCreateOrConnectWithoutQuarterInput>>? connectOrCreate;
+
+  final _i1.PrismaUnion<_i2.LogsUpsertWithWhereUniqueWithoutQuarterInput,
+      Iterable<_i2.LogsUpsertWithWhereUniqueWithoutQuarterInput>>? upsert;
+
+  final _i2.LogsCreateManyQuarterInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? set;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? disconnect;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? delete;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? connect;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateWithWhereUniqueWithoutQuarterInput,
+      Iterable<_i2.LogsUpdateWithWhereUniqueWithoutQuarterInput>>? update;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateManyWithWhereWithoutQuarterInput,
+      Iterable<_i2.LogsUpdateManyWithWhereWithoutQuarterInput>>? updateMany;
+
+  final _i1.PrismaUnion<_i2.LogsScalarWhereInput,
+      Iterable<_i2.LogsScalarWhereInput>>? deleteMany;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'createMany': createMany,
+        'set': set,
+        'disconnect': disconnect,
+        'delete': delete,
+        'connect': connect,
+        'update': update,
+        'updateMany': updateMany,
+        'deleteMany': deleteMany,
+      };
+}
+
 class QuarterUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUpdateInput({
     this.number,
@@ -6606,6 +7616,7 @@ class QuarterUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.assist,
     this.block,
     this.steal,
+    this.logs,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
@@ -6636,6 +7647,8 @@ class QuarterUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
+  final _i2.LogsUpdateManyWithoutQuarterNestedInput? logs;
+
   @override
   Map<String, dynamic> toJson() => {
         'number': number,
@@ -6651,6 +7664,75 @@ class QuarterUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
+      };
+}
+
+class LogsUncheckedUpdateManyWithoutQuarterNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedUpdateManyWithoutQuarterNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.createMany,
+    this.set,
+    this.disconnect,
+    this.delete,
+    this.connect,
+    this.update,
+    this.updateMany,
+    this.deleteMany,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.LogsCreateWithoutQuarterInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.LogsCreateWithoutQuarterInput>,
+          _i1.PrismaUnion<_i2.LogsUncheckedCreateWithoutQuarterInput,
+              Iterable<_i2.LogsUncheckedCreateWithoutQuarterInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.LogsCreateOrConnectWithoutQuarterInput,
+      Iterable<_i2.LogsCreateOrConnectWithoutQuarterInput>>? connectOrCreate;
+
+  final _i1.PrismaUnion<_i2.LogsUpsertWithWhereUniqueWithoutQuarterInput,
+      Iterable<_i2.LogsUpsertWithWhereUniqueWithoutQuarterInput>>? upsert;
+
+  final _i2.LogsCreateManyQuarterInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? set;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? disconnect;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? delete;
+
+  final _i1.PrismaUnion<_i2.LogsWhereUniqueInput,
+      Iterable<_i2.LogsWhereUniqueInput>>? connect;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateWithWhereUniqueWithoutQuarterInput,
+      Iterable<_i2.LogsUpdateWithWhereUniqueWithoutQuarterInput>>? update;
+
+  final _i1.PrismaUnion<_i2.LogsUpdateManyWithWhereWithoutQuarterInput,
+      Iterable<_i2.LogsUpdateManyWithWhereWithoutQuarterInput>>? updateMany;
+
+  final _i1.PrismaUnion<_i2.LogsScalarWhereInput,
+      Iterable<_i2.LogsScalarWhereInput>>? deleteMany;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'createMany': createMany,
+        'set': set,
+        'disconnect': disconnect,
+        'delete': delete,
+        'connect': connect,
+        'update': update,
+        'updateMany': updateMany,
+        'deleteMany': deleteMany,
       };
 }
 
@@ -6671,6 +7753,7 @@ class QuarterUncheckedUpdateInput
     this.assist,
     this.block,
     this.steal,
+    this.logs,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
@@ -6703,6 +7786,8 @@ class QuarterUncheckedUpdateInput
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
+  final _i2.LogsUncheckedUpdateManyWithoutQuarterNestedInput? logs;
+
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -6719,6 +7804,7 @@ class QuarterUncheckedUpdateInput
         'assist': assist,
         'block': block,
         'steal': steal,
+        'Logs': logs,
       };
 }
 
@@ -8467,6 +9553,1679 @@ class AggregateQuarterSelect
   final _i1.PrismaUnion<bool, _i2.AggregateQuarterMinArgs>? $min;
 
   final _i1.PrismaUnion<bool, _i2.AggregateQuarterMaxArgs>? $max;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        '_count': $count,
+        '_avg': $avg,
+        '_sum': $sum,
+        '_min': $min,
+        '_max': $max,
+      };
+}
+
+class QuarterCreateWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateWithoutLogsInput({
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+  });
+
+  final int number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? reboundOffensive;
+
+  final int? reboundDefensive;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'reboundOffensive': reboundOffensive,
+        'reboundDefensive': reboundDefensive,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
+      };
+}
+
+class QuarterUncheckedCreateWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedCreateWithoutLogsInput({
+    this.id,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+  });
+
+  final int? id;
+
+  final int number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? reboundOffensive;
+
+  final int? reboundDefensive;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'reboundOffensive': reboundOffensive,
+        'reboundDefensive': reboundDefensive,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
+      };
+}
+
+class QuarterCreateOrConnectWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateOrConnectWithoutLogsInput({
+    required this.where,
+    required this.create,
+  });
+
+  final _i2.QuarterWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateWithoutLogsInput,
+      _i2.QuarterUncheckedCreateWithoutLogsInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'create': create,
+      };
+}
+
+class QuarterCreateNestedOneWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateNestedOneWithoutLogsInput({
+    this.create,
+    this.connectOrCreate,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<_i2.QuarterCreateWithoutLogsInput,
+      _i2.QuarterUncheckedCreateWithoutLogsInput>? create;
+
+  final _i2.QuarterCreateOrConnectWithoutLogsInput? connectOrCreate;
+
+  final _i2.QuarterWhereUniqueInput? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'connect': connect,
+      };
+}
+
+class LogsCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateInput({
+    required this.keywordOne,
+    required this.keywordTwo,
+    this.keywordThree,
+    required this.timestamp,
+    required this.quarter,
+  });
+
+  final String keywordOne;
+
+  final String keywordTwo;
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
+
+  final DateTime timestamp;
+
+  final _i2.QuarterCreateNestedOneWithoutLogsInput quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarter': quarter,
+      };
+}
+
+class LogsUncheckedCreateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedCreateInput({
+    this.id,
+    required this.keywordOne,
+    required this.keywordTwo,
+    this.keywordThree,
+    required this.timestamp,
+    required this.quarterID,
+  });
+
+  final int? id;
+
+  final String keywordOne;
+
+  final String keywordTwo;
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
+
+  final DateTime timestamp;
+
+  final int quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCreateManyInput({
+    this.id,
+    required this.keywordOne,
+    required this.keywordTwo,
+    this.keywordThree,
+    required this.timestamp,
+    required this.quarterID,
+  });
+
+  final int? id;
+
+  final String keywordOne;
+
+  final String keywordTwo;
+
+  final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
+
+  final DateTime timestamp;
+
+  final int quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class CreateManyLogsAndReturnOutputTypeQuarterArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const CreateManyLogsAndReturnOutputTypeQuarterArgs({
+    this.select,
+    this.include,
+  });
+
+  final _i2.QuarterSelect? select;
+
+  final _i2.QuarterInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'select': select,
+        'include': include,
+      };
+}
+
+class CreateManyLogsAndReturnOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const CreateManyLogsAndReturnOutputTypeSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.quarter,
+  });
+
+  final bool? id;
+
+  final bool? keywordOne;
+
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? timestamp;
+
+  final bool? quarterID;
+
+  final _i1.PrismaUnion<bool, _i2.CreateManyLogsAndReturnOutputTypeQuarterArgs>?
+      quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        'quarter': quarter,
+      };
+}
+
+class CreateManyLogsAndReturnOutputTypeInclude
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const CreateManyLogsAndReturnOutputTypeInclude({this.quarter});
+
+  final _i1.PrismaUnion<bool, _i2.CreateManyLogsAndReturnOutputTypeQuarterArgs>?
+      quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {'quarter': quarter};
+}
+
+class QuarterUpdateWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateWithoutLogsInput({
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
+      reboundOffensive;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
+      reboundDefensive;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'reboundOffensive': reboundOffensive,
+        'reboundDefensive': reboundDefensive,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
+      };
+}
+
+class QuarterUncheckedUpdateWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedUpdateWithoutLogsInput({
+    this.id,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.reboundOffensive,
+    this.reboundDefensive,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
+      reboundOffensive;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
+      reboundDefensive;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'reboundOffensive': reboundOffensive,
+        'reboundDefensive': reboundDefensive,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
+      };
+}
+
+class QuarterUpsertWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpsertWithoutLogsInput({
+    required this.update,
+    required this.create,
+    this.where,
+  });
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateWithoutLogsInput,
+      _i2.QuarterUncheckedUpdateWithoutLogsInput> update;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateWithoutLogsInput,
+      _i2.QuarterUncheckedCreateWithoutLogsInput> create;
+
+  final _i2.QuarterWhereInput? where;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'update': update,
+        'create': create,
+        'where': where,
+      };
+}
+
+class QuarterUpdateToOneWithWhereWithoutLogsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateToOneWithWhereWithoutLogsInput({
+    this.where,
+    required this.data,
+  });
+
+  final _i2.QuarterWhereInput? where;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateWithoutLogsInput,
+      _i2.QuarterUncheckedUpdateWithoutLogsInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class QuarterUpdateOneRequiredWithoutLogsNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateOneRequiredWithoutLogsNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.connect,
+    this.update,
+  });
+
+  final _i1.PrismaUnion<_i2.QuarterCreateWithoutLogsInput,
+      _i2.QuarterUncheckedCreateWithoutLogsInput>? create;
+
+  final _i2.QuarterCreateOrConnectWithoutLogsInput? connectOrCreate;
+
+  final _i2.QuarterUpsertWithoutLogsInput? upsert;
+
+  final _i2.QuarterWhereUniqueInput? connect;
+
+  final _i1.PrismaUnion<
+      _i2.QuarterUpdateToOneWithWhereWithoutLogsInput,
+      _i1.PrismaUnion<_i2.QuarterUpdateWithoutLogsInput,
+          _i2.QuarterUncheckedUpdateWithoutLogsInput>>? update;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'connect': connect,
+        'update': update,
+      };
+}
+
+class LogsUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUpdateInput({
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarter,
+  });
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  final _i2.QuarterUpdateOneRequiredWithoutLogsNestedInput? quarter;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarter': quarter,
+      };
+}
+
+class LogsUncheckedUpdateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedUpdateInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsUncheckedUpdateManyInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsUncheckedUpdateManyInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordOne;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      keywordTwo;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
+      timestamp;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsCountAggregateOutputType {
+  const LogsCountAggregateOutputType({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.$all,
+  });
+
+  factory LogsCountAggregateOutputType.fromJson(Map json) =>
+      LogsCountAggregateOutputType(
+        id: json['id'],
+        keywordOne: json['keywordOne'],
+        keywordTwo: json['keywordTwo'],
+        keywordThree: json['keywordThree'],
+        timestamp: json['timestamp'],
+        quarterID: json['quarterID'],
+        $all: json['_all'],
+      );
+
+  final int? id;
+
+  final int? keywordOne;
+
+  final int? keywordTwo;
+
+  final int? keywordThree;
+
+  final int? timestamp;
+
+  final int? quarterID;
+
+  final int? $all;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        '_all': $all,
+      };
+}
+
+class LogsAvgAggregateOutputType {
+  const LogsAvgAggregateOutputType({
+    this.id,
+    this.quarterID,
+  });
+
+  factory LogsAvgAggregateOutputType.fromJson(Map json) =>
+      LogsAvgAggregateOutputType(
+        id: json['id'],
+        quarterID: json['quarterID'],
+      );
+
+  final double? id;
+
+  final double? quarterID;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsSumAggregateOutputType {
+  const LogsSumAggregateOutputType({
+    this.id,
+    this.quarterID,
+  });
+
+  factory LogsSumAggregateOutputType.fromJson(Map json) =>
+      LogsSumAggregateOutputType(
+        id: json['id'],
+        quarterID: json['quarterID'],
+      );
+
+  final int? id;
+
+  final int? quarterID;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsMinAggregateOutputType {
+  const LogsMinAggregateOutputType({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  factory LogsMinAggregateOutputType.fromJson(Map json) =>
+      LogsMinAggregateOutputType(
+        id: json['id'],
+        keywordOne: json['keywordOne'],
+        keywordTwo: json['keywordTwo'],
+        keywordThree: json['keywordThree'],
+        timestamp: switch (json['timestamp']) {
+          DateTime value => value,
+          String value => DateTime.parse(value),
+          _ => json['timestamp']
+        },
+        quarterID: json['quarterID'],
+      );
+
+  final int? id;
+
+  final String? keywordOne;
+
+  final String? keywordTwo;
+
+  final String? keywordThree;
+
+  final DateTime? timestamp;
+
+  final int? quarterID;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp?.toIso8601String(),
+        'quarterID': quarterID,
+      };
+}
+
+class LogsMaxAggregateOutputType {
+  const LogsMaxAggregateOutputType({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  factory LogsMaxAggregateOutputType.fromJson(Map json) =>
+      LogsMaxAggregateOutputType(
+        id: json['id'],
+        keywordOne: json['keywordOne'],
+        keywordTwo: json['keywordTwo'],
+        keywordThree: json['keywordThree'],
+        timestamp: switch (json['timestamp']) {
+          DateTime value => value,
+          String value => DateTime.parse(value),
+          _ => json['timestamp']
+        },
+        quarterID: json['quarterID'],
+      );
+
+  final int? id;
+
+  final String? keywordOne;
+
+  final String? keywordTwo;
+
+  final String? keywordThree;
+
+  final DateTime? timestamp;
+
+  final int? quarterID;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp?.toIso8601String(),
+        'quarterID': quarterID,
+      };
+}
+
+class LogsGroupByOutputType {
+  const LogsGroupByOutputType({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.$count,
+    this.$avg,
+    this.$sum,
+    this.$min,
+    this.$max,
+  });
+
+  factory LogsGroupByOutputType.fromJson(Map json) => LogsGroupByOutputType(
+        id: json['id'],
+        keywordOne: json['keywordOne'],
+        keywordTwo: json['keywordTwo'],
+        keywordThree: json['keywordThree'],
+        timestamp: switch (json['timestamp']) {
+          DateTime value => value,
+          String value => DateTime.parse(value),
+          _ => json['timestamp']
+        },
+        quarterID: json['quarterID'],
+        $count: json['_count'] is Map
+            ? _i2.LogsCountAggregateOutputType.fromJson(json['_count'])
+            : null,
+        $avg: json['_avg'] is Map
+            ? _i2.LogsAvgAggregateOutputType.fromJson(json['_avg'])
+            : null,
+        $sum: json['_sum'] is Map
+            ? _i2.LogsSumAggregateOutputType.fromJson(json['_sum'])
+            : null,
+        $min: json['_min'] is Map
+            ? _i2.LogsMinAggregateOutputType.fromJson(json['_min'])
+            : null,
+        $max: json['_max'] is Map
+            ? _i2.LogsMaxAggregateOutputType.fromJson(json['_max'])
+            : null,
+      );
+
+  final int? id;
+
+  final String? keywordOne;
+
+  final String? keywordTwo;
+
+  final String? keywordThree;
+
+  final DateTime? timestamp;
+
+  final int? quarterID;
+
+  final _i2.LogsCountAggregateOutputType? $count;
+
+  final _i2.LogsAvgAggregateOutputType? $avg;
+
+  final _i2.LogsSumAggregateOutputType? $sum;
+
+  final _i2.LogsMinAggregateOutputType? $min;
+
+  final _i2.LogsMaxAggregateOutputType? $max;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp?.toIso8601String(),
+        'quarterID': quarterID,
+        '_count': $count?.toJson(),
+        '_avg': $avg?.toJson(),
+        '_sum': $sum?.toJson(),
+        '_min': $min?.toJson(),
+        '_max': $max?.toJson(),
+      };
+}
+
+class LogsCountOrderByAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCountOrderByAggregateInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? keywordOne;
+
+  final _i2.SortOrder? keywordTwo;
+
+  final _i2.SortOrder? keywordThree;
+
+  final _i2.SortOrder? timestamp;
+
+  final _i2.SortOrder? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsAvgOrderByAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsAvgOrderByAggregateInput({
+    this.id,
+    this.quarterID,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsMaxOrderByAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsMaxOrderByAggregateInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? keywordOne;
+
+  final _i2.SortOrder? keywordTwo;
+
+  final _i2.SortOrder? keywordThree;
+
+  final _i2.SortOrder? timestamp;
+
+  final _i2.SortOrder? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsMinOrderByAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsMinOrderByAggregateInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? keywordOne;
+
+  final _i2.SortOrder? keywordTwo;
+
+  final _i2.SortOrder? keywordThree;
+
+  final _i2.SortOrder? timestamp;
+
+  final _i2.SortOrder? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsSumOrderByAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsSumOrderByAggregateInput({
+    this.id,
+    this.quarterID,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsOrderByWithAggregationInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsOrderByWithAggregationInput({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.$count,
+    this.$avg,
+    this.$max,
+    this.$min,
+    this.$sum,
+  });
+
+  final _i2.SortOrder? id;
+
+  final _i2.SortOrder? keywordOne;
+
+  final _i2.SortOrder? keywordTwo;
+
+  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? keywordThree;
+
+  final _i2.SortOrder? timestamp;
+
+  final _i2.SortOrder? quarterID;
+
+  final _i2.LogsCountOrderByAggregateInput? $count;
+
+  final _i2.LogsAvgOrderByAggregateInput? $avg;
+
+  final _i2.LogsMaxOrderByAggregateInput? $max;
+
+  final _i2.LogsMinOrderByAggregateInput? $min;
+
+  final _i2.LogsSumOrderByAggregateInput? $sum;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        '_count': $count,
+        '_avg': $avg,
+        '_max': $max,
+        '_min': $min,
+        '_sum': $sum,
+      };
+}
+
+class NestedStringNullableWithAggregatesFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const NestedStringNullableWithAggregatesFilter({
+    this.equals,
+    this.$in,
+    this.notIn,
+    this.lt,
+    this.lte,
+    this.gt,
+    this.gte,
+    this.contains,
+    this.startsWith,
+    this.endsWith,
+    this.not,
+    this.$count,
+    this.$min,
+    this.$max,
+  });
+
+  final _i1.PrismaUnion<String,
+      _i1.PrismaUnion<_i1.Reference<String>, _i1.PrismaNull>>? equals;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? $in;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? notIn;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? contains;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? startsWith;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? endsWith;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NestedStringNullableWithAggregatesFilter,
+          _i1.PrismaNull>>? not;
+
+  final _i2.NestedIntNullableFilter? $count;
+
+  final _i2.NestedStringNullableFilter? $min;
+
+  final _i2.NestedStringNullableFilter? $max;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'in': $in,
+        'notIn': notIn,
+        'lt': lt,
+        'lte': lte,
+        'gt': gt,
+        'gte': gte,
+        'contains': contains,
+        'startsWith': startsWith,
+        'endsWith': endsWith,
+        'not': not,
+        '_count': $count,
+        '_min': $min,
+        '_max': $max,
+      };
+}
+
+class StringNullableWithAggregatesFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const StringNullableWithAggregatesFilter({
+    this.equals,
+    this.$in,
+    this.notIn,
+    this.lt,
+    this.lte,
+    this.gt,
+    this.gte,
+    this.contains,
+    this.startsWith,
+    this.endsWith,
+    this.not,
+    this.$count,
+    this.$min,
+    this.$max,
+  });
+
+  final _i1.PrismaUnion<String,
+      _i1.PrismaUnion<_i1.Reference<String>, _i1.PrismaNull>>? equals;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? $in;
+
+  final _i1.PrismaUnion<Iterable<String>, _i1.PrismaNull>? notIn;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? lte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gt;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? gte;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? contains;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? startsWith;
+
+  final _i1.PrismaUnion<String, _i1.Reference<String>>? endsWith;
+
+  final _i1.PrismaUnion<
+      String,
+      _i1.PrismaUnion<_i2.NestedStringNullableWithAggregatesFilter,
+          _i1.PrismaNull>>? not;
+
+  final _i2.NestedIntNullableFilter? $count;
+
+  final _i2.NestedStringNullableFilter? $min;
+
+  final _i2.NestedStringNullableFilter? $max;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'in': $in,
+        'notIn': notIn,
+        'lt': lt,
+        'lte': lte,
+        'gt': gt,
+        'gte': gte,
+        'contains': contains,
+        'startsWith': startsWith,
+        'endsWith': endsWith,
+        'not': not,
+        '_count': $count,
+        '_min': $min,
+        '_max': $max,
+      };
+}
+
+class LogsScalarWhereWithAggregatesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsScalarWhereWithAggregatesInput({
+    this.AND,
+    this.OR,
+    this.NOT,
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final _i1.PrismaUnion<_i2.LogsScalarWhereWithAggregatesInput,
+      Iterable<_i2.LogsScalarWhereWithAggregatesInput>>? AND;
+
+  final Iterable<_i2.LogsScalarWhereWithAggregatesInput>? OR;
+
+  final _i1.PrismaUnion<_i2.LogsScalarWhereWithAggregatesInput,
+      Iterable<_i2.LogsScalarWhereWithAggregatesInput>>? NOT;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? id;
+
+  final _i1.PrismaUnion<_i2.StringWithAggregatesFilter, String>? keywordOne;
+
+  final _i1.PrismaUnion<_i2.StringWithAggregatesFilter, String>? keywordTwo;
+
+  final _i1.PrismaUnion<_i2.StringNullableWithAggregatesFilter,
+      _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
+
+  final _i1.PrismaUnion<_i2.DateTimeWithAggregatesFilter, DateTime>? timestamp;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'AND': AND,
+        'OR': OR,
+        'NOT': NOT,
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsCountAggregateOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsCountAggregateOutputTypeSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.$all,
+  });
+
+  final bool? id;
+
+  final bool? keywordOne;
+
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? timestamp;
+
+  final bool? quarterID;
+
+  final bool? $all;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        '_all': $all,
+      };
+}
+
+class LogsGroupByOutputTypeCountArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsGroupByOutputTypeCountArgs({this.select});
+
+  final _i2.LogsCountAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class LogsAvgAggregateOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsAvgAggregateOutputTypeSelect({
+    this.id,
+    this.quarterID,
+  });
+
+  final bool? id;
+
+  final bool? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsGroupByOutputTypeAvgArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsGroupByOutputTypeAvgArgs({this.select});
+
+  final _i2.LogsAvgAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class LogsSumAggregateOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsSumAggregateOutputTypeSelect({
+    this.id,
+    this.quarterID,
+  });
+
+  final bool? id;
+
+  final bool? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsGroupByOutputTypeSumArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsGroupByOutputTypeSumArgs({this.select});
+
+  final _i2.LogsSumAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class LogsMinAggregateOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsMinAggregateOutputTypeSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final bool? id;
+
+  final bool? keywordOne;
+
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? timestamp;
+
+  final bool? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsGroupByOutputTypeMinArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsGroupByOutputTypeMinArgs({this.select});
+
+  final _i2.LogsMinAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class LogsMaxAggregateOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsMaxAggregateOutputTypeSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+  });
+
+  final bool? id;
+
+  final bool? keywordOne;
+
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? timestamp;
+
+  final bool? quarterID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+      };
+}
+
+class LogsGroupByOutputTypeMaxArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsGroupByOutputTypeMaxArgs({this.select});
+
+  final _i2.LogsMaxAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class LogsGroupByOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsGroupByOutputTypeSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.timestamp,
+    this.quarterID,
+    this.$count,
+    this.$avg,
+    this.$sum,
+    this.$min,
+    this.$max,
+  });
+
+  final bool? id;
+
+  final bool? keywordOne;
+
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? timestamp;
+
+  final bool? quarterID;
+
+  final _i1.PrismaUnion<bool, _i2.LogsGroupByOutputTypeCountArgs>? $count;
+
+  final _i1.PrismaUnion<bool, _i2.LogsGroupByOutputTypeAvgArgs>? $avg;
+
+  final _i1.PrismaUnion<bool, _i2.LogsGroupByOutputTypeSumArgs>? $sum;
+
+  final _i1.PrismaUnion<bool, _i2.LogsGroupByOutputTypeMinArgs>? $min;
+
+  final _i1.PrismaUnion<bool, _i2.LogsGroupByOutputTypeMaxArgs>? $max;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'timestamp': timestamp,
+        'quarterID': quarterID,
+        '_count': $count,
+        '_avg': $avg,
+        '_sum': $sum,
+        '_min': $min,
+        '_max': $max,
+      };
+}
+
+class AggregateLogs {
+  const AggregateLogs({
+    this.$count,
+    this.$avg,
+    this.$sum,
+    this.$min,
+    this.$max,
+  });
+
+  factory AggregateLogs.fromJson(Map json) => AggregateLogs(
+        $count: json['_count'] is Map
+            ? _i2.LogsCountAggregateOutputType.fromJson(json['_count'])
+            : null,
+        $avg: json['_avg'] is Map
+            ? _i2.LogsAvgAggregateOutputType.fromJson(json['_avg'])
+            : null,
+        $sum: json['_sum'] is Map
+            ? _i2.LogsSumAggregateOutputType.fromJson(json['_sum'])
+            : null,
+        $min: json['_min'] is Map
+            ? _i2.LogsMinAggregateOutputType.fromJson(json['_min'])
+            : null,
+        $max: json['_max'] is Map
+            ? _i2.LogsMaxAggregateOutputType.fromJson(json['_max'])
+            : null,
+      );
+
+  final _i2.LogsCountAggregateOutputType? $count;
+
+  final _i2.LogsAvgAggregateOutputType? $avg;
+
+  final _i2.LogsSumAggregateOutputType? $sum;
+
+  final _i2.LogsMinAggregateOutputType? $min;
+
+  final _i2.LogsMaxAggregateOutputType? $max;
+
+  Map<String, dynamic> toJson() => {
+        '_count': $count?.toJson(),
+        '_avg': $avg?.toJson(),
+        '_sum': $sum?.toJson(),
+        '_min': $min?.toJson(),
+        '_max': $max?.toJson(),
+      };
+}
+
+class AggregateLogsCountArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const AggregateLogsCountArgs({this.select});
+
+  final _i2.LogsCountAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class AggregateLogsAvgArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const AggregateLogsAvgArgs({this.select});
+
+  final _i2.LogsAvgAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class AggregateLogsSumArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const AggregateLogsSumArgs({this.select});
+
+  final _i2.LogsSumAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class AggregateLogsMinArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const AggregateLogsMinArgs({this.select});
+
+  final _i2.LogsMinAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class AggregateLogsMaxArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const AggregateLogsMaxArgs({this.select});
+
+  final _i2.LogsMaxAggregateOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class AggregateLogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const AggregateLogsSelect({
+    this.$count,
+    this.$avg,
+    this.$sum,
+    this.$min,
+    this.$max,
+  });
+
+  final _i1.PrismaUnion<bool, _i2.AggregateLogsCountArgs>? $count;
+
+  final _i1.PrismaUnion<bool, _i2.AggregateLogsAvgArgs>? $avg;
+
+  final _i1.PrismaUnion<bool, _i2.AggregateLogsSumArgs>? $sum;
+
+  final _i1.PrismaUnion<bool, _i2.AggregateLogsMinArgs>? $min;
+
+  final _i1.PrismaUnion<bool, _i2.AggregateLogsMaxArgs>? $max;
 
   @override
   Map<String, dynamic> toJson() => {

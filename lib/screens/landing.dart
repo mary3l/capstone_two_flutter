@@ -1,15 +1,9 @@
-/* import 'package:audio_classification/models/test_basketball_model.dart'; */
-import 'dart:developer';
-
-import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
 import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 import 'package:audio_classification/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
 import 'package:audio_classification/widgets/button.dart';
-import 'package:audio_classification/helper/prisma.dart';
-import 'package:orm/orm.dart';
 import 'package:audio_classification/services/service_methods.dart';
 
 class Landing extends StatefulWidget {
