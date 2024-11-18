@@ -27,13 +27,28 @@ class _DashboardState extends State<Dashboard> {
   // Declare a list of games and teams
   List<Game> _games = [];
   List<Team> _teams = [];
+  final serviceMethod = ServiceMethod();
 
   @override
   void initState() {
     super.initState();
+    _fetchGames();
   }
 
-  final serviceMethod = ServiceMethod();
+  // Fetch games based on selected seasonID
+  Future<void> _fetchGames() async {
+    if (widget.selectedSeasonID != null) {
+      try {
+        final games =
+            await serviceMethod.fetchGamesBySeasonID(widget.selectedSeasonID!);
+        setState(() {
+          _games = games; // Update the _games list with the fetched games
+        });
+      } catch (e) {
+        print("Error fetching games: $e");
+      }
+    }
+  }
 
   // Function to show a dialog to add a new game
   void _showAddGameDialog(BuildContext context) async {
@@ -50,6 +65,8 @@ class _DashboardState extends State<Dashboard> {
     });
 
     final TextEditingController _gameTitleController = TextEditingController();
+    final TextEditingController _opponentNameController =
+        TextEditingController();
     final TextEditingController _dateController = TextEditingController();
     final TextEditingController _semesterController = TextEditingController();
     final TextEditingController _seasonIDController = TextEditingController();
@@ -82,6 +99,13 @@ class _DashboardState extends State<Dashboard> {
                   controller: _gameTitleController,
                   decoration: InputDecoration(
                     labelText: 'Game Title',
+                    labelStyle: TextStyle(color: AppColors.lightOrange),
+                  ),
+                ),
+                TextField(
+                  controller: _opponentNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Opponent Team Name',
                     labelStyle: TextStyle(color: AppColors.lightOrange),
                   ),
                 ),
@@ -163,6 +187,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () async {
                 // Get the values entered in the dialog fields
                 String gameTitle = _gameTitleController.text.trim();
+                String opponentName = _opponentNameController.text.trim();
                 String dateText = _dateController.text.trim();
                 int seasonID = widget.selectedSeasonID ?? 0;
                 int teamID = int.tryParse(selectedTeam ?? "0") ??
@@ -171,6 +196,7 @@ class _DashboardState extends State<Dashboard> {
                 // Validate that all required fields are filled
                 if (gameTitle.isNotEmpty &&
                     dateText.isNotEmpty &&
+                    opponentName.isNotEmpty &&
                     selectedSemester != null &&
                     seasonID != 0 &&
                     teamID != 0) {
@@ -178,13 +204,8 @@ class _DashboardState extends State<Dashboard> {
                     DateTime date = DateTime.parse(dateText);
 
                     // Create a new game by calling the service method
-                    await serviceMethod.createGame(
-                      seasonID,
-                      gameTitle,
-                      date,
-                      selectedSemester!,
-                      teamID,
-                    );
+                    await serviceMethod.createGame(seasonID, gameTitle, date,
+                        selectedSemester!, teamID, opponentName);
 
                     // Clear the text controllers after the game is added
                     _gameTitleController.clear();
@@ -192,6 +213,7 @@ class _DashboardState extends State<Dashboard> {
                     _semesterController.clear();
                     _seasonIDController.clear();
                     _teamIDController.clear();
+                    _opponentNameController.clear();
 
                     Navigator.pop(context); // Close the dialog
 
@@ -199,6 +221,7 @@ class _DashboardState extends State<Dashboard> {
                     print(
                         "Navigating to StartRecording screen with arguments:");
                     print('Game Title: $gameTitle');
+                    print('Opponent Name: $opponentName');
                     print('Date: $date');
                     print('Semester: $selectedSemester');
                     print('Team ID: $teamID');
@@ -212,6 +235,7 @@ class _DashboardState extends State<Dashboard> {
                         builder: (context) => StartRecording(
                           gameTitle: gameTitle,
                           date: date,
+                          opponentName: opponentName,
                           semester: selectedSemester ?? "No selected semester",
                           teamID: teamID,
                           seasonID: seasonID,

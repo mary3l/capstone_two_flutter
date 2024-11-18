@@ -97,6 +97,7 @@ class Game {
   const Game({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -108,6 +109,7 @@ class Game {
   factory Game.fromJson(Map json) => Game(
         id: json['id'],
         title: json['title'],
+        againstTeam: json['againstTeam'],
         date: switch (json['date']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -125,6 +127,8 @@ class Game {
 
   final String? title;
 
+  final String? againstTeam;
+
   final DateTime? date;
 
   final String? semester;
@@ -140,6 +144,7 @@ class Game {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,
@@ -219,6 +224,7 @@ class CreateManyGameAndReturnOutputType {
   const CreateManyGameAndReturnOutputType({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -231,6 +237,7 @@ class CreateManyGameAndReturnOutputType {
       CreateManyGameAndReturnOutputType(
         id: json['id'],
         title: json['title'],
+        againstTeam: json['againstTeam'],
         date: switch (json['date']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -248,6 +255,8 @@ class CreateManyGameAndReturnOutputType {
 
   final String? title;
 
+  final String? againstTeam;
+
   final DateTime? date;
 
   final String? semester;
@@ -263,6 +272,7 @@ class CreateManyGameAndReturnOutputType {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,

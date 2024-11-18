@@ -3,35 +3,35 @@ import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 import 'package:flutter/material.dart';
 
 class GameCard extends StatelessWidget {
-  final Game? game; // Nullable Game object
-  final Team? team; // Nullable Team object
-  // final List<Team>? listTeams; // Nullable List of teams for this game
-  final Player? player; // Nullable Player object
-  final VoidCallback? onPress; // Nullable callback for tap
-  final bool showStats; // Whether to show stats
-  final bool
-      againstTeam; // Flag to indicate if the player is playing against a team
+  final Game? game;
+  final Team? team;
+  final Player? player;
+  final VoidCallback? onPress;
+  final bool showStats;
+  final bool againstTeam;
+  final String? season;
+  final String? semester;
 
   const GameCard({
     Key? key,
     this.game,
     this.team,
-    // this.listTeams,
     this.player,
     this.onPress,
     this.showStats = false,
     this.againstTeam = false,
+    this.season,
+    this.semester,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Handling nullable Game, Team, and Player objects
     String formattedDate = game != null
-        ? "${game!.date!.year}-${game!.date!.month}-${game!.date!.day}" // Format game date
-        : 'No Date Available'; // Default text if no date is available
+        ? "${game!.date!.year}-${game!.date!.month}-${game!.date!.day}"
+        : 'No Date Available';
 
     return GestureDetector(
-      onTap: onPress, // Trigger the onPress callback when the card is tapped
+      onTap: onPress,
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -42,152 +42,20 @@ class GameCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         child: Column(
           children: [
-            // If game data is available, display game details
             if (game != null) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Displaying the game title
-                        Text(
-                          game!.title ??
-                              'No Game Title', // Fallback text if title is null
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: AppColors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          game!.team!.name ??
-                              'No Team Name', // Fallback text if team name is null
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formattedDate, // Display formatted date
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  // Eye icon to view more details (common for all layouts)
-                  Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: AppColors.darkOrange,
-                    size: 35,
-                  ),
-                ],
+              GameDetails(game: game!, formattedDate: formattedDate),
+            ] else if (player != null) ...[
+              PlayerDetails(player: player!),
+            ] else if (team != null) ...[
+              TeamDetails(
+                team: team!,
+                // seasonYear:
+                //     '${game?.season?.startYear ?? 'N/A'} - ${game?.season?.endYear ?? 'N/A'}',
+                semester: game?.semester ?? 'No Semester Available',
               ),
-            ]
-            // If player data is available, display player details
-            else if (player != null) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          againstTeam
-                              ? "${player!.lastName?.toUpperCase()}, ${player!.firstName}" // Player name if playing against a team
-                              : 'Against Team', // Fallback text when not playing against a specific team
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: AppColors.black,
-                          ),
-                        ),
-                        Text(
-                          againstTeam
-                              ? 'Player No. 123' // Placeholder for player number
-                              : 'Game Title - Date and Time Schedule', // Fallback text
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // If showStats is true, display stats
-                  if (showStats) ...[
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.darkOrange,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        "0", // Placeholder for stats; replace with actual value
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ]
-                  // Otherwise, show the eye icon
-                  else ...[
-                    Icon(
-                      Icons.remove_red_eye_outlined,
-                      color: AppColors.darkOrange,
-                      size: 35,
-                    ),
-                  ],
-                ],
-              ),
-            ]
-            // If team data is available, display team details
-            else if (team != null) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      team!.name ??
-                          'No Team Available', // Fallback text if team is null
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: AppColors.black,
-                      ),
-                    ),
-                  ),
-                  // Eye icon to view more details
-                  Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: AppColors.darkOrange,
-                    size: 35,
-                  ),
-                ],
-              ),
-            ]
-            // Default case when no game, player, or team is available
-            else ...[
+            ] else ...[
               Text(
-                'No Data Available', // Fallback text for missing data
+                'No Data Available',
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.bold,
@@ -199,6 +67,176 @@ class GameCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class GameDetails extends StatelessWidget {
+  final Game game;
+  final String formattedDate;
+
+  const GameDetails({
+    Key? key,
+    required this.game,
+    required this.formattedDate,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                game.title ?? 'No Game Title',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: AppColors.black,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                game.againstTeam ?? 'No Opponent Team Name',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  color: AppColors.grey,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                formattedDate,
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  color: AppColors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 10),
+        Icon(
+          Icons.remove_red_eye_outlined,
+          color: AppColors.darkOrange,
+          size: 35,
+        ),
+      ],
+    );
+  }
+}
+
+class PlayerDetails extends StatelessWidget {
+  final Player player;
+
+  const PlayerDetails({
+    Key? key,
+    required this.player,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${player.lastName?.toUpperCase()}, ${player.firstName}",
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: AppColors.black,
+                ),
+              ),
+              Text(
+                "${player.jerseyNumber}",
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  color: AppColors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Icon(
+          Icons.remove_red_eye_outlined,
+          color: AppColors.darkOrange,
+          size: 35,
+        ),
+      ],
+    );
+  }
+}
+
+class TeamDetails extends StatelessWidget {
+  final Team team;
+  // final String seasonYear;
+  // final String startYear;
+  // final String endYear;
+  final String semester;
+
+  const TeamDetails({
+    Key? key,
+    required this.team,
+    // required this.startYear,
+    // required this.endYear,
+    required this.semester,
+    // required this.seasonYear,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            team.name ?? 'No Team Available',
+            style: const TextStyle(
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: AppColors.black,
+            ),
+          ),
+        ),
+        // Expanded(
+        //   child: Text(
+        //     '$startYear - $endYear',
+        //     style: const TextStyle(
+        //       fontFamily: 'Inter',
+        //       fontSize: 14,
+        //       color: AppColors.grey,
+        //     ),
+        //   ),
+        // ),
+        // Expanded(
+        //   child: Text(
+        //     semester ?? 'No Semester Available',
+        //     style: const TextStyle(
+        //       fontFamily: 'Inter',
+        //       fontSize: 14,
+        //       color: AppColors.grey,
+        //     ),
+        //   ),
+        // ),
+        Icon(
+          Icons.remove_red_eye_outlined,
+          color: AppColors.darkOrange,
+          size: 35,
+        ),
+      ],
     );
   }
 }

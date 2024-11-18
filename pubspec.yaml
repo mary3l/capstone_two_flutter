@@ -73,6 +73,13 @@ flutter:
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
     - lib/prisma/migrations/20241113052255_init_new_db_model/
     - lib/prisma/migrations/20241113054355_added_quarter_table/
+    - lib/prisma/migrations/20241114054819_mariel_added_relations_with_season_and_game/
+    - lib/prisma/migrations/20241114075233_mariel_changed_season_and_games_into_one_to_many_relationship/
+    - lib/prisma/migrations/20241114151915_mariel_made_games_played_and_team_id_nullable/
+    - lib/prisma/migrations/20241116111623_mariel_game_model_added_season_relations_and_in_player_model_made_games_played_nullable/
+    - lib/prisma/migrations/20241117051629_mariel_added_opponent_name_in_game/
+    - lib/prisma/migrations/20241118005804_mariel_add_opponent_name_in_game_table/
+    - lib/prisma/migrations/20241118013000_changed_opponent_name_to_against_team/
 
     ### mariel's assets
     - lib/data/gameData.json

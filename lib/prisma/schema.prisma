@@ -25,14 +25,15 @@ model Season {
 }
 
 model Game {
-  id       Int      @id @default(autoincrement())
-  title    String
-  date     DateTime
-  semester String
-  team     Team?    @relation(fields: [teamID], references: [id])
-  teamID   Int?
-  season   Season   @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season
-  seasonID Int
+  id          Int      @id @default(autoincrement())
+  title       String
+  againstTeam String
+  date        DateTime
+  semester    String
+  team        Team?    @relation(fields: [teamID], references: [id])
+  teamID      Int?
+  season      Season   @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season
+  seasonID    Int
 }
 
 model Quarter {

@@ -559,6 +559,7 @@ class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.NOT,
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -576,6 +577,8 @@ class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   final _i1.PrismaUnion<_i2.IntFilter, int>? id;
 
   final _i1.PrismaUnion<_i2.StringFilter, String>? title;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? againstTeam;
 
   final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? date;
 
@@ -599,6 +602,7 @@ class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'NOT': NOT,
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -823,6 +827,7 @@ class GameOrderByWithRelationInput
   const GameOrderByWithRelationInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -834,6 +839,8 @@ class GameOrderByWithRelationInput
   final _i2.SortOrder? id;
 
   final _i2.SortOrder? title;
+
+  final _i2.SortOrder? againstTeam;
 
   final _i2.SortOrder? date;
 
@@ -851,6 +858,7 @@ class GameOrderByWithRelationInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -868,6 +876,7 @@ class GameWhereUniqueInput
     this.OR,
     this.NOT,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -885,6 +894,8 @@ class GameWhereUniqueInput
   final _i1.PrismaUnion<_i2.GameWhereInput, Iterable<_i2.GameWhereInput>>? NOT;
 
   final _i1.PrismaUnion<_i2.StringFilter, String>? title;
+
+  final _i1.PrismaUnion<_i2.StringFilter, String>? againstTeam;
 
   final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? date;
 
@@ -908,6 +919,7 @@ class GameWhereUniqueInput
         'OR': OR,
         'NOT': NOT,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -920,6 +932,7 @@ class GameWhereUniqueInput
 enum GameScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
   id<int>('id', 'Game'),
   title<String>('title', 'Game'),
+  againstTeam<String>('againstTeam', 'Game'),
   date<DateTime>('date', 'Game'),
   semester<String>('semester', 'Game'),
   teamID<int>('teamID', 'Game'),
@@ -1430,6 +1443,7 @@ class GameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameSelect({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -1441,6 +1455,8 @@ class GameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
   final bool? id;
 
   final bool? title;
+
+  final bool? againstTeam;
 
   final bool? date;
 
@@ -1458,6 +1474,7 @@ class GameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -1831,12 +1848,15 @@ class GameCreateWithoutSeasonInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameCreateWithoutSeasonInput({
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     this.team,
   });
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -1847,6 +1867,7 @@ class GameCreateWithoutSeasonInput
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'team': team,
@@ -1858,6 +1879,7 @@ class GameUncheckedCreateWithoutSeasonInput
   const GameUncheckedCreateWithoutSeasonInput({
     this.id,
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     this.teamID,
@@ -1866,6 +1888,8 @@ class GameUncheckedCreateWithoutSeasonInput
   final int? id;
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -1877,6 +1901,7 @@ class GameUncheckedCreateWithoutSeasonInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -1907,6 +1932,7 @@ class GameCreateManySeasonInput
   const GameCreateManySeasonInput({
     this.id,
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     this.teamID,
@@ -1915,6 +1941,8 @@ class GameCreateManySeasonInput
   final int? id;
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -1926,6 +1954,7 @@ class GameCreateManySeasonInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -2722,12 +2751,16 @@ class GameUpdateWithoutSeasonInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameUpdateWithoutSeasonInput({
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.team,
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -2738,6 +2771,7 @@ class GameUpdateWithoutSeasonInput
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'team': team,
@@ -2749,6 +2783,7 @@ class GameUncheckedUpdateWithoutSeasonInput
   const GameUncheckedUpdateWithoutSeasonInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -2757,6 +2792,9 @@ class GameUncheckedUpdateWithoutSeasonInput
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -2771,6 +2809,7 @@ class GameUncheckedUpdateWithoutSeasonInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -2828,6 +2867,7 @@ class GameScalarWhereInput
     this.NOT,
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -2846,6 +2886,8 @@ class GameScalarWhereInput
 
   final _i1.PrismaUnion<_i2.StringFilter, String>? title;
 
+  final _i1.PrismaUnion<_i2.StringFilter, String>? againstTeam;
+
   final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? date;
 
   final _i1.PrismaUnion<_i2.StringFilter, String>? semester;
@@ -2863,6 +2905,7 @@ class GameScalarWhereInput
         'NOT': NOT,
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -2874,11 +2917,15 @@ class GameUpdateManyMutationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameUpdateManyMutationInput({
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -2887,6 +2934,7 @@ class GameUpdateManyMutationInput
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
       };
@@ -2897,6 +2945,7 @@ class GameUncheckedUpdateManyWithoutSeasonInput
   const GameUncheckedUpdateManyWithoutSeasonInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -2905,6 +2954,9 @@ class GameUncheckedUpdateManyWithoutSeasonInput
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -2919,6 +2971,7 @@ class GameUncheckedUpdateManyWithoutSeasonInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4138,6 +4191,7 @@ class SeasonCreateNestedOneWithoutGamesInput
 class GameCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameCreateInput({
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     this.team,
@@ -4145,6 +4199,8 @@ class GameCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   });
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -4157,6 +4213,7 @@ class GameCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'team': team,
@@ -4169,6 +4226,7 @@ class GameUncheckedCreateInput
   const GameUncheckedCreateInput({
     this.id,
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     this.teamID,
@@ -4178,6 +4236,8 @@ class GameUncheckedCreateInput
   final int? id;
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -4191,6 +4251,7 @@ class GameUncheckedCreateInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4202,6 +4263,7 @@ class GameCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameCreateManyInput({
     this.id,
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     this.teamID,
@@ -4211,6 +4273,8 @@ class GameCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   final int? id;
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -4224,6 +4288,7 @@ class GameCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4276,6 +4341,7 @@ class CreateManyGameAndReturnOutputTypeSelect
   const CreateManyGameAndReturnOutputTypeSelect({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4287,6 +4353,8 @@ class CreateManyGameAndReturnOutputTypeSelect
   final bool? id;
 
   final bool? title;
+
+  final bool? againstTeam;
 
   final bool? date;
 
@@ -4306,6 +4374,7 @@ class CreateManyGameAndReturnOutputTypeSelect
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4455,6 +4524,7 @@ class SeasonUpdateOneRequiredWithoutGamesNestedInput
 class GameUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameUpdateInput({
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.team,
@@ -4462,6 +4532,9 @@ class GameUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -4474,6 +4547,7 @@ class GameUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'team': team,
@@ -4486,6 +4560,7 @@ class GameUncheckedUpdateInput
   const GameUncheckedUpdateInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4495,6 +4570,9 @@ class GameUncheckedUpdateInput
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -4511,6 +4589,7 @@ class GameUncheckedUpdateInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4523,6 +4602,7 @@ class GameUncheckedUpdateManyInput
   const GameUncheckedUpdateManyInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4532,6 +4612,9 @@ class GameUncheckedUpdateManyInput
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -4548,6 +4631,7 @@ class GameUncheckedUpdateManyInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4559,6 +4643,7 @@ class GameCountAggregateOutputType {
   const GameCountAggregateOutputType({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4570,6 +4655,7 @@ class GameCountAggregateOutputType {
       GameCountAggregateOutputType(
         id: json['id'],
         title: json['title'],
+        againstTeam: json['againstTeam'],
         date: json['date'],
         semester: json['semester'],
         teamID: json['teamID'],
@@ -4580,6 +4666,8 @@ class GameCountAggregateOutputType {
   final int? id;
 
   final int? title;
+
+  final int? againstTeam;
 
   final int? date;
 
@@ -4594,6 +4682,7 @@ class GameCountAggregateOutputType {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4660,6 +4749,7 @@ class GameMinAggregateOutputType {
   const GameMinAggregateOutputType({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4670,6 +4760,7 @@ class GameMinAggregateOutputType {
       GameMinAggregateOutputType(
         id: json['id'],
         title: json['title'],
+        againstTeam: json['againstTeam'],
         date: switch (json['date']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -4684,6 +4775,8 @@ class GameMinAggregateOutputType {
 
   final String? title;
 
+  final String? againstTeam;
+
   final DateTime? date;
 
   final String? semester;
@@ -4695,6 +4788,7 @@ class GameMinAggregateOutputType {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,
@@ -4706,6 +4800,7 @@ class GameMaxAggregateOutputType {
   const GameMaxAggregateOutputType({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4716,6 +4811,7 @@ class GameMaxAggregateOutputType {
       GameMaxAggregateOutputType(
         id: json['id'],
         title: json['title'],
+        againstTeam: json['againstTeam'],
         date: switch (json['date']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -4730,6 +4826,8 @@ class GameMaxAggregateOutputType {
 
   final String? title;
 
+  final String? againstTeam;
+
   final DateTime? date;
 
   final String? semester;
@@ -4741,6 +4839,7 @@ class GameMaxAggregateOutputType {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,
@@ -4752,6 +4851,7 @@ class GameGroupByOutputType {
   const GameGroupByOutputType({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4766,6 +4866,7 @@ class GameGroupByOutputType {
   factory GameGroupByOutputType.fromJson(Map json) => GameGroupByOutputType(
         id: json['id'],
         title: json['title'],
+        againstTeam: json['againstTeam'],
         date: switch (json['date']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -4795,6 +4896,8 @@ class GameGroupByOutputType {
 
   final String? title;
 
+  final String? againstTeam;
+
   final DateTime? date;
 
   final String? semester;
@@ -4816,6 +4919,7 @@ class GameGroupByOutputType {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date?.toIso8601String(),
         'semester': semester,
         'teamID': teamID,
@@ -4833,6 +4937,7 @@ class GameCountOrderByAggregateInput
   const GameCountOrderByAggregateInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4842,6 +4947,8 @@ class GameCountOrderByAggregateInput
   final _i2.SortOrder? id;
 
   final _i2.SortOrder? title;
+
+  final _i2.SortOrder? againstTeam;
 
   final _i2.SortOrder? date;
 
@@ -4855,6 +4962,7 @@ class GameCountOrderByAggregateInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4889,6 +4997,7 @@ class GameMaxOrderByAggregateInput
   const GameMaxOrderByAggregateInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4898,6 +5007,8 @@ class GameMaxOrderByAggregateInput
   final _i2.SortOrder? id;
 
   final _i2.SortOrder? title;
+
+  final _i2.SortOrder? againstTeam;
 
   final _i2.SortOrder? date;
 
@@ -4911,6 +5022,7 @@ class GameMaxOrderByAggregateInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4923,6 +5035,7 @@ class GameMinOrderByAggregateInput
   const GameMinOrderByAggregateInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4932,6 +5045,8 @@ class GameMinOrderByAggregateInput
   final _i2.SortOrder? id;
 
   final _i2.SortOrder? title;
+
+  final _i2.SortOrder? againstTeam;
 
   final _i2.SortOrder? date;
 
@@ -4945,6 +5060,7 @@ class GameMinOrderByAggregateInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -4979,6 +5095,7 @@ class GameOrderByWithAggregationInput
   const GameOrderByWithAggregationInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -4993,6 +5110,8 @@ class GameOrderByWithAggregationInput
   final _i2.SortOrder? id;
 
   final _i2.SortOrder? title;
+
+  final _i2.SortOrder? againstTeam;
 
   final _i2.SortOrder? date;
 
@@ -5016,6 +5135,7 @@ class GameOrderByWithAggregationInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -5454,6 +5574,7 @@ class GameScalarWhereWithAggregatesInput
     this.NOT,
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -5472,6 +5593,8 @@ class GameScalarWhereWithAggregatesInput
 
   final _i1.PrismaUnion<_i2.StringWithAggregatesFilter, String>? title;
 
+  final _i1.PrismaUnion<_i2.StringWithAggregatesFilter, String>? againstTeam;
+
   final _i1.PrismaUnion<_i2.DateTimeWithAggregatesFilter, DateTime>? date;
 
   final _i1.PrismaUnion<_i2.StringWithAggregatesFilter, String>? semester;
@@ -5488,6 +5611,7 @@ class GameScalarWhereWithAggregatesInput
         'NOT': NOT,
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -5500,6 +5624,7 @@ class GameCountAggregateOutputTypeSelect
   const GameCountAggregateOutputTypeSelect({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -5510,6 +5635,8 @@ class GameCountAggregateOutputTypeSelect
   final bool? id;
 
   final bool? title;
+
+  final bool? againstTeam;
 
   final bool? date;
 
@@ -5525,6 +5652,7 @@ class GameCountAggregateOutputTypeSelect
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -5612,6 +5740,7 @@ class GameMinAggregateOutputTypeSelect
   const GameMinAggregateOutputTypeSelect({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -5621,6 +5750,8 @@ class GameMinAggregateOutputTypeSelect
   final bool? id;
 
   final bool? title;
+
+  final bool? againstTeam;
 
   final bool? date;
 
@@ -5634,6 +5765,7 @@ class GameMinAggregateOutputTypeSelect
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -5656,6 +5788,7 @@ class GameMaxAggregateOutputTypeSelect
   const GameMaxAggregateOutputTypeSelect({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -5665,6 +5798,8 @@ class GameMaxAggregateOutputTypeSelect
   final bool? id;
 
   final bool? title;
+
+  final bool? againstTeam;
 
   final bool? date;
 
@@ -5678,6 +5813,7 @@ class GameMaxAggregateOutputTypeSelect
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -5700,6 +5836,7 @@ class GameGroupByOutputTypeSelect
   const GameGroupByOutputTypeSelect({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.teamID,
@@ -5714,6 +5851,8 @@ class GameGroupByOutputTypeSelect
   final bool? id;
 
   final bool? title;
+
+  final bool? againstTeam;
 
   final bool? date;
 
@@ -5737,6 +5876,7 @@ class GameGroupByOutputTypeSelect
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'teamID': teamID,
@@ -8358,12 +8498,15 @@ class GameCreateWithoutTeamInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameCreateWithoutTeamInput({
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     required this.season,
   });
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -8374,6 +8517,7 @@ class GameCreateWithoutTeamInput
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'season': season,
@@ -8385,6 +8529,7 @@ class GameUncheckedCreateWithoutTeamInput
   const GameUncheckedCreateWithoutTeamInput({
     this.id,
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     required this.seasonID,
@@ -8393,6 +8538,8 @@ class GameUncheckedCreateWithoutTeamInput
   final int? id;
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -8404,6 +8551,7 @@ class GameUncheckedCreateWithoutTeamInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'seasonID': seasonID,
@@ -8434,6 +8582,7 @@ class GameCreateManyTeamInput
   const GameCreateManyTeamInput({
     this.id,
     required this.title,
+    required this.againstTeam,
     required this.date,
     required this.semester,
     required this.seasonID,
@@ -8442,6 +8591,8 @@ class GameCreateManyTeamInput
   final int? id;
 
   final String title;
+
+  final String againstTeam;
 
   final DateTime date;
 
@@ -8453,6 +8604,7 @@ class GameCreateManyTeamInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'seasonID': seasonID,
@@ -8622,12 +8774,16 @@ class GameUpdateWithoutTeamInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameUpdateWithoutTeamInput({
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.season,
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -8638,6 +8794,7 @@ class GameUpdateWithoutTeamInput
   @override
   Map<String, dynamic> toJson() => {
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'season': season,
@@ -8649,6 +8806,7 @@ class GameUncheckedUpdateWithoutTeamInput
   const GameUncheckedUpdateWithoutTeamInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.seasonID,
@@ -8657,6 +8815,9 @@ class GameUncheckedUpdateWithoutTeamInput
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -8668,6 +8829,7 @@ class GameUncheckedUpdateWithoutTeamInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'seasonID': seasonID,
@@ -8722,6 +8884,7 @@ class GameUncheckedUpdateManyWithoutTeamInput
   const GameUncheckedUpdateManyWithoutTeamInput({
     this.id,
     this.title,
+    this.againstTeam,
     this.date,
     this.semester,
     this.seasonID,
@@ -8730,6 +8893,9 @@ class GameUncheckedUpdateManyWithoutTeamInput
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
 
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
 
@@ -8741,6 +8907,7 @@ class GameUncheckedUpdateManyWithoutTeamInput
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'againstTeam': againstTeam,
         'date': date,
         'semester': semester,
         'seasonID': seasonID,

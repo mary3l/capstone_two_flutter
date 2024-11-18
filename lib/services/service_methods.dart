@@ -19,9 +19,9 @@ class ServiceMethod {
           ),
         ),
       );
-      print('Successfully created season');
+      log('Successfully created season');
     } catch (e) {
-      print('Failed to create season: $e');
+      log('Failed to create season: $e');
     }
   }
 
@@ -34,9 +34,9 @@ class ServiceMethod {
       await prisma.season.delete(
         where: SeasonWhereUniqueInput(id: id),
       );
-      print('Successfully deleted season');
+      log('Successfully deleted season');
     } catch (e) {
-      print('Failed to delete season: $e');
+      log('Failed to delete season: $e');
     }
   }
 
@@ -55,19 +55,20 @@ class ServiceMethod {
 
 // creating season w/o gameID
   Future<void> createGame(int seasonID, String title, DateTime date,
-      String semester, int teamID) async {
+      String semester, int teamID, String againstTeam) async {
     try {
       // Debugging: Check if teamID is null
       if (teamID == null) {
-        print('Team ID is null, no team will be associated with this game.');
+        log('Team ID is null, no team will be associated with this game.');
       } else {
-        print('Team ID is provided: $teamID');
+        log('Team ID is provided: $teamID');
       }
 
       // Attempt to create the game
       await prisma.game.create(
         data: PrismaUnion.$1(
           GameCreateInput(
+            againstTeam: againstTeam,
             title: title,
             date: date,
             semester: semester,
@@ -82,9 +83,9 @@ class ServiceMethod {
           ),
         ),
       );
-      print('Game created successfully');
+      log('Game created successfully');
     } catch (e) {
-      print('Error creating game: $e');
+      log('Error creating game: $e');
     }
   }
 
@@ -100,17 +101,39 @@ class ServiceMethod {
   }
 
 //fetch according to seasonID
-  // Future<List<Game>> fetchGamesBySeasonID(int seasonID) async {
-  //   try {
-  //     final games =
-  //         await prisma.game.findMany(where: GameWhereInput(seasonID: seasonID));
-  //     log('Successfully fetched games for season $seasonID');
-  //     return games.toList();
-  //   } catch (e) {
-  //     log('Failed to fetch games by season ID: $e');
-  //     return [];
-  //   }
-  // }
+  Future<List<Game>> fetchGamesBySeasonID(int seasonID) async {
+    try {
+      final games = await prisma.game.findMany(
+          where: GameWhereInput(
+              seasonID:
+                  PrismaUnion.$1(IntFilter(equals: PrismaUnion.$1(seasonID)))));
+      log('Successfully fetched games for season $seasonID');
+      return games.toList();
+    } catch (e) {
+      log('Failed to fetch games by season ID: $e');
+      return [];
+    }
+  }
+
+  Future<void> deleteGame(int id) async {
+    try {
+      await prisma.game.delete(
+        where: GameWhereUniqueInput(id: id),
+      );
+      log('Successfully deleted game');
+    } catch (e) {
+      log('Failed to delete game: $e');
+    }
+  }
+
+  Future<void> deleteAllGame() async {
+    try {
+      await prisma.game.deleteMany();
+      log('Successfully deleted all games');
+    } catch (e) {
+      log('Failed to delete all games: $e');
+    }
+  }
 
 // -------------------- Teams ---------------------------
   Future<List<Team>> fetchTeams() async {
@@ -121,6 +144,56 @@ class ServiceMethod {
     } catch (e) {
       log('Failed to fetch teams: $e');
       return []; // Return an empty list in case of an error
+    }
+  }
+
+// fetch teams according to seasonID inside game
+  Future<List<Team>> fetchTeamsForSeason(int seasonID) async {
+    try {
+      final teams = await prisma.team.findMany(
+        where: TeamWhereInput(
+          game: GameListRelationFilter(
+            some: GameWhereInput(
+              seasonID: PrismaUnion.$1(
+                IntFilter(equals: PrismaUnion.$1(seasonID)),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      // Log the results for debugging
+      log('Successfully fetched teams for season with ID: $seasonID');
+      log('Teams: $teams'); // Log the fetched teams
+
+      return teams.toList(); // Return the fetched teams
+    } catch (e) {
+      log('Error fetching teams for season: $e');
+      return []; // Return an empty list in case of error
+    }
+  }
+
+// fetch teams according to semester [first, second] inside game
+  Future<List<Team>> fetchTeamsForSemester(String semester) async {
+    try {
+      final teams = await prisma.team.findMany(
+        where: TeamWhereInput(
+          game: GameListRelationFilter(
+            some: GameWhereInput(
+                semester: PrismaUnion.$1(
+                    StringFilter(equals: PrismaUnion.$1(semester)))),
+          ),
+        ),
+      );
+
+      // Log the results for debugging
+      log('Successfully fetched teams with semester: $semester');
+      log('Teams: $teams'); // Log the fetched teams
+
+      return teams.toList(); // Return the fetched teams
+    } catch (e) {
+      log('Error fetching teams for semester: $e');
+      return []; // Return an empty list in case of error
     }
   }
 
@@ -138,13 +211,14 @@ class ServiceMethod {
           ),
         ),
       );
-      print('Successfully created team');
+      log('Successfully created team');
     } catch (e) {
-      print('Failed to create team: $e');
+      log('Failed to create team: $e');
     }
   }
 
 // -------------------- Players ---------------------------
+// fetch all players
   Future<List<Player>> fetchPlayers() async {
     try {
       final players = await prisma.player.findMany();
@@ -152,6 +226,28 @@ class ServiceMethod {
       return players.toList();
     } catch (e) {
       log('Failed to fetch players: $e');
+      return []; // Return an empty list in case of an error
+    }
+  }
+
+  //fetch players according to teamID
+  Future<List<Player>> fetchPlayersByTeamId(int teamID) async {
+    try {
+      final players = await prisma.player.findMany(
+        where: PlayerWhereInput(
+            teamID: PrismaUnion.$1(
+                IntNullableFilter(equals: PrismaUnion.$1(teamID)))),
+      );
+      log('Successfully fetched players for team with ID: $teamID');
+
+      // Log each player with their ID and the team ID
+      for (var player in players) {
+        log('Fetched Player ID: ${player.id}, Team ID: $teamID');
+      }
+
+      return players.toList();
+    } catch (e) {
+      log('Failed to fetch players for team with ID: $teamID. Error: $e');
       return []; // Return an empty list in case of an error
     }
   }
@@ -168,9 +264,9 @@ class ServiceMethod {
           jerseyNumber: jerseyNumber,
         )),
       );
-      print('Successfully created team');
+      log('Successfully created team');
     } catch (e) {
-      print('Failed to create team: $e');
+      log('Failed to create team: $e');
     }
   }
 }

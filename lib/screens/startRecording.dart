@@ -26,18 +26,20 @@ class StartRecording extends StatefulWidget {
   final int? teamID;
   final int? startYear;
   final int? endYear;
-  final int? seasonID; // Added seasonID here
+  final int? seasonID;
+  final String? opponentName;
 
-  const StartRecording({
-    Key? key,
-    this.gameTitle,
-    this.date,
-    this.semester,
-    this.teamID,
-    this.startYear,
-    this.endYear,
-    this.seasonID,
-  }) : super(key: key);
+  const StartRecording(
+      {Key? key,
+      this.gameTitle,
+      this.date,
+      this.semester,
+      this.teamID,
+      this.startYear,
+      this.endYear,
+      this.seasonID,
+      this.opponentName})
+      : super(key: key);
 
   @override
   _StartRecordingState createState() => _StartRecordingState();
@@ -238,24 +240,30 @@ class _StartRecordingState extends State<StartRecording> {
               alignment: HeaderAlignment.header,
               textType: TextType.header,
             ),
-
             Label(
               text: widget.gameTitle != null
-                  ? 'Opponent Name: ${widget.gameTitle}'
-                  : 'Opponent Name: Not available',
+                  ? 'Game Title: ${widget.gameTitle}'
+                  : 'Game Title: Not available',
               alignment: LabelAlignment.header,
             ),
+
             Label(
-              text: widget.date != null
-                  ? 'Date: ${widget.date!.toLocal().toString().split(' ')[0]}'
-                  : 'Date: Not available', // Handle null case if needed
+              text: widget.opponentName != null
+                  ? 'Against Team: ${widget.opponentName}'
+                  : 'Against Name: Not available',
               alignment: LabelAlignment.header,
             ),
-            Label(
-              text:
-                  'School Year ${widget.startYear}-${widget.endYear} | ${widget.semester} Semester',
-              alignment: LabelAlignment.header,
-            ),
+            // Label(
+            //   text: widget.date != null
+            //       ? 'Date: ${widget.date!.toLocal().toString().split(' ')[0]}'
+            //       : 'Date: Not available', // Handle null case if needed
+            //   alignment: LabelAlignment.header,
+            // ),
+            // Label(
+            //   text:
+            //       'School Year ${widget.startYear}-${widget.endYear} | ${widget.semester} Semester',
+            //   alignment: LabelAlignment.header,
+            // ),
             SizedBox(height: 10),
 
             // Pass the setter function to GameQuarter

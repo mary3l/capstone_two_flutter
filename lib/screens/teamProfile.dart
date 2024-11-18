@@ -1,4 +1,4 @@
-import 'package:audio_classification/services/database_helper.dart';
+import 'package:audio_classification/screens/playerProfile.dart';
 import 'package:audio_classification/services/service_methods.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,6 @@ import 'package:audio_classification/widgets/button.dart';
 import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/widgets/filterButton.dart';
 import 'package:audio_classification/prisma/generated_dart_client/model.dart';
-import 'package:audio_classification/services/service_methods.dart';
 
 class TeamProfile extends StatefulWidget {
   @override
@@ -21,9 +20,12 @@ class _TeamProfileState extends State<TeamProfile> {
   //to capture user input, access it easily, and manage it
   final TextEditingController _teamNameController = TextEditingController();
 
-  final ServiceMethod _serviceMethod = ServiceMethod();
+  final serviceMethod = ServiceMethod();
+
   List<Team> _teams = [];
   List<Player> _players = [];
+  List<Season> _seasons = [];
+  int? _selectedSeasonID;
 
 // Track selected player IDs
   List<int> _selectedPlayerIDs = [];
@@ -31,24 +33,96 @@ class _TeamProfileState extends State<TeamProfile> {
   @override
   void initState() {
     super.initState(); // Call the parent class's initState
+    _fetchTeams(); // Fetch teams when the widget initializes
   }
 
-  final serviceMethod = ServiceMethod();
+// Fetch available seasons (called when the button is clicked)
+  Future<void> _fetchSeasons() async {
+    try {
+      List<Season> seasons = await serviceMethod.fetchSeasons();
+      setState(() {
+        _seasons = seasons;
+      });
+      if (seasons.isEmpty) {
+        debugPrint('No seasons available.');
+      }
+    } catch (e) {
+      debugPrint('Error fetching seasons: $e');
+    }
+  }
+
+  // Fetch teams for the selected season (called after selecting a season)
+  Future<void> _fetchTeamsForSeason(int seasonID) async {
+    try {
+      List<Team> teams = await serviceMethod
+          .fetchTeamsForSeason(seasonID); // Now it returns a List<Team>
+      setState(() {
+        _teams = teams; // Update the state with fetched data
+        _selectedSeasonID = seasonID; // Store the selected season ID
+      });
+
+      if (teams.isEmpty) {
+        debugPrint('No teams for seasonID :$seasonID is available.');
+      }
+    } catch (e) {
+      setState(() {
+        // Handle error or state update if necessary
+      });
+      debugPrint('Error fetching teams for seasonID $seasonID: $e');
+    }
+  }
+
+  Future<void> _fetchTeamsForSemester(String semester) async {
+    try {
+      List<Team> teams = await serviceMethod
+          .fetchTeamsForSemester(semester); // Fetch teams filtered by semester
+      setState(() {
+        _teams = teams; // Update the state with filtered teams
+      });
+
+      if (teams.isEmpty) {
+        debugPrint('No teams available for semester: $semester.');
+      }
+    } catch (e) {
+      debugPrint('Error fetching teams for semester $semester: $e');
+    }
+  }
+
+  Future<void> _fetchTeams() async {
+    try {
+      List<Team> teams =
+          await serviceMethod.fetchTeams(); // Fetch teams directly
+      setState(() {
+        _teams = teams; // Update the state with fetched data
+      });
+
+      // Check if the fetched teams list is empty
+      if (teams.isEmpty) {
+        debugPrint('No teams available.');
+      }
+    } catch (e) {
+      // Handle errors
+      setState(() {
+        // Keep state changes minimal here
+      });
+      debugPrint('Error fetching teams: $e');
+    }
+  }
 
 // for showing a form when user clicks "add new team" button
   void _showAddTeamDialog() async {
     // Fetch players asynchronously before showing the dialog
-    List<Player> players =
-        await serviceMethod.fetchPlayers(); // Ensure players are fetched first
+    List<Team> teams =
+        await serviceMethod.fetchTeams(); // Ensure teams are fetched first
 
-    if (players.isEmpty) {
-      // Handle empty players, if necessary (e.g., show a message)
-      print('No players available');
+    if (teams.isEmpty) {
+      // Handle empty teams, if necessary (e.g., show a message)
+      print('No teams available');
     }
 
-    // After fetching, update the _players list
+    // After fetching, update the _teams list
     setState(() {
-      _players = players;
+      _teams = teams;
     });
 
     // Show the dialog
@@ -136,7 +210,7 @@ class _TeamProfileState extends State<TeamProfile> {
 
                   if (teamName.isNotEmpty && _selectedPlayerIDs.isNotEmpty) {
                     // Call the service method to create the team with selected players
-                    await _serviceMethod.createTeam(
+                    await serviceMethod.createTeam(
                         teamName, _selectedPlayerIDs);
 
                     // Print the details of the newly created team (if insertion is successful)
@@ -164,6 +238,96 @@ class _TeamProfileState extends State<TeamProfile> {
               ),
             )
           ],
+        );
+      },
+    );
+  }
+
+  // Show the list of seasons in a dialog when the filter button is clicked
+  void _showSeasonFilterDialog() async {
+    // Fetch seasons asynchronously before showing the dialog
+    List<Season> seasons =
+        await serviceMethod.fetchSeasons(); // Ensure seasons are fetched first
+
+    if (seasons.isEmpty) {
+      // Handle empty seasons, if necessary (e.g., show a message)
+      print('No seasons available');
+      return; // Exit the function if no seasons are available
+    }
+
+    // After fetching, update the _seasons list
+    setState(() {
+      _seasons = seasons;
+    });
+
+    // Show the dialog with the fetched seasons
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // Local variables to store selected season details
+        int? selectedSeasonID;
+        int? startYear;
+        int? endYear;
+
+        return AlertDialog(
+          title: Text('Choose a Season'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _seasons.length,
+              itemBuilder: (context, index) {
+                final season = _seasons[index];
+                // Display the season as 'Season StartYear - EndYear'
+                final seasonText =
+                    'Season ${season.startYear} - ${season.endYear}';
+
+                return ListTile(
+                  title: Text(seasonText), // Display the formatted season text
+                  onTap: () {
+                    // Fetch teams for the selected season
+                    _fetchTeamsForSeason(season.id ?? 0);
+
+                    // Close the dialog after selection
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// Show the semester filter dialog when user clicks the semester button
+  void _showSemesterFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose Semester'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text("First Semester"),
+                onTap: () {
+                  _fetchTeamsForSemester(
+                      "First"); // Filter teams for first semester
+                  Navigator.pop(context); // Close the dialog
+                },
+              ),
+              ListTile(
+                title: Text("Second Semester"),
+                onTap: () {
+                  _fetchTeamsForSemester(
+                      "Second"); // Filter teams for second semester
+                  Navigator.pop(context); // Close the dialog
+                },
+              ),
+            ],
+          ),
         );
       },
     );
@@ -206,30 +370,45 @@ class _TeamProfileState extends State<TeamProfile> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                filterButton(title: 'School Year'),
-                filterButton(title: 'First Semester'),
-                filterButton(title: 'Game Name'),
+                Button(
+                  text: "Season Year",
+                  onPress: _showSeasonFilterDialog,
+                ),
+                Button(
+                  text: "Semester",
+                  onPress: _showSemesterFilterDialog,
+                ),
               ],
             ),
             SizedBox(height: 20),
 
             // List of teams
             Expanded(
-              // Use Expanded to allow the ListView to fill available space
               child: ListView.builder(
-                itemCount: _teams.length, // Use _teams list here
+                itemCount: _teams.length,
                 itemBuilder: (context, index) {
-                  final team = _teams[index]; // Fetch from _teams list
+                  final team = _teams[index];
+                  // String seasonYear =
+                  //     'Season ${team.season?.startYear} - ${team.season?.endYear}' ??
+                  //         'No Season Available';
+                  // String semester =
+                  //     team.season?.semester ?? 'No Semester Available';
 
                   return Column(
                     children: [
                       GameCard(
                         team: team,
+                        // season: seasonYear, // Pass season year
+                        // semester: semester, // Pass semester
                         onPress: () {
-                          Navigator.pushNamed(
+                          Navigator.push(
                             context,
-                            '/screens/teamPlayerProfile',
-                            arguments: team,
+                            MaterialPageRoute(
+                              builder: (context) => PlayerProfile(
+                                team: team,
+                                teamName: team.name,
+                              ),
+                            ),
                           );
                         },
                       ),
