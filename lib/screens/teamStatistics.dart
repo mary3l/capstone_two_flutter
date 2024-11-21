@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:audio_classification/helper/prisma.dart';
+import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
+import 'package:audio_classification/services/service_methods.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
@@ -8,7 +13,8 @@ import 'package:audio_classification/models/basketball_model.dart'; // Model for
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:audio_classification/widgets/statistic_category_selector.dart';
-import 'package:audio_classification/constants/stat_category.dart'; // Import your constants file
+import 'package:audio_classification/constants/stat_category.dart';
+import 'package:orm/orm.dart'; // Import your constants file
 
 class TeamStatistics extends StatefulWidget {
   @override
@@ -20,47 +26,87 @@ class _TeamStatisticsState extends State<TeamStatistics> {
   StatCategory selectedStat = StatCategory.points;
   List<Game> games = []; // Updated to hold games instead of players
 
+  final serviceMethod = ServiceMethod();
+
   @override
   void initState() {
     super.initState();
-    loadTeamStatistics(); // Load team statistics
   }
+  // List<PointsBreakdown> pointsBreakdownList = [
+  //   PointsBreakdown(
+  //     breakdownId: 1,
+  //     madeOne: 3,
+  //     madeTwo: 5,
+  //     madeThree: 2,
+  //     missOne: 1,
+  //     missTwo: 0,
+  //     missThree: 1,
+  //     quarterID: 'Q1',
+  //   ),
+  //   PointsBreakdown(
+  //     breakdownId: 2,
+  //     madeOne: 2,
+  //     madeTwo: 3,
+  //     madeThree: 4,
+  //     missOne: 1,
+  //     missTwo: 2,
+  //     missThree: 0,
+  //     quarterID: 'Q2',
+  //   ),
+  //   // Add more breakdowns as needed
+  // ];
 
-  Future<void> loadTeamStatistics() async {
-    // Load team statistics from JSON
-    final String response =
-        await rootBundle.loadString('lib/data/allData.json');
-    final List<dynamic> data = json.decode(response);
+  void _createPlayerStatistics(
+      List<String> _keywordCombinations, int quarterNumber, int gameID) async {
+    String first = _keywordCombinations[0]; // Maps to playerID
+    String second = _keywordCombinations[1]; // Maps to action
+    String third = _keywordCombinations.length > 2
+        ? _keywordCombinations[2]
+        : null; // Maps to points
 
-    // Extract games from the loaded data
-    setState(() {
-      games = data.map((gameJson) => Game.fromJson(gameJson)).toList();
-    });
+    try {
+      // Fetch the relevant quarter
+      final quarter = await prisma.quarter.findUnique(
+        where: QuarterWhereUniqueInput(id: quarterNumber),
+      );
+
+      if (quarter == null) {
+        log('Quarter with ID $quarterNumber not found.');
+        return;
+      }
+
+      // Create PlayerStatistics entry
+      await prisma.playerStatistics.create(
+        data: PrismaUnion.$1(
+          PlayerStatisticsCreateInput(
+            player: first.isNotEmpty
+                ? PlayerCreateNestedOneWithoutStatisticsInput(
+                    connect: PlayerWhereUniqueInput(id: int.tryParse(first)),
+                  )
+                : null, // Handle cases where playerID is not provided
+            game: gameID > 0
+                ? GameCreateNestedOneWithoutStatisticsInput(
+                    connect: GameWhereUniqueInput(id: gameID),
+                  )
+                : null, // Ensure gameID is valid
+            quarter: QuarterCreateNestedOneWithoutStatisticsInput(
+              connect: QuarterWhereUniqueInput(id: quarter.id),
+            ),
+            action: second,
+            points:
+                third != null && third.isNotEmpty ? int.tryParse(third) : null,
+          ),
+        ),
+      );
+
+      log('Successfully created PlayerStatistics: $first, $second, $third.');
+    } catch (e) {
+      print(e);
+      log('Error creating PlayerStatistics: ${e.toString()}');
+    } finally {
+      _keywordCombinations.clear();
+    }
   }
-
-  List<PointsBreakdown> pointsBreakdownList = [
-    PointsBreakdown(
-      breakdownId: 1,
-      madeOne: 3,
-      madeTwo: 5,
-      madeThree: 2,
-      missOne: 1,
-      missTwo: 0,
-      missThree: 1,
-      quarterID: 'Q1',
-    ),
-    PointsBreakdown(
-      breakdownId: 2,
-      madeOne: 2,
-      madeTwo: 3,
-      madeThree: 4,
-      missOne: 1,
-      missTwo: 2,
-      missThree: 0,
-      quarterID: 'Q2',
-    ),
-    // Add more breakdowns as needed
-  ];
 
   @override
   Widget build(BuildContext context) {
