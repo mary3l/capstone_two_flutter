@@ -2916,6 +2916,503 @@ class PlayerDelegate {
   }
 }
 
+class PlayerStatisticsDelegate {
+  const PlayerStatisticsDelegate._(this._client);
+
+  final PrismaClient _client;
+
+  _i1.ActionClient<_i2.PlayerStatistics?> findUnique({
+    required _i3.PlayerStatisticsWhereUniqueInput where,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.findUnique,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics?>(
+      action: 'findUniquePlayerStatistics',
+      result: result,
+      factory: (e) => e != null ? _i2.PlayerStatistics.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics> findUniqueOrThrow({
+    required _i3.PlayerStatisticsWhereUniqueInput where,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.findUniqueOrThrow,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics>(
+      action: 'findUniquePlayerStatisticsOrThrow',
+      result: result,
+      factory: (e) => _i2.PlayerStatistics.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics?> findFirst({
+    _i3.PlayerStatisticsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.PlayerStatisticsOrderByWithRelationInput>,
+            _i3.PlayerStatisticsOrderByWithRelationInput>?
+        orderBy,
+    _i3.PlayerStatisticsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.PlayerStatisticsScalar,
+            Iterable<_i3.PlayerStatisticsScalar>>?
+        distinct,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.findFirst,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics?>(
+      action: 'findFirstPlayerStatistics',
+      result: result,
+      factory: (e) => e != null ? _i2.PlayerStatistics.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics> findFirstOrThrow({
+    _i3.PlayerStatisticsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.PlayerStatisticsOrderByWithRelationInput>,
+            _i3.PlayerStatisticsOrderByWithRelationInput>?
+        orderBy,
+    _i3.PlayerStatisticsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.PlayerStatisticsScalar,
+            Iterable<_i3.PlayerStatisticsScalar>>?
+        distinct,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.findFirstOrThrow,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics>(
+      action: 'findFirstPlayerStatisticsOrThrow',
+      result: result,
+      factory: (e) => _i2.PlayerStatistics.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i2.PlayerStatistics>> findMany({
+    _i3.PlayerStatisticsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.PlayerStatisticsOrderByWithRelationInput>,
+            _i3.PlayerStatisticsOrderByWithRelationInput>?
+        orderBy,
+    _i3.PlayerStatisticsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.PlayerStatisticsScalar,
+            Iterable<_i3.PlayerStatisticsScalar>>?
+        distinct,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.findMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i2.PlayerStatistics>>(
+      action: 'findManyPlayerStatistics',
+      result: result,
+      factory: (values) =>
+          (values as Iterable).map((e) => _i2.PlayerStatistics.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics> create({
+    required _i1.PrismaUnion<_i3.PlayerStatisticsCreateInput,
+            _i3.PlayerStatisticsUncheckedCreateInput>
+        data,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.createOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics>(
+      action: 'createOnePlayerStatistics',
+      result: result,
+      factory: (e) => _i2.PlayerStatistics.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> createMany(
+      {required _i1.PrismaUnion<_i3.PlayerStatisticsCreateManyInput,
+              Iterable<_i3.PlayerStatisticsCreateManyInput>>
+          data}) {
+    final args = {'data': data};
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.createMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'createManyPlayerStatistics',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i2.CreateManyPlayerStatisticsAndReturnOutputType>>
+      createManyAndReturn({
+    required _i1.PrismaUnion<_i3.PlayerStatisticsCreateManyInput,
+            Iterable<_i3.PlayerStatisticsCreateManyInput>>
+        data,
+    _i3.CreateManyPlayerStatisticsAndReturnOutputTypeSelect? select,
+    _i3.CreateManyPlayerStatisticsAndReturnOutputTypeInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.createManyAndReturn,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<
+        Iterable<_i2.CreateManyPlayerStatisticsAndReturnOutputType>>(
+      action: 'createManyPlayerStatisticsAndReturn',
+      result: result,
+      factory: (values) => (values as Iterable).map(
+          (e) => _i2.CreateManyPlayerStatisticsAndReturnOutputType.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics?> update({
+    required _i1.PrismaUnion<_i3.PlayerStatisticsUpdateInput,
+            _i3.PlayerStatisticsUncheckedUpdateInput>
+        data,
+    required _i3.PlayerStatisticsWhereUniqueInput where,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.updateOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics?>(
+      action: 'updateOnePlayerStatistics',
+      result: result,
+      factory: (e) => e != null ? _i2.PlayerStatistics.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> updateMany({
+    required _i1.PrismaUnion<_i3.PlayerStatisticsUpdateManyMutationInput,
+            _i3.PlayerStatisticsUncheckedUpdateManyInput>
+        data,
+    _i3.PlayerStatisticsWhereInput? where,
+  }) {
+    final args = {
+      'data': data,
+      'where': where,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.updateMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'updateManyPlayerStatistics',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics> upsert({
+    required _i3.PlayerStatisticsWhereUniqueInput where,
+    required _i1.PrismaUnion<_i3.PlayerStatisticsCreateInput,
+            _i3.PlayerStatisticsUncheckedCreateInput>
+        create,
+    required _i1.PrismaUnion<_i3.PlayerStatisticsUpdateInput,
+            _i3.PlayerStatisticsUncheckedUpdateInput>
+        update,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'create': create,
+      'update': update,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.upsertOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics>(
+      action: 'upsertOnePlayerStatistics',
+      result: result,
+      factory: (e) => _i2.PlayerStatistics.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.PlayerStatistics?> delete({
+    required _i3.PlayerStatisticsWhereUniqueInput where,
+    _i3.PlayerStatisticsSelect? select,
+    _i3.PlayerStatisticsInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.deleteOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.PlayerStatistics?>(
+      action: 'deleteOnePlayerStatistics',
+      result: result,
+      factory: (e) => e != null ? _i2.PlayerStatistics.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> deleteMany(
+      {_i3.PlayerStatisticsWhereInput? where}) {
+    final args = {'where': where};
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.deleteMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'deleteManyPlayerStatistics',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i3.PlayerStatisticsGroupByOutputType>> groupBy({
+    _i3.PlayerStatisticsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.PlayerStatisticsOrderByWithAggregationInput>,
+            _i3.PlayerStatisticsOrderByWithAggregationInput>?
+        orderBy,
+    required _i1.PrismaUnion<Iterable<_i3.PlayerStatisticsScalar>,
+            _i3.PlayerStatisticsScalar>
+        by,
+    _i3.PlayerStatisticsScalarWhereWithAggregatesInput? having,
+    int? take,
+    int? skip,
+    _i3.PlayerStatisticsGroupByOutputTypeSelect? select,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'by': _i1.JsonQuery.groupBySerializer(by),
+      'having': having,
+      'take': take,
+      'skip': skip,
+      'select': select ?? _i1.JsonQuery.groupBySelectSerializer(by),
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.groupBy,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i3.PlayerStatisticsGroupByOutputType>>(
+      action: 'groupByPlayerStatistics',
+      result: result,
+      factory: (values) => (values as Iterable)
+          .map((e) => _i3.PlayerStatisticsGroupByOutputType.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i3.AggregatePlayerStatistics> aggregate({
+    _i3.PlayerStatisticsWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.PlayerStatisticsOrderByWithRelationInput>,
+            _i3.PlayerStatisticsOrderByWithRelationInput>?
+        orderBy,
+    _i3.PlayerStatisticsWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i3.AggregatePlayerStatisticsSelect? select,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'select': select,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'PlayerStatistics',
+      action: _i1.JsonQueryAction.aggregate,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AggregatePlayerStatistics>(
+      action: 'aggregatePlayerStatistics',
+      result: result,
+      factory: (e) => _i3.AggregatePlayerStatistics.fromJson(e),
+    );
+  }
+}
+
 class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   PrismaClient({
     super.datasourceUrl,
@@ -3125,6 +3622,22 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'isReadOnly': true,
             'hasDefaultValue': false,
             'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'PlayerStatistics',
+            'kind': 'object',
+            'isList': true,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'PlayerStatistics',
+            'relationName': 'GameToPlayerStatistics',
+            'relationFromFields': [],
+            'relationToFields': [],
             'isGenerated': false,
             'isUpdatedAt': false,
           },
@@ -3347,6 +3860,22 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'hasDefaultValue': false,
             'type': 'Logs',
             'relationName': 'LogsToQuarter',
+            'relationFromFields': [],
+            'relationToFields': [],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'PlayerStatistics',
+            'kind': 'object',
+            'isList': true,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'PlayerStatistics',
+            'relationName': 'PlayerStatisticsToQuarter',
             'relationFromFields': [],
             'relationToFields': [],
             'isGenerated': false,
@@ -3666,6 +4195,162 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'isGenerated': false,
             'isUpdatedAt': false,
           },
+          {
+            'name': 'PlayerStatistics',
+            'kind': 'object',
+            'isList': true,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'PlayerStatistics',
+            'relationName': 'PlayerToPlayerStatistics',
+            'relationFromFields': [],
+            'relationToFields': [],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+        ],
+        'primaryKey': null,
+        'uniqueFields': [],
+        'uniqueIndexes': [],
+        'isGenerated': false,
+      },
+      {
+        'name': 'PlayerStatistics',
+        'dbName': null,
+        'fields': [
+          {
+            'name': 'id',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': true,
+            'isReadOnly': false,
+            'hasDefaultValue': true,
+            'type': 'Int',
+            'default': {
+              'name': 'autoincrement',
+              'args': [],
+            },
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'player',
+            'kind': 'object',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Player',
+            'relationName': 'PlayerToPlayerStatistics',
+            'relationFromFields': ['playerID'],
+            'relationToFields': ['id'],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'playerID',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': true,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'game',
+            'kind': 'object',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Game',
+            'relationName': 'GameToPlayerStatistics',
+            'relationFromFields': ['gameID'],
+            'relationToFields': ['id'],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'gameID',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': true,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'quarter',
+            'kind': 'object',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Quarter',
+            'relationName': 'PlayerStatisticsToQuarter',
+            'relationFromFields': ['quarterID'],
+            'relationToFields': ['id'],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'quarterID',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': true,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'action',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'String',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'points',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': false,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
         ],
         'primaryKey': null,
         'uniqueFields': [],
@@ -3723,6 +4408,14 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
           {'name': 'id'}
         ],
       },
+      {
+        'model': 'PlayerStatistics',
+        'type': 'id',
+        'isDefinedOnField': true,
+        'fields': [
+          {'name': 'id'}
+        ],
+      },
     ],
   });
 
@@ -3753,7 +4446,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   @override
   get $engine => _engine ??= _i5.LibraryEngine(
         schema:
-            '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = "dart run orm"\n  engineType = "flutter"\n}\n\ndatasource db {\n  provider  = "sqlite"\n  url       = env("DATABASE_URL")\n  // Why need directUrl ?\n  // The Prisma CLI tool uses the file URL relative to the prisma directory when it is configured at runtime. The Dart runtime uses PWD\n  directUrl = env("DIRECT_DATABASE_URL")\n}\n\nmodel Season {\n  id        Int    @id @default(autoincrement())\n  startYear Int\n  endYear   Int\n  games     Game[]\n}\n\nmodel Game {\n  id          Int      @id @default(autoincrement())\n  title       String\n  againstTeam String\n  date        DateTime\n  semester    String\n  team        Team?    @relation(fields: [teamID], references: [id])\n  teamID      Int?\n  season      Season   @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season\n  seasonID    Int\n}\n\nmodel Quarter {\n  id               Int    @id @default(autoincrement())\n  number           Int\n  totalScore       Int    @default(0)\n  madeOne          Int    @default(0)\n  madeTwo          Int    @default(0)\n  madeThree        Int    @default(0)\n  miss             Int    @default(0)\n  reboundOffensive Int    @default(0)\n  reboundDefensive Int    @default(0)\n  foul             Int    @default(0)\n  turnover         Int    @default(0)\n  assist           Int    @default(0)\n  block            Int    @default(0)\n  steal            Int    @default(0)\n  Logs             Logs[]\n}\n\nmodel Logs {\n  id                 Int      @id @default(autoincrement())\n  keywordOne         String\n  keywordTwo         String\n  keywordThree       String?\n  isValidCombination Boolean\n  timestamp          DateTime\n  quarter            Quarter  @relation(fields: [quarterID], references: [id])\n  quarterID          Int\n}\n\nmodel Team {\n  id     Int      @id @default(autoincrement())\n  name   String\n  Game   Game[]\n  Player Player[]\n}\n\nmodel Player {\n  id           Int    @id @default(autoincrement())\n  lastName     String\n  firstName    String\n  middleName   String\n  jerseyNumber Int\n  gamesPlayed  Int?\n  team         Team?  @relation(fields: [teamID], references: [id])\n  teamID       Int?\n}\n',
+            '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = "dart run orm"\n  engineType = "flutter"\n}\n\ndatasource db {\n  provider  = "sqlite"\n  url       = env("DATABASE_URL")\n  // Why need directUrl ?\n  // The Prisma CLI tool uses the file URL relative to the prisma directory when it is configured at runtime. The Dart runtime uses PWD\n  directUrl = env("DIRECT_DATABASE_URL")\n}\n\nmodel Season {\n  id        Int    @id @default(autoincrement())\n  startYear Int\n  endYear   Int\n  games     Game[]\n}\n\nmodel Game {\n  id               Int                @id @default(autoincrement())\n  title            String\n  againstTeam      String\n  date             DateTime\n  semester         String\n  team             Team?              @relation(fields: [teamID], references: [id])\n  teamID           Int?\n  season           Season             @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season\n  seasonID         Int\n  PlayerStatistics PlayerStatistics[]\n}\n\nmodel Quarter {\n  id               Int                @id @default(autoincrement())\n  number           Int\n  totalScore       Int                @default(0)\n  madeOne          Int                @default(0)\n  madeTwo          Int                @default(0)\n  madeThree        Int                @default(0)\n  miss             Int                @default(0)\n  reboundOffensive Int                @default(0)\n  reboundDefensive Int                @default(0)\n  foul             Int                @default(0)\n  turnover         Int                @default(0)\n  assist           Int                @default(0)\n  block            Int                @default(0)\n  steal            Int                @default(0)\n  Logs             Logs[]\n  PlayerStatistics PlayerStatistics[]\n}\n\nmodel Logs {\n  id                 Int      @id @default(autoincrement())\n  keywordOne         String\n  keywordTwo         String\n  keywordThree       String?\n  isValidCombination Boolean\n  timestamp          DateTime\n  quarter            Quarter  @relation(fields: [quarterID], references: [id])\n  quarterID          Int\n}\n\nmodel Team {\n  id     Int      @id @default(autoincrement())\n  name   String\n  Game   Game[]\n  Player Player[]\n}\n\nmodel Player {\n  id               Int                @id @default(autoincrement())\n  lastName         String\n  firstName        String\n  middleName       String\n  jerseyNumber     Int\n  gamesPlayed      Int?\n  team             Team?              @relation(fields: [teamID], references: [id])\n  teamID           Int?\n  PlayerStatistics PlayerStatistics[]\n}\n\nmodel PlayerStatistics {\n  id        Int      @id @default(autoincrement())\n  player    Player?  @relation(fields: [playerID], references: [id])\n  playerID  Int? // Corresponds to String first = _keywordCombinations[0];\n  game      Game?    @relation(fields: [gameID], references: [id])\n  gameID    Int? // Optional: You might link this dynamically if needed.\n  quarter   Quarter? @relation(fields: [quarterID], references: [id])\n  quarterID Int? // Corresponds to the associated quarter.\n  action    String // Represents actions like "steal", "turnover", etc. Maps to String second = _keywordCombinations[1];\n  points    Int? // Nullable field to represent points. Maps to String third = _keywordCombinations[2];\n}\n',
         datasources: const {
           'db': _i1.Datasource(
             _i1.DatasourceType.environment,
@@ -3777,4 +4470,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   TeamDelegate get team => TeamDelegate._(this);
 
   PlayerDelegate get player => PlayerDelegate._(this);
+
+  PlayerStatisticsDelegate get playerStatistics =>
+      PlayerStatisticsDelegate._(this);
 }

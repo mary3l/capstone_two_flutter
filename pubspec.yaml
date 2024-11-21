@@ -82,6 +82,7 @@ flutter:
     - lib/prisma/migrations/20241118005804_mariel_add_opponent_name_in_game_table/
     - lib/prisma/migrations/20241118013000_changed_opponent_name_to_against_team/
     - lib/prisma/migrations/20241120052619_mariel_added_is_valid_combination_logs_table/
+    - lib/prisma/migrations/20241121013050_mariel_added_player_statistics_an_added_model_for_logs_table_and_the_player/
 
     ### mariel's assets
     - lib/data/gameData.json
