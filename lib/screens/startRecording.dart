@@ -1,5 +1,6 @@
 import 'package:audio_classification/constants/colors.dart';
 import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
+import 'package:audio_classification/services/service_methods.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
@@ -48,6 +49,12 @@ class StartRecording extends StatefulWidget {
 }
 
 class _StartRecordingState extends State<StartRecording> {
+  final serviceMethod = ServiceMethod();
+  // Declare the state for isValidCombination, initially null
+  bool? isValidCombination;
+
+  List<String> keywordCombinations = []; // Store keyword combinations here
+
   // State to hold the selected quarter
   static const platform =
       MethodChannel('org.tensorflow.audio_classification/audio_record');
@@ -106,16 +113,36 @@ class _StartRecordingState extends State<StartRecording> {
     _keywordCombinations.clear();
   }
 
+  void printKeywordCombinationStatus() {
+    log('isValidCombination: $isValidCombination');
+    log('Current Keyword Combinations: $_keywordCombinations');
+  }
+
   void _checkKeyWordCombinations(List<String> _keywordCombinations) {
     keywordList = KeywordList();
     _isValidKeywordCombination = keywordList.matches(_keywordCombinations);
+
+    setState(
+        () {}); // Ensure the UI updates after checking the keyword combination
+
+    // Call the print method to log the status
+    printKeywordCombinationStatus();
+
     // ADD THIS CHECK IF THE MODEL IS RELIABLE ENOUGH
-    /*    if (_isValidKeywordCombination) {
-      _processKeyWord(_keywordCombinations);
+
+    // Once the combination is checked, proceed to process the keyword
+
+    // Check if the combination is valid or invalid
+    if (_isValidKeywordCombination) {
+      // If the combination is valid, process the keyword as valid
+      log('Valid keyword combination: $_keywordCombinations');
+      _processKeyWord(_keywordCombinations); // Valid combination processing
     } else {
-      log('Invalid combination');
-      _processKeyWord(_keywordCombinations);
-    } */
+      // If the combination is invalid, log the invalid combination as invalid
+      log('Invalid keyword combination: $_keywordCombinations');
+      _processKeyWord(
+          _keywordCombinations); // Still logs the invalid keyword combination in the table
+    }
     _processKeyWord(_keywordCombinations);
     _keywordCombinations.clear();
   }
@@ -146,6 +173,8 @@ class _StartRecordingState extends State<StartRecording> {
                 ? PrismaUnion.$1(third)
                 : const PrismaUnion.$2(PrismaNull()),
             timestamp: DateTime.now(),
+            isValidCombination:
+                _isValidKeywordCombination, // the value for isValidCombination is passed here from _isValidKeywordCombination
           ),
         ),
       );
@@ -323,6 +352,8 @@ class _StartRecordingState extends State<StartRecording> {
               speech: _keywordCombinations.join('-'),
               type: 'inputSpeechFieldType',
               gameQuarter: '',
+              isValidCombination:
+                  _isValidKeywordCombination, // Pass the validity here
             ),
             const SizedBox(height: 20),
             Center(
@@ -341,21 +372,8 @@ class _StartRecordingState extends State<StartRecording> {
                       speech: _keywordCombinations.join('-'),
                       gameQuarter: selectedQuarter ?? '',
                       type: 'outputSpeechFieldType',
-                    ),
-                    RecordingField(
-                      speech: 'test',
-                      gameQuarter: selectedQuarter ?? '',
-                      type: 'outputSpeechFieldType',
-                    ),
-                    RecordingField(
-                      speech: 'test',
-                      gameQuarter: selectedQuarter ?? '',
-                      type: 'outputSpeechFieldType',
-                    ),
-                    RecordingField(
-                      speech: 'test',
-                      gameQuarter: selectedQuarter ?? '',
-                      type: 'outputSpeechFieldType',
+                      isValidCombination:
+                          _isValidKeywordCombination, // Pass the validity here
                     ),
                   ],
                 ),

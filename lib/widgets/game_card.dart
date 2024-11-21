@@ -159,7 +159,7 @@ class PlayerDetails extends StatelessWidget {
                 ),
               ),
               Text(
-                "${player.jerseyNumber}",
+                "Player Jersey No.${player.jerseyNumber}",
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,

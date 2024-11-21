@@ -5,12 +5,14 @@ class RecordingField extends StatelessWidget {
   final String? speech;
   final String gameQuarter;
   final String type; // Use "inputSpeechFieldType" or "outputSpeechFieldType"
+  final bool? isValidCombination;
 
   const RecordingField({
     Key? key,
     required this.speech,
     required this.type,
     required this.gameQuarter,
+    this.isValidCombination,
   }) : super(key: key);
 
   @override
@@ -25,9 +27,11 @@ class RecordingField extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: type == "inputSpeechFieldType"
-                ? AppColors.darkOrange
-                : AppColors.black,
+            color: isValidCombination == null
+                ? Colors.black // Default black when null
+                : (isValidCombination!
+                    ? Colors.green // Green if valid
+                    : Colors.red), // Red if invalid
             width: 3,
           ),
         ),
@@ -54,6 +58,19 @@ class RecordingField extends StatelessWidget {
                   fontSize: 12,
                 ),
               ),
+            const SizedBox(height: 10),
+            // Show the keyword combination when type is 'outputSpeechFieldType'
+            if (type == 'outputSpeechFieldType') ...[
+              Text(
+                'Keyword Combination: $speech',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black, // You can change the color as needed
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ],
         ),
       ),

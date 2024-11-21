@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:audio_classification/screens/playerProfile.dart';
 import 'package:audio_classification/services/service_methods.dart';
 import 'package:audio_classification/widgets/customDrawer.dart';
@@ -26,6 +28,7 @@ class _TeamProfileState extends State<TeamProfile> {
   List<Player> _players = [];
   List<Season> _seasons = [];
   int? _selectedSeasonID;
+  List<Game> _games = [];
 
 // Track selected player IDs
   List<int> _selectedPlayerIDs = [];
@@ -388,18 +391,15 @@ class _TeamProfileState extends State<TeamProfile> {
                 itemCount: _teams.length,
                 itemBuilder: (context, index) {
                   final team = _teams[index];
-                  // String seasonYear =
-                  //     'Season ${team.season?.startYear} - ${team.season?.endYear}' ??
-                  //         'No Season Available';
-                  // String semester =
-                  //     team.season?.semester ?? 'No Semester Available';
+
+                  final games = team.game;
 
                   return Column(
                     children: [
                       GameCard(
                         team: team,
-                        // season: seasonYear, // Pass season year
-                        // semester: semester, // Pass semester
+                        // season: '${startYear} - ${endYear}',
+                        semester: games?.elementAt(0).semester,
                         onPress: () {
                           Navigator.push(
                             context,

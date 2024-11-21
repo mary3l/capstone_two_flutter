@@ -288,6 +288,7 @@ class Logs {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -298,6 +299,7 @@ class Logs {
         keywordOne: json['keywordOne'],
         keywordTwo: json['keywordTwo'],
         keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
         timestamp: switch (json['timestamp']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -317,6 +319,8 @@ class Logs {
 
   final String? keywordThree;
 
+  final bool? isValidCombination;
+
   final DateTime? timestamp;
 
   final int? quarterID;
@@ -328,6 +332,7 @@ class Logs {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp?.toIso8601String(),
         'quarterID': quarterID,
         'quarter': quarter?.toJson(),
@@ -516,6 +521,7 @@ class CreateManyLogsAndReturnOutputType {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -527,6 +533,7 @@ class CreateManyLogsAndReturnOutputType {
         keywordOne: json['keywordOne'],
         keywordTwo: json['keywordTwo'],
         keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
         timestamp: switch (json['timestamp']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -546,6 +553,8 @@ class CreateManyLogsAndReturnOutputType {
 
   final String? keywordThree;
 
+  final bool? isValidCombination;
+
   final DateTime? timestamp;
 
   final int? quarterID;
@@ -557,6 +566,7 @@ class CreateManyLogsAndReturnOutputType {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp?.toIso8601String(),
         'quarterID': quarterID,
         'quarter': quarter?.toJson(),

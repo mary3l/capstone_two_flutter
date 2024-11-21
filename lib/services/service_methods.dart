@@ -270,3 +270,16 @@ class ServiceMethod {
     }
   }
 }
+
+// -------------------- Logs ---------------------------
+// fetch all logs
+Future<List<Logs>> fetchLogs() async {
+  try {
+    final logs = await prisma.logs.findMany();
+    log('Successfully fetched logs');
+    return logs.toList();
+  } catch (e) {
+    log('Failed to fetch logs: $e');
+    return []; // Return an empty list in case of an error
+  }
+}

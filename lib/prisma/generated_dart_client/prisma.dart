@@ -6137,6 +6137,40 @@ class StringNullableFilter
       };
 }
 
+class NestedBoolFilter implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const NestedBoolFilter({
+    this.equals,
+    this.not,
+  });
+
+  final _i1.PrismaUnion<bool, _i1.Reference<bool>>? equals;
+
+  final _i1.PrismaUnion<bool, _i2.NestedBoolFilter>? not;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'not': not,
+      };
+}
+
+class BoolFilter implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const BoolFilter({
+    this.equals,
+    this.not,
+  });
+
+  final _i1.PrismaUnion<bool, _i1.Reference<bool>>? equals;
+
+  final _i1.PrismaUnion<bool, _i2.NestedBoolFilter>? not;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'not': not,
+      };
+}
+
 class QuarterRelationFilter
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterRelationFilter({
@@ -6164,6 +6198,7 @@ class LogsWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -6184,6 +6219,8 @@ class LogsWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   final _i1.PrismaUnion<_i2.StringNullableFilter,
       _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<_i2.BoolFilter, bool>? isValidCombination;
+
   final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? timestamp;
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
@@ -6200,6 +6237,7 @@ class LogsWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         'quarter': quarter,
@@ -6508,6 +6546,7 @@ class LogsOrderByWithRelationInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -6521,6 +6560,8 @@ class LogsOrderByWithRelationInput
 
   final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? keywordThree;
 
+  final _i2.SortOrder? isValidCombination;
+
   final _i2.SortOrder? timestamp;
 
   final _i2.SortOrder? quarterID;
@@ -6533,6 +6574,7 @@ class LogsOrderByWithRelationInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         'quarter': quarter,
@@ -6549,6 +6591,7 @@ class LogsWhereUniqueInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -6569,6 +6612,8 @@ class LogsWhereUniqueInput
   final _i1.PrismaUnion<_i2.StringNullableFilter,
       _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<_i2.BoolFilter, bool>? isValidCombination;
+
   final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? timestamp;
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
@@ -6585,6 +6630,7 @@ class LogsWhereUniqueInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         'quarter': quarter,
@@ -6596,6 +6642,7 @@ enum LogsScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
   keywordOne<String>('keywordOne', 'Logs'),
   keywordTwo<String>('keywordTwo', 'Logs'),
   keywordThree<String>('keywordThree', 'Logs'),
+  isValidCombination<bool>('isValidCombination', 'Logs'),
   timestamp<DateTime>('timestamp', 'Logs'),
   quarterID<int>('quarterID', 'Logs');
 
@@ -6695,6 +6742,7 @@ class LogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -6708,6 +6756,8 @@ class LogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final bool? keywordThree;
 
+  final bool? isValidCombination;
+
   final bool? timestamp;
 
   final bool? quarterID;
@@ -6720,6 +6770,7 @@ class LogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         'quarter': quarter,
@@ -6833,6 +6884,7 @@ class LogsCreateWithoutQuarterInput
     required this.keywordOne,
     required this.keywordTwo,
     this.keywordThree,
+    required this.isValidCombination,
     required this.timestamp,
   });
 
@@ -6842,6 +6894,8 @@ class LogsCreateWithoutQuarterInput
 
   final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
 
+  final bool isValidCombination;
+
   final DateTime timestamp;
 
   @override
@@ -6849,6 +6903,7 @@ class LogsCreateWithoutQuarterInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -6860,6 +6915,7 @@ class LogsUncheckedCreateWithoutQuarterInput
     required this.keywordOne,
     required this.keywordTwo,
     this.keywordThree,
+    required this.isValidCombination,
     required this.timestamp,
   });
 
@@ -6871,6 +6927,8 @@ class LogsUncheckedCreateWithoutQuarterInput
 
   final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
 
+  final bool isValidCombination;
+
   final DateTime timestamp;
 
   @override
@@ -6879,6 +6937,7 @@ class LogsUncheckedCreateWithoutQuarterInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -6909,6 +6968,7 @@ class LogsCreateManyQuarterInput
     required this.keywordOne,
     required this.keywordTwo,
     this.keywordThree,
+    required this.isValidCombination,
     required this.timestamp,
   });
 
@@ -6920,6 +6980,8 @@ class LogsCreateManyQuarterInput
 
   final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
 
+  final bool isValidCombination;
+
   final DateTime timestamp;
 
   @override
@@ -6928,6 +6990,7 @@ class LogsCreateManyQuarterInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -7286,12 +7349,23 @@ class NullableStringFieldUpdateOperationsInput
   Map<String, dynamic> toJson() => {'set': set};
 }
 
+class BoolFieldUpdateOperationsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const BoolFieldUpdateOperationsInput({this.set});
+
+  final bool? set;
+
+  @override
+  Map<String, dynamic> toJson() => {'set': set};
+}
+
 class LogsUpdateWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const LogsUpdateWithoutQuarterInput({
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
   });
 
@@ -7306,6 +7380,9 @@ class LogsUpdateWithoutQuarterInput
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -7314,6 +7391,7 @@ class LogsUpdateWithoutQuarterInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -7325,6 +7403,7 @@ class LogsUncheckedUpdateWithoutQuarterInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
   });
 
@@ -7341,6 +7420,9 @@ class LogsUncheckedUpdateWithoutQuarterInput
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -7350,6 +7432,7 @@ class LogsUncheckedUpdateWithoutQuarterInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -7407,6 +7490,7 @@ class LogsScalarWhereInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -7428,6 +7512,8 @@ class LogsScalarWhereInput
   final _i1.PrismaUnion<_i2.StringNullableFilter,
       _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<_i2.BoolFilter, bool>? isValidCombination;
+
   final _i1.PrismaUnion<_i2.DateTimeFilter, DateTime>? timestamp;
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
@@ -7441,6 +7527,7 @@ class LogsScalarWhereInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -7452,6 +7539,7 @@ class LogsUpdateManyMutationInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
   });
 
@@ -7466,6 +7554,9 @@ class LogsUpdateManyMutationInput
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -7474,6 +7565,7 @@ class LogsUpdateManyMutationInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -7485,6 +7577,7 @@ class LogsUncheckedUpdateManyWithoutQuarterInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
   });
 
@@ -7501,6 +7594,9 @@ class LogsUncheckedUpdateManyWithoutQuarterInput
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -7510,6 +7606,7 @@ class LogsUncheckedUpdateManyWithoutQuarterInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
       };
 }
@@ -9739,6 +9836,7 @@ class LogsCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     required this.keywordOne,
     required this.keywordTwo,
     this.keywordThree,
+    required this.isValidCombination,
     required this.timestamp,
     required this.quarter,
   });
@@ -9749,6 +9847,8 @@ class LogsCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
 
+  final bool isValidCombination;
+
   final DateTime timestamp;
 
   final _i2.QuarterCreateNestedOneWithoutLogsInput quarter;
@@ -9758,6 +9858,7 @@ class LogsCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarter': quarter,
       };
@@ -9770,6 +9871,7 @@ class LogsUncheckedCreateInput
     required this.keywordOne,
     required this.keywordTwo,
     this.keywordThree,
+    required this.isValidCombination,
     required this.timestamp,
     required this.quarterID,
   });
@@ -9782,6 +9884,8 @@ class LogsUncheckedCreateInput
 
   final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
 
+  final bool isValidCombination;
+
   final DateTime timestamp;
 
   final int quarterID;
@@ -9792,6 +9896,7 @@ class LogsUncheckedCreateInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -9803,6 +9908,7 @@ class LogsCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     required this.keywordOne,
     required this.keywordTwo,
     this.keywordThree,
+    required this.isValidCombination,
     required this.timestamp,
     required this.quarterID,
   });
@@ -9815,6 +9921,8 @@ class LogsCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<String, _i1.PrismaNull>? keywordThree;
 
+  final bool isValidCombination;
+
   final DateTime timestamp;
 
   final int quarterID;
@@ -9825,6 +9933,7 @@ class LogsCreateManyInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -9855,6 +9964,7 @@ class CreateManyLogsAndReturnOutputTypeSelect
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.quarter,
@@ -9867,6 +9977,8 @@ class CreateManyLogsAndReturnOutputTypeSelect
   final bool? keywordTwo;
 
   final bool? keywordThree;
+
+  final bool? isValidCombination;
 
   final bool? timestamp;
 
@@ -9881,6 +9993,7 @@ class CreateManyLogsAndReturnOutputTypeSelect
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         'quarter': quarter,
@@ -10112,6 +10225,7 @@ class LogsUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarter,
   });
@@ -10127,6 +10241,9 @@ class LogsUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -10137,6 +10254,7 @@ class LogsUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarter': quarter,
       };
@@ -10149,6 +10267,7 @@ class LogsUncheckedUpdateInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10166,6 +10285,9 @@ class LogsUncheckedUpdateInput
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -10177,6 +10299,7 @@ class LogsUncheckedUpdateInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -10189,6 +10312,7 @@ class LogsUncheckedUpdateManyInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10206,6 +10330,9 @@ class LogsUncheckedUpdateManyInput
       _i1.PrismaUnion<_i2.NullableStringFieldUpdateOperationsInput,
           _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<bool, _i2.BoolFieldUpdateOperationsInput>?
+      isValidCombination;
+
   final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>?
       timestamp;
 
@@ -10217,6 +10344,7 @@ class LogsUncheckedUpdateManyInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -10228,6 +10356,7 @@ class LogsCountAggregateOutputType {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.$all,
@@ -10239,6 +10368,7 @@ class LogsCountAggregateOutputType {
         keywordOne: json['keywordOne'],
         keywordTwo: json['keywordTwo'],
         keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
         timestamp: json['timestamp'],
         quarterID: json['quarterID'],
         $all: json['_all'],
@@ -10252,6 +10382,8 @@ class LogsCountAggregateOutputType {
 
   final int? keywordThree;
 
+  final int? isValidCombination;
+
   final int? timestamp;
 
   final int? quarterID;
@@ -10263,6 +10395,7 @@ class LogsCountAggregateOutputType {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         '_all': $all,
@@ -10319,6 +10452,7 @@ class LogsMinAggregateOutputType {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10329,6 +10463,7 @@ class LogsMinAggregateOutputType {
         keywordOne: json['keywordOne'],
         keywordTwo: json['keywordTwo'],
         keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
         timestamp: switch (json['timestamp']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -10345,6 +10480,8 @@ class LogsMinAggregateOutputType {
 
   final String? keywordThree;
 
+  final bool? isValidCombination;
+
   final DateTime? timestamp;
 
   final int? quarterID;
@@ -10354,6 +10491,7 @@ class LogsMinAggregateOutputType {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp?.toIso8601String(),
         'quarterID': quarterID,
       };
@@ -10365,6 +10503,7 @@ class LogsMaxAggregateOutputType {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10375,6 +10514,7 @@ class LogsMaxAggregateOutputType {
         keywordOne: json['keywordOne'],
         keywordTwo: json['keywordTwo'],
         keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
         timestamp: switch (json['timestamp']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -10391,6 +10531,8 @@ class LogsMaxAggregateOutputType {
 
   final String? keywordThree;
 
+  final bool? isValidCombination;
+
   final DateTime? timestamp;
 
   final int? quarterID;
@@ -10400,6 +10542,7 @@ class LogsMaxAggregateOutputType {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp?.toIso8601String(),
         'quarterID': quarterID,
       };
@@ -10411,6 +10554,7 @@ class LogsGroupByOutputType {
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.$count,
@@ -10425,6 +10569,7 @@ class LogsGroupByOutputType {
         keywordOne: json['keywordOne'],
         keywordTwo: json['keywordTwo'],
         keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
         timestamp: switch (json['timestamp']) {
           DateTime value => value,
           String value => DateTime.parse(value),
@@ -10456,6 +10601,8 @@ class LogsGroupByOutputType {
 
   final String? keywordThree;
 
+  final bool? isValidCombination;
+
   final DateTime? timestamp;
 
   final int? quarterID;
@@ -10475,6 +10622,7 @@ class LogsGroupByOutputType {
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp?.toIso8601String(),
         'quarterID': quarterID,
         '_count': $count?.toJson(),
@@ -10492,6 +10640,7 @@ class LogsCountOrderByAggregateInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10504,6 +10653,8 @@ class LogsCountOrderByAggregateInput
 
   final _i2.SortOrder? keywordThree;
 
+  final _i2.SortOrder? isValidCombination;
+
   final _i2.SortOrder? timestamp;
 
   final _i2.SortOrder? quarterID;
@@ -10514,6 +10665,7 @@ class LogsCountOrderByAggregateInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -10544,6 +10696,7 @@ class LogsMaxOrderByAggregateInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10556,6 +10709,8 @@ class LogsMaxOrderByAggregateInput
 
   final _i2.SortOrder? keywordThree;
 
+  final _i2.SortOrder? isValidCombination;
+
   final _i2.SortOrder? timestamp;
 
   final _i2.SortOrder? quarterID;
@@ -10566,6 +10721,7 @@ class LogsMaxOrderByAggregateInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -10578,6 +10734,7 @@ class LogsMinOrderByAggregateInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10590,6 +10747,8 @@ class LogsMinOrderByAggregateInput
 
   final _i2.SortOrder? keywordThree;
 
+  final _i2.SortOrder? isValidCombination;
+
   final _i2.SortOrder? timestamp;
 
   final _i2.SortOrder? quarterID;
@@ -10600,6 +10759,7 @@ class LogsMinOrderByAggregateInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -10630,6 +10790,7 @@ class LogsOrderByWithAggregationInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.$count,
@@ -10646,6 +10807,8 @@ class LogsOrderByWithAggregationInput
   final _i2.SortOrder? keywordTwo;
 
   final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? keywordThree;
+
+  final _i2.SortOrder? isValidCombination;
 
   final _i2.SortOrder? timestamp;
 
@@ -10667,6 +10830,7 @@ class LogsOrderByWithAggregationInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         '_count': $count,
@@ -10817,6 +10981,66 @@ class StringNullableWithAggregatesFilter
       };
 }
 
+class NestedBoolWithAggregatesFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const NestedBoolWithAggregatesFilter({
+    this.equals,
+    this.not,
+    this.$count,
+    this.$min,
+    this.$max,
+  });
+
+  final _i1.PrismaUnion<bool, _i1.Reference<bool>>? equals;
+
+  final _i1.PrismaUnion<bool, _i2.NestedBoolWithAggregatesFilter>? not;
+
+  final _i2.NestedIntFilter? $count;
+
+  final _i2.NestedBoolFilter? $min;
+
+  final _i2.NestedBoolFilter? $max;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'not': not,
+        '_count': $count,
+        '_min': $min,
+        '_max': $max,
+      };
+}
+
+class BoolWithAggregatesFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const BoolWithAggregatesFilter({
+    this.equals,
+    this.not,
+    this.$count,
+    this.$min,
+    this.$max,
+  });
+
+  final _i1.PrismaUnion<bool, _i1.Reference<bool>>? equals;
+
+  final _i1.PrismaUnion<bool, _i2.NestedBoolWithAggregatesFilter>? not;
+
+  final _i2.NestedIntFilter? $count;
+
+  final _i2.NestedBoolFilter? $min;
+
+  final _i2.NestedBoolFilter? $max;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'equals': equals,
+        'not': not,
+        '_count': $count,
+        '_min': $min,
+        '_max': $max,
+      };
+}
+
 class LogsScalarWhereWithAggregatesInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const LogsScalarWhereWithAggregatesInput({
@@ -10827,6 +11051,7 @@ class LogsScalarWhereWithAggregatesInput
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10848,6 +11073,8 @@ class LogsScalarWhereWithAggregatesInput
   final _i1.PrismaUnion<_i2.StringNullableWithAggregatesFilter,
       _i1.PrismaUnion<String, _i1.PrismaNull>>? keywordThree;
 
+  final _i1.PrismaUnion<_i2.BoolWithAggregatesFilter, bool>? isValidCombination;
+
   final _i1.PrismaUnion<_i2.DateTimeWithAggregatesFilter, DateTime>? timestamp;
 
   final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? quarterID;
@@ -10861,6 +11088,7 @@ class LogsScalarWhereWithAggregatesInput
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -10873,6 +11101,7 @@ class LogsCountAggregateOutputTypeSelect
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.$all,
@@ -10886,6 +11115,8 @@ class LogsCountAggregateOutputTypeSelect
 
   final bool? keywordThree;
 
+  final bool? isValidCombination;
+
   final bool? timestamp;
 
   final bool? quarterID;
@@ -10898,6 +11129,7 @@ class LogsCountAggregateOutputTypeSelect
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         '_all': $all,
@@ -10977,6 +11209,7 @@ class LogsMinAggregateOutputTypeSelect
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -10989,6 +11222,8 @@ class LogsMinAggregateOutputTypeSelect
 
   final bool? keywordThree;
 
+  final bool? isValidCombination;
+
   final bool? timestamp;
 
   final bool? quarterID;
@@ -10999,6 +11234,7 @@ class LogsMinAggregateOutputTypeSelect
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -11021,6 +11257,7 @@ class LogsMaxAggregateOutputTypeSelect
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
   });
@@ -11033,6 +11270,8 @@ class LogsMaxAggregateOutputTypeSelect
 
   final bool? keywordThree;
 
+  final bool? isValidCombination;
+
   final bool? timestamp;
 
   final bool? quarterID;
@@ -11043,6 +11282,7 @@ class LogsMaxAggregateOutputTypeSelect
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
       };
@@ -11065,6 +11305,7 @@ class LogsGroupByOutputTypeSelect
     this.keywordOne,
     this.keywordTwo,
     this.keywordThree,
+    this.isValidCombination,
     this.timestamp,
     this.quarterID,
     this.$count,
@@ -11081,6 +11322,8 @@ class LogsGroupByOutputTypeSelect
   final bool? keywordTwo;
 
   final bool? keywordThree;
+
+  final bool? isValidCombination;
 
   final bool? timestamp;
 
@@ -11102,6 +11345,7 @@ class LogsGroupByOutputTypeSelect
         'keywordOne': keywordOne,
         'keywordTwo': keywordTwo,
         'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
         'timestamp': timestamp,
         'quarterID': quarterID,
         '_count': $count,
