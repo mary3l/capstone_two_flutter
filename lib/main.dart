@@ -5,15 +5,16 @@ import 'package:audio_classification/prisma/generated_dart_client/prisma.dart';
 import 'package:audio_classification/screens/playerProfile.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:audio_classification/screens/playerProfile.dart';
+import 'package:audio_classification/screens/playerProfile.dart';
 import 'package:audio_classification/screens/teamProfile.dart';
-// import 'package:audio_classification/screens/teamStatistics.dart';
+import 'package:audio_classification/screens/teamStatistics.dart';
 import 'package:audio_classification/screens/startRecording.dart';
 import 'package:audio_classification/screens/dashboard.dart';
 import 'package:audio_classification/screens/landing.dart';
 import 'package:orm/orm.dart';
-// import 'package:audio_classification/screens/teamPlayerProfile.dart';
+import 'package:audio_classification/screens/teamPlayerProfile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sqflite/sqflite.dart';
 
 void loadPackageInfo() async {
   final packageInfo = await PackageInfo.fromPlatform();
@@ -53,50 +54,78 @@ void seedData() async {
   //   log('Seed: Failed to create team');
   // }
 
-  try {
-    await prisma.player.create(
-      data: PrismaUnion.$1(
-        PlayerCreateInput(
-          lastName: 'Valmoria',
-          firstName: 'Jiyo',
-          middleName: 'Baababoi',
-          gamesPlayed: PrismaUnion.$1(0),
-          jerseyNumber: 1,
-          team: TeamCreateNestedOneWithoutPlayerInput(
-            connect: TeamWhereUniqueInput(id: (2)),
-          ),
-        ),
-      ),
-    );
-    log('Seed: Successfully created player');
-  } catch (e) {
-    log('Seed: Failed to create player');
-  }
-
   // try {
-  //   await prisma.quarter.create(
-  //     data: const PrismaUnion.$1(
-  //       QuarterCreateInput(
-  //         number: 1,
-  //         totalScore: 0,
-  //         madeOne: 0,
-  //         madeTwo: 0,
-  //         madeThree: 0,
-  //         miss: 0,
-  //         reboundOffensive: 0,
-  //         assist: 0,
-  //         block: 0,
-  //         foul: 0,
-  //         reboundDefensive: 0,
-  //         steal: 0,
-  //         turnover: 0,
+  //   await prisma.player.create(
+  //     data: PrismaUnion.$1(
+  //       PlayerCreateInput(
+  //         lastName: 'Valmoria',
+  //         firstName: 'Jiyo',
+  //         middleName: 'Baababoi',
+  //         gamesPlayed: PrismaUnion.$1(0),
+  //         jerseyNumber: 1,
+  //         team: TeamCreateNestedOneWithoutPlayerInput(
+  //           connect: TeamWhereUniqueInput(id: (2)),
+  //         ),
   //       ),
   //     ),
   //   );
-  //   log('Seed: Successfully created quarter');
+  //   log('Seed: Successfully created player');
   // } catch (e) {
-  //   log('Seed: Failed to create quarter');
+  //   log('Seed: Failed to create player');
   // }
+// for quarter table create
+
+  try {
+    // Define field values
+    final madeOne = 5;
+    final madeTwo = 3;
+    final madeThree = 2;
+
+    // Log the field values to ensure they are correct
+    log('Made One: $madeOne');
+    log('Made Two: $madeTwo');
+    log('Made Three: $madeThree');
+
+    // Calculate totalScore
+    final totalScore = (madeOne * 1) + (madeTwo * 2) + (madeThree * 3);
+    log('Total Score: $totalScore'); // Log the total score calculation
+
+    // Create Quarter record
+    final quarterID = 1; // Ensure this is a valid quarter ID
+    log('Quarter ID: $quarterID');
+
+    final playerID = 1; // Ensure this is a valid player ID
+    log('Player ID: $playerID');
+
+    // Create player statistics
+    final playerStatisticsInput = PlayerStatisticsCreateInput(
+      quarter: QuarterCreateNestedOneWithoutPlayerStatisticsInput(
+          connect: QuarterWhereUniqueInput(id: quarterID)),
+      number: 1,
+      madeOne: madeOne,
+      madeTwo: madeTwo,
+      madeThree: madeThree,
+      totalScore: totalScore, // Computed value
+      rebound: 1,
+      foul: 2,
+      assist: 1,
+      turnover: 1,
+      steal: 1,
+      block: 1,
+      player: PlayerCreateNestedOneWithoutPlayerStatisticsInput(
+          connect: PlayerWhereUniqueInput(id: playerID)),
+    );
+
+    log('Player Statistics Input: $playerStatisticsInput');
+
+    await prisma.playerStatistics.create(
+      data: PrismaUnion.$1(playerStatisticsInput),
+    );
+
+    log('Seed: Successfully created player statistics');
+  } catch (e) {
+    log('Seed: Failed to create player statistics with error: $e');
+  }
 
   // try {
   //   await prisma.game.create(
@@ -142,7 +171,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initializePrisma();
-  // seedData();
+  seedData();
   loadPackageInfo();
   runApp(MyApp());
 }
@@ -157,15 +186,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Basketball Voice Recognition App',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      initialRoute: '/screens/startRecording', // jiyo's initial route
-      // initialRoute: '/screens/landing', // mariel's initial route
+      initialRoute: '/screens/teamStatistics', // mariel's initial route
+      // initialRoute: '/screens/startRecording', jiyo's initial route
+      //initialRoute: '/screens/landing', // mariel's initial route
+
       routes: {
         '/screens/landing': (context) => Landing(),
         '/screens/startRecording': (context) => StartRecording(),
         '/screens/dashboard': (context) => const Dashboard(),
-        // '/screens/teamStatistics': (context) => TeamStatistics(),
+        '/screens/teamStatistics': (context) => TeamStatistics(),
         '/screens/teamProfile': (context) => TeamProfile(),
-        '/screens/playerProfile': (context) => PlayerProfile(),
+        //'/screens/playerProfile': (context) => PlayerProfile(),
         // '/screens/teamPlayerProfile': (context) => TeamPlayerProfile()
       },
     );

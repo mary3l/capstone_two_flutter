@@ -283,3 +283,56 @@ Future<List<Logs>> fetchLogs() async {
     return []; // Return an empty list in case of an error
   }
 }
+
+// --------------- Player Statistics -----------------
+// Fetch player statistics according to gameID inside the quarter
+// Future<List<PlayerStatistics>> fetchPlayerStatisticsForGame(int gameID) async {
+//   try {
+//     final playerStatistics = await prisma.playerStatistics.findMany(
+//       where: PlayerStatisticsWhereInput(
+//         quarter: PrismaUnion.$1(QuarterRelationFilter())
+        
+//         // QuarterWhereInput(
+//         //   gameID: PrismaUnion.$1(gameID),
+//           //   (equals: PrismaUnion.$1(gameID)),
+//           // ),
+//         ),
+//       ),
+//     );
+
+//     // Log the results for debugging
+//     log('Successfully fetched player statistics for game with ID: $gameID');
+//     log('Player Statistics: $playerStatistics'); // Log the fetched player statistics
+
+//     return playerStatistics.toList(); // Return the fetched player statistics
+//   } catch (e) {
+//     log('Error fetching player statistics for game: $e');
+//     return []; // Return an empty list in case of error
+//   }
+// }
+
+// fetch teams according to seasonID inside game
+// Future<List<Team>> fetchTeamsForSeason(int seasonID) async {
+//   try {
+//     final teams = await prisma.team.findMany(
+//       where: TeamWhereInput(
+//         game: GameListRelationFilter(
+//           some: GameWhereInput(
+//             seasonID: PrismaUnion.$1(
+//               IntFilter(equals: PrismaUnion.$1(seasonID)),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+
+//     // Log the results for debugging
+//     log('Successfully fetched teams for season with ID: $seasonID');
+//     log('Teams: $teams'); // Log the fetched teams
+
+//     return teams.toList(); // Return the fetched teams
+//   } catch (e) {
+//     log('Error fetching teams for season: $e');
+//     return []; // Return an empty list in case of error
+//   }
+// }

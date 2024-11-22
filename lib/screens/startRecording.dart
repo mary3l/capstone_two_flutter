@@ -31,18 +31,20 @@ class StartRecording extends StatefulWidget {
   final int? endYear;
   final int? seasonID;
   final String? opponentName;
+  final int? gameID; // Add gameID here
 
-  const StartRecording(
-      {Key? key,
-      this.gameTitle,
-      this.date,
-      this.semester,
-      this.teamID,
-      this.startYear,
-      this.endYear,
-      this.seasonID,
-      this.opponentName})
-      : super(key: key);
+  const StartRecording({
+    Key? key,
+    this.gameTitle,
+    this.date,
+    this.semester,
+    this.teamID,
+    this.startYear,
+    this.endYear,
+    this.seasonID,
+    this.opponentName,
+    this.gameID, // Add gameID to the constructor
+  }) : super(key: key);
 
   @override
   _StartRecordingState createState() => _StartRecordingState();
@@ -128,8 +130,6 @@ class _StartRecordingState extends State<StartRecording> {
     // Call the print method to log the status
     printKeywordCombinationStatus();
 
-    // ADD THIS CHECK IF THE MODEL IS RELIABLE ENOUGH
-
     // Once the combination is checked, proceed to process the keyword
 
     // Check if the combination is valid or invalid
@@ -155,36 +155,36 @@ class _StartRecordingState extends State<StartRecording> {
     String first = _keywordCombinations[0];
     String second = _keywordCombinations[1];
     String third = _keywordCombinations[2];
-    try {
-      final quarter = await prisma.quarter.findMany();
-      for (var quarter in quarter) {
-        print('Quarter ID: ${quarter.id}');
-      }
+    // try {
+    //   final quarter = await prisma.quarter.findMany();
+    //   for (var quarter in quarter) {
+    //     print('Quarter ID: ${quarter.id}');
+    //   }
 
-      await prisma.logs.create(
-        data: PrismaUnion.$1(
-          LogsCreateInput(
-            quarter: QuarterCreateNestedOneWithoutLogsInput(
-              connect: (QuarterWhereUniqueInput(id: 1)),
-            ),
-            keywordOne: first,
-            keywordTwo: second,
-            keywordThree: third.isNotEmpty
-                ? PrismaUnion.$1(third)
-                : const PrismaUnion.$2(PrismaNull()),
-            timestamp: DateTime.now(),
-            isValidCombination:
-                _isValidKeywordCombination, // the value for isValidCombination is passed here from _isValidKeywordCombination
-          ),
-        ),
-      );
-      log('Successfully created logs');
-    } catch (e) {
-      print(e);
-      log('Error ${e.toString()}');
-    } finally {
-      _keywordCombinations.clear();
-    }
+    //   await prisma.logs.create(
+    //     data: PrismaUnion.$1(
+    //       LogsCreateInput(
+    //         quarter: QuarterCreateNestedOneWithoutLogsInput(
+    //           connect: (QuarterWhereUniqueInput(id: 1)),
+    //         ),
+    //         keywordOne: first,
+    //         keywordTwo: second,
+    //         keywordThree: third.isNotEmpty
+    //             ? PrismaUnion.$1(third)
+    //             : const PrismaUnion.$2(PrismaNull()),
+    //         timestamp: DateTime.now(),
+    //         isValidCombination:
+    //             _isValidKeywordCombination, // the value for isValidCombination is passed here from _isValidKeywordCombination
+    //       ),
+    //     ),
+    //   );
+    //   log('Successfully created logs');
+    // } catch (e) {
+    //   print(e);
+    //   log('Error ${e.toString()}');
+    // } finally {
+    //   _keywordCombinations.clear();
+    // }
   }
 
   Future<bool> _requestPermission() async {

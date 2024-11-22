@@ -59,14 +59,14 @@ class TeamCountOutputType {
 }
 
 class GameCountOutputType {
-  const GameCountOutputType({this.playerStatistics});
+  const GameCountOutputType({this.quarter});
 
   factory GameCountOutputType.fromJson(Map json) =>
-      GameCountOutputType(playerStatistics: json['PlayerStatistics']);
+      GameCountOutputType(quarter: json['Quarter']);
 
-  final int? playerStatistics;
+  final int? quarter;
 
-  Map<String, dynamic> toJson() => {'PlayerStatistics': playerStatistics};
+  Map<String, dynamic> toJson() => {'Quarter': quarter};
 }
 
 class SeasonCountOutputType {
@@ -440,42 +440,6 @@ class IntNullableFilter implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
-class PlayerNullableRelationFilter
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerNullableRelationFilter({
-    this.$is,
-    this.isNot,
-  });
-
-  final _i1.PrismaUnion<_i2.PlayerWhereInput, _i1.PrismaNull>? $is;
-
-  final _i1.PrismaUnion<_i2.PlayerWhereInput, _i1.PrismaNull>? isNot;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'is': $is,
-        'isNot': isNot,
-      };
-}
-
-class GameNullableRelationFilter
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameNullableRelationFilter({
-    this.$is,
-    this.isNot,
-  });
-
-  final _i1.PrismaUnion<_i2.GameWhereInput, _i1.PrismaNull>? $is;
-
-  final _i1.PrismaUnion<_i2.GameWhereInput, _i1.PrismaNull>? isNot;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'is': $is,
-        'isNot': isNot,
-      };
-}
-
 class NestedStringNullableFilter
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const NestedStringNullableFilter({
@@ -622,24 +586,6 @@ class BoolFilter implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
-class QuarterRelationFilter
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterRelationFilter({
-    this.$is,
-    this.isNot,
-  });
-
-  final _i2.QuarterWhereInput? $is;
-
-  final _i2.QuarterWhereInput? isNot;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'is': $is,
-        'isNot': isNot,
-      };
-}
-
 class LogsWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const LogsWhereInput({
     this.AND,
@@ -717,26 +663,32 @@ class LogsListRelationFilter
       };
 }
 
+class GameRelationFilter implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameRelationFilter({
+    this.$is,
+    this.isNot,
+  });
+
+  final _i2.GameWhereInput? $is;
+
+  final _i2.GameWhereInput? isNot;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'is': $is,
+        'isNot': isNot,
+      };
+}
+
 class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterWhereInput({
     this.AND,
     this.OR,
     this.NOT,
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.logs,
+    this.game,
     this.playerStatistics,
   });
 
@@ -750,33 +702,11 @@ class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? id;
 
-  final _i1.PrismaUnion<_i2.IntFilter, int>? number;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? totalScore;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? madeOne;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? madeTwo;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? madeThree;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? miss;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? reboundOffensive;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? reboundDefensive;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? foul;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? turnover;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? assist;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? block;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? gameID;
 
   final _i2.LogsListRelationFilter? logs;
+
+  final _i1.PrismaUnion<_i2.GameRelationFilter, _i2.GameWhereInput>? game;
 
   final _i2.PlayerStatisticsListRelationFilter? playerStatistics;
 
@@ -786,34 +716,41 @@ class QuarterWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'OR': OR,
         'NOT': NOT,
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'Logs': logs,
+        'game': game,
         'PlayerStatistics': playerStatistics,
       };
 }
 
-class QuarterNullableRelationFilter
+class QuarterRelationFilter
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterNullableRelationFilter({
+  const QuarterRelationFilter({
     this.$is,
     this.isNot,
   });
 
-  final _i1.PrismaUnion<_i2.QuarterWhereInput, _i1.PrismaNull>? $is;
+  final _i2.QuarterWhereInput? $is;
 
-  final _i1.PrismaUnion<_i2.QuarterWhereInput, _i1.PrismaNull>? isNot;
+  final _i2.QuarterWhereInput? isNot;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'is': $is,
+        'isNot': isNot,
+      };
+}
+
+class PlayerRelationFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const PlayerRelationFilter({
+    this.$is,
+    this.isNot,
+  });
+
+  final _i2.PlayerWhereInput? $is;
+
+  final _i2.PlayerWhereInput? isNot;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -829,14 +766,22 @@ class PlayerStatisticsWhereInput
     this.OR,
     this.NOT,
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
-    this.player,
-    this.game,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.quarter,
+    this.player,
   });
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsWhereInput,
@@ -849,32 +794,40 @@ class PlayerStatisticsWhereInput
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? id;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      playerID;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? playerID;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? number;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? totalScore;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeOne;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeTwo;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeThree;
 
   final _i1
       .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      gameID;
+      miss;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      quarterID;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? rebound;
 
-  final _i1.PrismaUnion<_i2.StringFilter, String>? action;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? foul;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      points;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? turnover;
 
-  final _i1.PrismaUnion<_i2.PlayerNullableRelationFilter,
-      _i1.PrismaUnion<_i2.PlayerWhereInput, _i1.PrismaNull>>? player;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? assist;
 
-  final _i1.PrismaUnion<_i2.GameNullableRelationFilter,
-      _i1.PrismaUnion<_i2.GameWhereInput, _i1.PrismaNull>>? game;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? block;
 
-  final _i1.PrismaUnion<_i2.QuarterNullableRelationFilter,
-      _i1.PrismaUnion<_i2.QuarterWhereInput, _i1.PrismaNull>>? quarter;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
+
+  final _i1.PrismaUnion<_i2.QuarterRelationFilter, _i2.QuarterWhereInput>?
+      quarter;
+
+  final _i1.PrismaUnion<_i2.PlayerRelationFilter, _i2.PlayerWhereInput>? player;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -882,14 +835,22 @@ class PlayerStatisticsWhereInput
         'OR': OR,
         'NOT': NOT,
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
+        'player': player,
       };
 }
 
@@ -1074,6 +1035,28 @@ class SeasonRelationFilter
       };
 }
 
+class QuarterListRelationFilter
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterListRelationFilter({
+    this.every,
+    this.some,
+    this.none,
+  });
+
+  final _i2.QuarterWhereInput? every;
+
+  final _i2.QuarterWhereInput? some;
+
+  final _i2.QuarterWhereInput? none;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'every': every,
+        'some': some,
+        'none': none,
+      };
+}
+
 class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameWhereInput({
     this.AND,
@@ -1088,7 +1071,7 @@ class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.seasonID,
     this.team,
     this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<_i2.GameWhereInput, Iterable<_i2.GameWhereInput>>? AND;
@@ -1118,7 +1101,7 @@ class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<_i2.SeasonRelationFilter, _i2.SeasonWhereInput>? season;
 
-  final _i2.PlayerStatisticsListRelationFilter? playerStatistics;
+  final _i2.QuarterListRelationFilter? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -1134,7 +1117,7 @@ class GameWhereInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'seasonID': seasonID,
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -1348,9 +1331,9 @@ class SeasonOrderByWithRelationInput
       };
 }
 
-class PlayerStatisticsOrderByRelationAggregateInput
+class QuarterOrderByRelationAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsOrderByRelationAggregateInput({this.$count});
+  const QuarterOrderByRelationAggregateInput({this.$count});
 
   final _i2.SortOrder? $count;
 
@@ -1370,7 +1353,7 @@ class GameOrderByWithRelationInput
     this.seasonID,
     this.team,
     this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i2.SortOrder? id;
@@ -1391,7 +1374,7 @@ class GameOrderByWithRelationInput
 
   final _i2.SeasonOrderByWithRelationInput? season;
 
-  final _i2.PlayerStatisticsOrderByRelationAggregateInput? playerStatistics;
+  final _i2.QuarterOrderByRelationAggregateInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -1404,7 +1387,7 @@ class GameOrderByWithRelationInput
         'seasonID': seasonID,
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -1423,7 +1406,7 @@ class GameWhereUniqueInput
     this.seasonID,
     this.team,
     this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final int? id;
@@ -1453,7 +1436,7 @@ class GameWhereUniqueInput
 
   final _i1.PrismaUnion<_i2.SeasonRelationFilter, _i2.SeasonWhereInput>? season;
 
-  final _i2.PlayerStatisticsListRelationFilter? playerStatistics;
+  final _i2.QuarterListRelationFilter? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -1469,7 +1452,7 @@ class GameWhereUniqueInput
         'seasonID': seasonID,
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -1557,50 +1540,6 @@ class PlayerTeamArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
-class PlayerStatisticsPlayerArgs
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsPlayerArgs({
-    this.where,
-    this.select,
-    this.include,
-  });
-
-  final _i2.PlayerWhereInput? where;
-
-  final _i2.PlayerSelect? select;
-
-  final _i2.PlayerInclude? include;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'select': select,
-        'include': include,
-      };
-}
-
-class PlayerStatisticsGameArgs
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsGameArgs({
-    this.where,
-    this.select,
-    this.include,
-  });
-
-  final _i2.GameWhereInput? where;
-
-  final _i2.GameSelect? select;
-
-  final _i2.GameInclude? include;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'select': select,
-        'include': include,
-      };
-}
-
 class LogsQuarterArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
   const LogsQuarterArgs({
     this.select,
@@ -1637,76 +1576,42 @@ class LogsOrderByRelationAggregateInput
   Map<String, dynamic> toJson() => {'_count': $count};
 }
 
+class PlayerStatisticsOrderByRelationAggregateInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const PlayerStatisticsOrderByRelationAggregateInput({this.$count});
+
+  final _i2.SortOrder? $count;
+
+  @override
+  Map<String, dynamic> toJson() => {'_count': $count};
+}
+
 class QuarterOrderByWithRelationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterOrderByWithRelationInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.logs,
+    this.game,
     this.playerStatistics,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   final _i2.LogsOrderByRelationAggregateInput? logs;
+
+  final _i2.GameOrderByWithRelationInput? game;
 
   final _i2.PlayerStatisticsOrderByRelationAggregateInput? playerStatistics;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'Logs': logs,
+        'game': game,
         'PlayerStatistics': playerStatistics,
       };
 }
@@ -1872,6 +1777,41 @@ class QuarterLogsArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
+class QuarterGameArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterGameArgs({
+    this.select,
+    this.include,
+  });
+
+  final _i2.GameSelect? select;
+
+  final _i2.GameInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'select': select,
+        'include': include,
+      };
+}
+
+class PlayerStatisticsQuarterArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const PlayerStatisticsQuarterArgs({
+    this.select,
+    this.include,
+  });
+
+  final _i2.QuarterSelect? select;
+
+  final _i2.QuarterInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'select': select,
+        'include': include,
+      };
+}
+
 class PlayerOrderByWithRelationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerOrderByWithRelationInput({
@@ -1922,45 +1862,77 @@ class PlayerStatisticsOrderByWithRelationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsOrderByWithRelationInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
-    this.player,
-    this.game,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.quarter,
+    this.player,
   });
 
   final _i2.SortOrder? id;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? playerID;
+  final _i2.SortOrder? quarterID;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? gameID;
+  final _i2.SortOrder? playerID;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? quarterID;
+  final _i2.SortOrder? number;
 
-  final _i2.SortOrder? action;
+  final _i2.SortOrder? totalScore;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? points;
+  final _i2.SortOrder? madeOne;
 
-  final _i2.PlayerOrderByWithRelationInput? player;
+  final _i2.SortOrder? madeTwo;
 
-  final _i2.GameOrderByWithRelationInput? game;
+  final _i2.SortOrder? madeThree;
+
+  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   final _i2.QuarterOrderByWithRelationInput? quarter;
+
+  final _i2.PlayerOrderByWithRelationInput? player;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
+        'player': player,
       };
 }
 
@@ -1971,14 +1943,22 @@ class PlayerStatisticsWhereUniqueInput
     this.AND,
     this.OR,
     this.NOT,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
-    this.player,
-    this.game,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.quarter,
+    this.player,
   });
 
   final int? id;
@@ -1991,32 +1971,40 @@ class PlayerStatisticsWhereUniqueInput
   final _i1.PrismaUnion<_i2.PlayerStatisticsWhereInput,
       Iterable<_i2.PlayerStatisticsWhereInput>>? NOT;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      playerID;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? playerID;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? number;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? totalScore;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeOne;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeTwo;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeThree;
 
   final _i1
       .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      gameID;
+      miss;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      quarterID;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? rebound;
 
-  final _i1.PrismaUnion<_i2.StringFilter, String>? action;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? foul;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      points;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? turnover;
 
-  final _i1.PrismaUnion<_i2.PlayerNullableRelationFilter,
-      _i1.PrismaUnion<_i2.PlayerWhereInput, _i1.PrismaNull>>? player;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? assist;
 
-  final _i1.PrismaUnion<_i2.GameNullableRelationFilter,
-      _i1.PrismaUnion<_i2.GameWhereInput, _i1.PrismaNull>>? game;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? block;
 
-  final _i1.PrismaUnion<_i2.QuarterNullableRelationFilter,
-      _i1.PrismaUnion<_i2.QuarterWhereInput, _i1.PrismaNull>>? quarter;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
+
+  final _i1.PrismaUnion<_i2.QuarterRelationFilter, _i2.QuarterWhereInput>?
+      quarter;
+
+  final _i1.PrismaUnion<_i2.PlayerRelationFilter, _i2.PlayerWhereInput>? player;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -2024,24 +2012,41 @@ class PlayerStatisticsWhereUniqueInput
         'AND': AND,
         'OR': OR,
         'NOT': NOT,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
+        'player': player,
       };
 }
 
 enum PlayerStatisticsScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
   id<int>('id', 'PlayerStatistics'),
-  playerID<int>('playerID', 'PlayerStatistics'),
-  gameID<int>('gameID', 'PlayerStatistics'),
   quarterID<int>('quarterID', 'PlayerStatistics'),
-  action<String>('action', 'PlayerStatistics'),
-  points<int>('points', 'PlayerStatistics');
+  playerID<int>('playerID', 'PlayerStatistics'),
+  number<int>('number', 'PlayerStatistics'),
+  totalScore<int>('totalScore', 'PlayerStatistics'),
+  madeOne<int>('madeOne', 'PlayerStatistics'),
+  madeTwo<int>('madeTwo', 'PlayerStatistics'),
+  madeThree<int>('madeThree', 'PlayerStatistics'),
+  miss<int>('miss', 'PlayerStatistics'),
+  rebound<int>('rebound', 'PlayerStatistics'),
+  foul<int>('foul', 'PlayerStatistics'),
+  turnover<int>('turnover', 'PlayerStatistics'),
+  assist<int>('assist', 'PlayerStatistics'),
+  block<int>('block', 'PlayerStatistics'),
+  steal<int>('steal', 'PlayerStatistics');
 
   const PlayerStatisticsScalar(
     this.name,
@@ -2053,262 +2058,6 @@ enum PlayerStatisticsScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
 
   @override
   final String model;
-}
-
-class QuarterPlayerStatisticsArgs
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterPlayerStatisticsArgs({
-    this.where,
-    this.orderBy,
-    this.cursor,
-    this.take,
-    this.skip,
-    this.distinct,
-    this.select,
-    this.include,
-  });
-
-  final _i2.PlayerStatisticsWhereInput? where;
-
-  final _i1.PrismaUnion<Iterable<_i2.PlayerStatisticsOrderByWithRelationInput>,
-      _i2.PlayerStatisticsOrderByWithRelationInput>? orderBy;
-
-  final _i2.PlayerStatisticsWhereUniqueInput? cursor;
-
-  final int? take;
-
-  final int? skip;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsScalar,
-      Iterable<_i2.PlayerStatisticsScalar>>? distinct;
-
-  final _i2.PlayerStatisticsSelect? select;
-
-  final _i2.PlayerStatisticsInclude? include;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'orderBy': orderBy,
-        'cursor': cursor,
-        'take': take,
-        'skip': skip,
-        'distinct': distinct,
-        'select': select,
-        'include': include,
-      };
-}
-
-class QuarterCountOutputTypeSelect
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterCountOutputTypeSelect({
-    this.logs,
-    this.playerStatistics,
-  });
-
-  final bool? logs;
-
-  final bool? playerStatistics;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'Logs': logs,
-        'PlayerStatistics': playerStatistics,
-      };
-}
-
-class QuarterCountArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterCountArgs({this.select});
-
-  final _i2.QuarterCountOutputTypeSelect? select;
-
-  @override
-  Map<String, dynamic> toJson() => {'select': select};
-}
-
-class QuarterInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterInclude({
-    this.logs,
-    this.playerStatistics,
-    this.$count,
-  });
-
-  final _i1.PrismaUnion<bool, _i2.QuarterLogsArgs>? logs;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterPlayerStatisticsArgs>?
-      playerStatistics;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterCountArgs>? $count;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'Logs': logs,
-        'PlayerStatistics': playerStatistics,
-        '_count': $count,
-      };
-}
-
-class LogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const LogsSelect({
-    this.id,
-    this.keywordOne,
-    this.keywordTwo,
-    this.keywordThree,
-    this.isValidCombination,
-    this.timestamp,
-    this.quarterID,
-    this.quarter,
-  });
-
-  final bool? id;
-
-  final bool? keywordOne;
-
-  final bool? keywordTwo;
-
-  final bool? keywordThree;
-
-  final bool? isValidCombination;
-
-  final bool? timestamp;
-
-  final bool? quarterID;
-
-  final _i1.PrismaUnion<bool, _i2.LogsQuarterArgs>? quarter;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'keywordOne': keywordOne,
-        'keywordTwo': keywordTwo,
-        'keywordThree': keywordThree,
-        'isValidCombination': isValidCombination,
-        'timestamp': timestamp,
-        'quarterID': quarterID,
-        'quarter': quarter,
-      };
-}
-
-class QuarterSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterSelect({
-    this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
-    this.logs,
-    this.playerStatistics,
-    this.$count,
-  });
-
-  final bool? id;
-
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterLogsArgs>? logs;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterPlayerStatisticsArgs>?
-      playerStatistics;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterCountArgs>? $count;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
-        'Logs': logs,
-        'PlayerStatistics': playerStatistics,
-        '_count': $count,
-      };
-}
-
-class PlayerStatisticsQuarterArgs
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsQuarterArgs({
-    this.where,
-    this.select,
-    this.include,
-  });
-
-  final _i2.QuarterWhereInput? where;
-
-  final _i2.QuarterSelect? select;
-
-  final _i2.QuarterInclude? include;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'select': select,
-        'include': include,
-      };
-}
-
-class PlayerStatisticsInclude
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsInclude({
-    this.player,
-    this.game,
-    this.quarter,
-  });
-
-  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsPlayerArgs>? player;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsGameArgs>? game;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsQuarterArgs>? quarter;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'player': player,
-        'game': game,
-        'quarter': quarter,
-      };
 }
 
 class PlayerPlayerStatisticsArgs
@@ -2395,49 +2144,289 @@ class PlayerInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
-class PlayerStatisticsSelect
+class PlayerStatisticsPlayerArgs
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsSelect({
-    this.id,
-    this.playerID,
-    this.gameID,
-    this.quarterID,
-    this.action,
-    this.points,
+  const PlayerStatisticsPlayerArgs({
+    this.select,
+    this.include,
+  });
+
+  final _i2.PlayerSelect? select;
+
+  final _i2.PlayerInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'select': select,
+        'include': include,
+      };
+}
+
+class PlayerStatisticsInclude
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const PlayerStatisticsInclude({
+    this.quarter,
     this.player,
+  });
+
+  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsQuarterArgs>? quarter;
+
+  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsPlayerArgs>? player;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'quarter': quarter,
+        'player': player,
+      };
+}
+
+class QuarterPlayerStatisticsArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterPlayerStatisticsArgs({
+    this.where,
+    this.orderBy,
+    this.cursor,
+    this.take,
+    this.skip,
+    this.distinct,
+    this.select,
+    this.include,
+  });
+
+  final _i2.PlayerStatisticsWhereInput? where;
+
+  final _i1.PrismaUnion<Iterable<_i2.PlayerStatisticsOrderByWithRelationInput>,
+      _i2.PlayerStatisticsOrderByWithRelationInput>? orderBy;
+
+  final _i2.PlayerStatisticsWhereUniqueInput? cursor;
+
+  final int? take;
+
+  final int? skip;
+
+  final _i1.PrismaUnion<_i2.PlayerStatisticsScalar,
+      Iterable<_i2.PlayerStatisticsScalar>>? distinct;
+
+  final _i2.PlayerStatisticsSelect? select;
+
+  final _i2.PlayerStatisticsInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'orderBy': orderBy,
+        'cursor': cursor,
+        'take': take,
+        'skip': skip,
+        'distinct': distinct,
+        'select': select,
+        'include': include,
+      };
+}
+
+class QuarterCountOutputTypeSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCountOutputTypeSelect({
+    this.logs,
+    this.playerStatistics,
+  });
+
+  final bool? logs;
+
+  final bool? playerStatistics;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'Logs': logs,
+        'PlayerStatistics': playerStatistics,
+      };
+}
+
+class QuarterCountArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCountArgs({this.select});
+
+  final _i2.QuarterCountOutputTypeSelect? select;
+
+  @override
+  Map<String, dynamic> toJson() => {'select': select};
+}
+
+class QuarterInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterInclude({
+    this.logs,
     this.game,
+    this.playerStatistics,
+    this.$count,
+  });
+
+  final _i1.PrismaUnion<bool, _i2.QuarterLogsArgs>? logs;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterGameArgs>? game;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterPlayerStatisticsArgs>?
+      playerStatistics;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterCountArgs>? $count;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'Logs': logs,
+        'game': game,
+        'PlayerStatistics': playerStatistics,
+        '_count': $count,
+      };
+}
+
+class LogsSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const LogsSelect({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.isValidCombination,
+    this.timestamp,
+    this.quarterID,
     this.quarter,
   });
 
   final bool? id;
 
-  final bool? playerID;
+  final bool? keywordOne;
 
-  final bool? gameID;
+  final bool? keywordTwo;
+
+  final bool? keywordThree;
+
+  final bool? isValidCombination;
+
+  final bool? timestamp;
 
   final bool? quarterID;
 
-  final bool? action;
-
-  final bool? points;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsPlayerArgs>? player;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsGameArgs>? game;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsQuarterArgs>? quarter;
+  final _i1.PrismaUnion<bool, _i2.LogsQuarterArgs>? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
+        'timestamp': timestamp,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
         'quarter': quarter,
+      };
+}
+
+class QuarterSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterSelect({
+    this.id,
+    this.gameID,
+    this.logs,
+    this.game,
+    this.playerStatistics,
+    this.$count,
+  });
+
+  final bool? id;
+
+  final bool? gameID;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterLogsArgs>? logs;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterGameArgs>? game;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterPlayerStatisticsArgs>?
+      playerStatistics;
+
+  final _i1.PrismaUnion<bool, _i2.QuarterCountArgs>? $count;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'gameID': gameID,
+        'Logs': logs,
+        'game': game,
+        'PlayerStatistics': playerStatistics,
+        '_count': $count,
+      };
+}
+
+class PlayerStatisticsSelect
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const PlayerStatisticsSelect({
+    this.id,
+    this.quarterID,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    this.quarter,
+    this.player,
+  });
+
+  final bool? id;
+
+  final bool? quarterID;
+
+  final bool? playerID;
+
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
+
+  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsQuarterArgs>? quarter;
+
+  final _i1.PrismaUnion<bool, _i2.PlayerStatisticsPlayerArgs>? player;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'quarterID': quarterID,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
+        'quarter': quarter,
+        'player': player,
       };
 }
 
@@ -2782,9 +2771,68 @@ class GameSeasonArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
-class GamePlayerStatisticsArgs
+class QuarterWhereUniqueInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GamePlayerStatisticsArgs({
+  const QuarterWhereUniqueInput({
+    this.id,
+    this.AND,
+    this.OR,
+    this.NOT,
+    this.gameID,
+    this.logs,
+    this.game,
+    this.playerStatistics,
+  });
+
+  final int? id;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereInput, Iterable<_i2.QuarterWhereInput>>?
+      AND;
+
+  final Iterable<_i2.QuarterWhereInput>? OR;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereInput, Iterable<_i2.QuarterWhereInput>>?
+      NOT;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? gameID;
+
+  final _i2.LogsListRelationFilter? logs;
+
+  final _i1.PrismaUnion<_i2.GameRelationFilter, _i2.GameWhereInput>? game;
+
+  final _i2.PlayerStatisticsListRelationFilter? playerStatistics;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'AND': AND,
+        'OR': OR,
+        'NOT': NOT,
+        'gameID': gameID,
+        'Logs': logs,
+        'game': game,
+        'PlayerStatistics': playerStatistics,
+      };
+}
+
+enum QuarterScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
+  id<int>('id', 'Quarter'),
+  gameID<int>('gameID', 'Quarter');
+
+  const QuarterScalar(
+    this.name,
+    this.model,
+  );
+
+  @override
+  final String name;
+
+  @override
+  final String model;
+}
+
+class GameQuarterArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameQuarterArgs({
     this.where,
     this.orderBy,
     this.cursor,
@@ -2795,23 +2843,23 @@ class GamePlayerStatisticsArgs
     this.include,
   });
 
-  final _i2.PlayerStatisticsWhereInput? where;
+  final _i2.QuarterWhereInput? where;
 
-  final _i1.PrismaUnion<Iterable<_i2.PlayerStatisticsOrderByWithRelationInput>,
-      _i2.PlayerStatisticsOrderByWithRelationInput>? orderBy;
+  final _i1.PrismaUnion<Iterable<_i2.QuarterOrderByWithRelationInput>,
+      _i2.QuarterOrderByWithRelationInput>? orderBy;
 
-  final _i2.PlayerStatisticsWhereUniqueInput? cursor;
+  final _i2.QuarterWhereUniqueInput? cursor;
 
   final int? take;
 
   final int? skip;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsScalar,
-      Iterable<_i2.PlayerStatisticsScalar>>? distinct;
+  final _i1.PrismaUnion<_i2.QuarterScalar, Iterable<_i2.QuarterScalar>>?
+      distinct;
 
-  final _i2.PlayerStatisticsSelect? select;
+  final _i2.QuarterSelect? select;
 
-  final _i2.PlayerStatisticsInclude? include;
+  final _i2.QuarterInclude? include;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -2828,12 +2876,12 @@ class GamePlayerStatisticsArgs
 
 class GameCountOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameCountOutputTypeSelect({this.playerStatistics});
+  const GameCountOutputTypeSelect({this.quarter});
 
-  final bool? playerStatistics;
+  final bool? quarter;
 
   @override
-  Map<String, dynamic> toJson() => {'PlayerStatistics': playerStatistics};
+  Map<String, dynamic> toJson() => {'Quarter': quarter};
 }
 
 class GameCountArgs implements _i1.JsonConvertible<Map<String, dynamic>> {
@@ -2849,7 +2897,7 @@ class GameInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
   const GameInclude({
     this.team,
     this.season,
-    this.playerStatistics,
+    this.quarter,
     this.$count,
   });
 
@@ -2857,7 +2905,7 @@ class GameInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<bool, _i2.GameSeasonArgs>? season;
 
-  final _i1.PrismaUnion<bool, _i2.GamePlayerStatisticsArgs>? playerStatistics;
+  final _i1.PrismaUnion<bool, _i2.GameQuarterArgs>? quarter;
 
   final _i1.PrismaUnion<bool, _i2.GameCountArgs>? $count;
 
@@ -2865,7 +2913,7 @@ class GameInclude implements _i1.JsonConvertible<Map<String, dynamic>> {
   Map<String, dynamic> toJson() => {
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
         '_count': $count,
       };
 }
@@ -2910,7 +2958,7 @@ class GameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.seasonID,
     this.team,
     this.season,
-    this.playerStatistics,
+    this.quarter,
     this.$count,
   });
 
@@ -2932,7 +2980,7 @@ class GameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i1.PrismaUnion<bool, _i2.GameSeasonArgs>? season;
 
-  final _i1.PrismaUnion<bool, _i2.GamePlayerStatisticsArgs>? playerStatistics;
+  final _i1.PrismaUnion<bool, _i2.GameQuarterArgs>? quarter;
 
   final _i1.PrismaUnion<bool, _i2.GameCountArgs>? $count;
 
@@ -2947,7 +2995,7 @@ class GameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
         'seasonID': seasonID,
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
         '_count': $count,
       };
 }
@@ -2996,202 +3044,6 @@ enum SeasonScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
 
   @override
   final String model;
-}
-
-class SeasonCreateWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonCreateWithoutGamesInput({
-    required this.startYear,
-    required this.endYear,
-  });
-
-  final int startYear;
-
-  final int endYear;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'startYear': startYear,
-        'endYear': endYear,
-      };
-}
-
-class SeasonUncheckedCreateWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonUncheckedCreateWithoutGamesInput({
-    this.id,
-    required this.startYear,
-    required this.endYear,
-  });
-
-  final int? id;
-
-  final int startYear;
-
-  final int endYear;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'startYear': startYear,
-        'endYear': endYear,
-      };
-}
-
-class SeasonCreateOrConnectWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonCreateOrConnectWithoutGamesInput({
-    required this.where,
-    required this.create,
-  });
-
-  final _i2.SeasonWhereUniqueInput where;
-
-  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
-      _i2.SeasonUncheckedCreateWithoutGamesInput> create;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'create': create,
-      };
-}
-
-class SeasonCreateNestedOneWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonCreateNestedOneWithoutGamesInput({
-    this.create,
-    this.connectOrCreate,
-    this.connect,
-  });
-
-  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
-      _i2.SeasonUncheckedCreateWithoutGamesInput>? create;
-
-  final _i2.SeasonCreateOrConnectWithoutGamesInput? connectOrCreate;
-
-  final _i2.SeasonWhereUniqueInput? connect;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'connect': connect,
-      };
-}
-
-class GameCreateWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameCreateWithoutPlayerStatisticsInput({
-    required this.title,
-    required this.againstTeam,
-    required this.date,
-    required this.semester,
-    this.team,
-    required this.season,
-  });
-
-  final String title;
-
-  final String againstTeam;
-
-  final DateTime date;
-
-  final String semester;
-
-  final _i2.TeamCreateNestedOneWithoutGameInput? team;
-
-  final _i2.SeasonCreateNestedOneWithoutGamesInput season;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'againstTeam': againstTeam,
-        'date': date,
-        'semester': semester,
-        'team': team,
-        'season': season,
-      };
-}
-
-class GameUncheckedCreateWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameUncheckedCreateWithoutPlayerStatisticsInput({
-    this.id,
-    required this.title,
-    required this.againstTeam,
-    required this.date,
-    required this.semester,
-    this.teamID,
-    required this.seasonID,
-  });
-
-  final int? id;
-
-  final String title;
-
-  final String againstTeam;
-
-  final DateTime date;
-
-  final String semester;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? teamID;
-
-  final int seasonID;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'againstTeam': againstTeam,
-        'date': date,
-        'semester': semester,
-        'teamID': teamID,
-        'seasonID': seasonID,
-      };
-}
-
-class GameCreateOrConnectWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameCreateOrConnectWithoutPlayerStatisticsInput({
-    required this.where,
-    required this.create,
-  });
-
-  final _i2.GameWhereUniqueInput where;
-
-  final _i1.PrismaUnion<_i2.GameCreateWithoutPlayerStatisticsInput,
-      _i2.GameUncheckedCreateWithoutPlayerStatisticsInput> create;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'create': create,
-      };
-}
-
-class GameCreateNestedOneWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameCreateNestedOneWithoutPlayerStatisticsInput({
-    this.create,
-    this.connectOrCreate,
-    this.connect,
-  });
-
-  final _i1.PrismaUnion<_i2.GameCreateWithoutPlayerStatisticsInput,
-      _i2.GameUncheckedCreateWithoutPlayerStatisticsInput>? create;
-
-  final _i2.GameCreateOrConnectWithoutPlayerStatisticsInput? connectOrCreate;
-
-  final _i2.GameWhereUniqueInput? connect;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'connect': connect,
-      };
 }
 
 class LogsCreateWithoutQuarterInput
@@ -3355,69 +3207,217 @@ class LogsCreateNestedManyWithoutQuarterInput
       };
 }
 
-class QuarterCreateWithoutPlayerStatisticsInput
+class SeasonCreateWithoutGamesInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterCreateWithoutPlayerStatisticsInput({
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
-    this.logs,
+  const SeasonCreateWithoutGamesInput({
+    required this.startYear,
+    required this.endYear,
   });
 
-  final int number;
+  final int startYear;
 
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
-
-  final _i2.LogsCreateNestedManyWithoutQuarterInput? logs;
+  final int endYear;
 
   @override
   Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'startYear': startYear,
+        'endYear': endYear,
+      };
+}
+
+class SeasonUncheckedCreateWithoutGamesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonUncheckedCreateWithoutGamesInput({
+    this.id,
+    required this.startYear,
+    required this.endYear,
+  });
+
+  final int? id;
+
+  final int startYear;
+
+  final int endYear;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'startYear': startYear,
+        'endYear': endYear,
+      };
+}
+
+class SeasonCreateOrConnectWithoutGamesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonCreateOrConnectWithoutGamesInput({
+    required this.where,
+    required this.create,
+  });
+
+  final _i2.SeasonWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
+      _i2.SeasonUncheckedCreateWithoutGamesInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'create': create,
+      };
+}
+
+class SeasonCreateNestedOneWithoutGamesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonCreateNestedOneWithoutGamesInput({
+    this.create,
+    this.connectOrCreate,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
+      _i2.SeasonUncheckedCreateWithoutGamesInput>? create;
+
+  final _i2.SeasonCreateOrConnectWithoutGamesInput? connectOrCreate;
+
+  final _i2.SeasonWhereUniqueInput? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'connect': connect,
+      };
+}
+
+class GameCreateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameCreateWithoutQuarterInput({
+    required this.title,
+    required this.againstTeam,
+    required this.date,
+    required this.semester,
+    this.team,
+    required this.season,
+  });
+
+  final String title;
+
+  final String againstTeam;
+
+  final DateTime date;
+
+  final String semester;
+
+  final _i2.TeamCreateNestedOneWithoutGameInput? team;
+
+  final _i2.SeasonCreateNestedOneWithoutGamesInput season;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'againstTeam': againstTeam,
+        'date': date,
+        'semester': semester,
+        'team': team,
+        'season': season,
+      };
+}
+
+class GameUncheckedCreateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameUncheckedCreateWithoutQuarterInput({
+    this.id,
+    required this.title,
+    required this.againstTeam,
+    required this.date,
+    required this.semester,
+    this.teamID,
+    required this.seasonID,
+  });
+
+  final int? id;
+
+  final String title;
+
+  final String againstTeam;
+
+  final DateTime date;
+
+  final String semester;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? teamID;
+
+  final int seasonID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'againstTeam': againstTeam,
+        'date': date,
+        'semester': semester,
+        'teamID': teamID,
+        'seasonID': seasonID,
+      };
+}
+
+class GameCreateOrConnectWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameCreateOrConnectWithoutQuarterInput({
+    required this.where,
+    required this.create,
+  });
+
+  final _i2.GameWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.GameCreateWithoutQuarterInput,
+      _i2.GameUncheckedCreateWithoutQuarterInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'create': create,
+      };
+}
+
+class GameCreateNestedOneWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameCreateNestedOneWithoutQuarterInput({
+    this.create,
+    this.connectOrCreate,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<_i2.GameCreateWithoutQuarterInput,
+      _i2.GameUncheckedCreateWithoutQuarterInput>? create;
+
+  final _i2.GameCreateOrConnectWithoutQuarterInput? connectOrCreate;
+
+  final _i2.GameWhereUniqueInput? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'connect': connect,
+      };
+}
+
+class QuarterCreateWithoutPlayerStatisticsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateWithoutPlayerStatisticsInput({
+    this.logs,
+    required this.game,
+  });
+
+  final _i2.LogsCreateNestedManyWithoutQuarterInput? logs;
+
+  final _i2.GameCreateNestedOneWithoutQuarterInput game;
+
+  @override
+  Map<String, dynamic> toJson() => {
         'Logs': logs,
+        'game': game,
       };
 }
 
@@ -3458,157 +3458,21 @@ class QuarterUncheckedCreateWithoutPlayerStatisticsInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedCreateWithoutPlayerStatisticsInput({
     this.id,
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    required this.gameID,
     this.logs,
   });
 
   final int? id;
 
-  final int number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int gameID;
 
   final _i2.LogsUncheckedCreateNestedManyWithoutQuarterInput? logs;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'Logs': logs,
-      };
-}
-
-class QuarterWhereUniqueInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterWhereUniqueInput({
-    this.id,
-    this.AND,
-    this.OR,
-    this.NOT,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
-    this.logs,
-    this.playerStatistics,
-  });
-
-  final int? id;
-
-  final _i1.PrismaUnion<_i2.QuarterWhereInput, Iterable<_i2.QuarterWhereInput>>?
-      AND;
-
-  final Iterable<_i2.QuarterWhereInput>? OR;
-
-  final _i1.PrismaUnion<_i2.QuarterWhereInput, Iterable<_i2.QuarterWhereInput>>?
-      NOT;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? number;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? totalScore;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? madeOne;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? madeTwo;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? madeThree;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? miss;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? reboundOffensive;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? reboundDefensive;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? foul;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? turnover;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? assist;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? block;
-
-  final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
-
-  final _i2.LogsListRelationFilter? logs;
-
-  final _i2.PlayerStatisticsListRelationFilter? playerStatistics;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'AND': AND,
-        'OR': OR,
-        'NOT': NOT,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
-        'Logs': logs,
-        'PlayerStatistics': playerStatistics,
       };
 }
 
@@ -3657,25 +3521,61 @@ class QuarterCreateNestedOneWithoutPlayerStatisticsInput
 class PlayerStatisticsCreateWithoutPlayerInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsCreateWithoutPlayerInput({
-    required this.action,
-    this.points,
-    this.game,
-    this.quarter,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    required this.quarter,
   });
 
-  final String action;
+  final int number;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? totalScore;
 
-  final _i2.GameCreateNestedOneWithoutPlayerStatisticsInput? game;
+  final int? madeOne;
 
-  final _i2.QuarterCreateNestedOneWithoutPlayerStatisticsInput? quarter;
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
+
+  final _i2.QuarterCreateNestedOneWithoutPlayerStatisticsInput quarter;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
-        'game': game,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
       };
 }
@@ -3684,29 +3584,65 @@ class PlayerStatisticsUncheckedCreateWithoutPlayerInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUncheckedCreateWithoutPlayerInput({
     this.id,
-    this.gameID,
-    this.quarterID,
-    required this.action,
-    this.points,
+    required this.quarterID,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? gameID;
+  final int quarterID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? quarterID;
+  final int number;
 
-  final String action;
+  final int? totalScore;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -3733,29 +3669,65 @@ class PlayerStatisticsCreateManyPlayerInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsCreateManyPlayerInput({
     this.id,
-    this.gameID,
-    this.quarterID,
-    required this.action,
-    this.points,
+    required this.quarterID,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? gameID;
+  final int quarterID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? quarterID;
+  final int number;
 
-  final String action;
+  final int? totalScore;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -4176,7 +4148,7 @@ class GameCreateWithoutTeamInput
     required this.date,
     required this.semester,
     required this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final String title;
@@ -4189,7 +4161,7 @@ class GameCreateWithoutTeamInput
 
   final _i2.SeasonCreateNestedOneWithoutGamesInput season;
 
-  final _i2.PlayerStatisticsCreateNestedManyWithoutGameInput? playerStatistics;
+  final _i2.QuarterCreateNestedManyWithoutGameInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4198,51 +4170,87 @@ class GameCreateWithoutTeamInput
         'date': date,
         'semester': semester,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
-class PlayerStatisticsUncheckedCreateWithoutGameInput
+class PlayerStatisticsUncheckedCreateWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedCreateWithoutGameInput({
+  const PlayerStatisticsUncheckedCreateWithoutQuarterInput({
     this.id,
-    this.playerID,
-    this.quarterID,
-    required this.action,
-    this.points,
+    required this.playerID,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? playerID;
+  final int playerID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? quarterID;
+  final int number;
 
-  final String action;
+  final int? totalScore;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'playerID': playerID,
-        'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
-class PlayerStatisticsCreateOrConnectWithoutGameInput
+class PlayerStatisticsCreateOrConnectWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateOrConnectWithoutGameInput({
+  const PlayerStatisticsCreateOrConnectWithoutQuarterInput({
     required this.where,
     required this.create,
   });
 
   final _i2.PlayerStatisticsWhereUniqueInput where;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateWithoutGameInput,
-      _i2.PlayerStatisticsUncheckedCreateWithoutGameInput> create;
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateWithoutQuarterInput,
+      _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput> create;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4251,50 +4259,86 @@ class PlayerStatisticsCreateOrConnectWithoutGameInput
       };
 }
 
-class PlayerStatisticsCreateManyGameInput
+class PlayerStatisticsCreateManyQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateManyGameInput({
+  const PlayerStatisticsCreateManyQuarterInput({
     this.id,
-    this.playerID,
-    this.quarterID,
-    required this.action,
-    this.points,
+    required this.playerID,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? playerID;
+  final int playerID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? quarterID;
+  final int number;
 
-  final String action;
+  final int? totalScore;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'playerID': playerID,
-        'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
-class PlayerStatisticsCreateManyGameInputEnvelope
+class PlayerStatisticsCreateManyQuarterInputEnvelope
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateManyGameInputEnvelope({required this.data});
+  const PlayerStatisticsCreateManyQuarterInputEnvelope({required this.data});
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateManyGameInput,
-      Iterable<_i2.PlayerStatisticsCreateManyGameInput>> data;
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateManyQuarterInput,
+      Iterable<_i2.PlayerStatisticsCreateManyQuarterInput>> data;
 
   @override
   Map<String, dynamic> toJson() => {'data': data};
 }
 
-class PlayerStatisticsUncheckedCreateNestedManyWithoutGameInput
+class PlayerStatisticsUncheckedCreateNestedManyWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedCreateNestedManyWithoutGameInput({
+  const PlayerStatisticsUncheckedCreateNestedManyWithoutQuarterInput({
     this.create,
     this.connectOrCreate,
     this.createMany,
@@ -4302,23 +4346,120 @@ class PlayerStatisticsUncheckedCreateNestedManyWithoutGameInput
   });
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutGameInput,
+          _i2.PlayerStatisticsCreateWithoutQuarterInput,
           _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutGameInput>,
+              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
               _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutGameInput,
+                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
                   Iterable<
-                      _i2.PlayerStatisticsUncheckedCreateWithoutGameInput>>>>?
+                      _i2
+                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
       create;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput>>?
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
+          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
       connectOrCreate;
 
-  final _i2.PlayerStatisticsCreateManyGameInputEnvelope? createMany;
+  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
       Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'createMany': createMany,
+        'connect': connect,
+      };
+}
+
+class QuarterUncheckedCreateWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedCreateWithoutGameInput({
+    this.id,
+    this.logs,
+    this.playerStatistics,
+  });
+
+  final int? id;
+
+  final _i2.LogsUncheckedCreateNestedManyWithoutQuarterInput? logs;
+
+  final _i2.PlayerStatisticsUncheckedCreateNestedManyWithoutQuarterInput?
+      playerStatistics;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'Logs': logs,
+        'PlayerStatistics': playerStatistics,
+      };
+}
+
+class QuarterCreateOrConnectWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateOrConnectWithoutGameInput({
+    required this.where,
+    required this.create,
+  });
+
+  final _i2.QuarterWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateWithoutGameInput,
+      _i2.QuarterUncheckedCreateWithoutGameInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'create': create,
+      };
+}
+
+class QuarterCreateManyGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateManyGameInput({this.id});
+
+  final int? id;
+
+  @override
+  Map<String, dynamic> toJson() => {'id': id};
+}
+
+class QuarterCreateManyGameInputEnvelope
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateManyGameInputEnvelope({required this.data});
+
+  final _i1.PrismaUnion<_i2.QuarterCreateManyGameInput,
+      Iterable<_i2.QuarterCreateManyGameInput>> data;
+
+  @override
+  Map<String, dynamic> toJson() => {'data': data};
+}
+
+class QuarterUncheckedCreateNestedManyWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedCreateNestedManyWithoutGameInput({
+    this.create,
+    this.connectOrCreate,
+    this.createMany,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.QuarterCreateWithoutGameInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.QuarterCreateWithoutGameInput>,
+          _i1.PrismaUnion<_i2.QuarterUncheckedCreateWithoutGameInput,
+              Iterable<_i2.QuarterUncheckedCreateWithoutGameInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateOrConnectWithoutGameInput,
+      Iterable<_i2.QuarterCreateOrConnectWithoutGameInput>>? connectOrCreate;
+
+  final _i2.QuarterCreateManyGameInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? connect;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4338,7 +4479,7 @@ class GameUncheckedCreateWithoutTeamInput
     required this.date,
     required this.semester,
     required this.seasonID,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final int? id;
@@ -4353,8 +4494,7 @@ class GameUncheckedCreateWithoutTeamInput
 
   final int seasonID;
 
-  final _i2.PlayerStatisticsUncheckedCreateNestedManyWithoutGameInput?
-      playerStatistics;
+  final _i2.QuarterUncheckedCreateNestedManyWithoutGameInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4364,7 +4504,7 @@ class GameUncheckedCreateWithoutTeamInput
         'date': date,
         'semester': semester,
         'seasonID': seasonID,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -4694,35 +4834,71 @@ class PlayerCreateNestedOneWithoutPlayerStatisticsInput
       };
 }
 
-class PlayerStatisticsCreateWithoutGameInput
+class PlayerStatisticsCreateWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateWithoutGameInput({
-    required this.action,
-    this.points,
-    this.player,
-    this.quarter,
+  const PlayerStatisticsCreateWithoutQuarterInput({
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    required this.player,
   });
 
-  final String action;
+  final int number;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? totalScore;
 
-  final _i2.PlayerCreateNestedOneWithoutPlayerStatisticsInput? player;
+  final int? madeOne;
 
-  final _i2.QuarterCreateNestedOneWithoutPlayerStatisticsInput? quarter;
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
+
+  final _i2.PlayerCreateNestedOneWithoutPlayerStatisticsInput player;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'player': player,
-        'quarter': quarter,
       };
 }
 
-class PlayerStatisticsCreateNestedManyWithoutGameInput
+class PlayerStatisticsCreateNestedManyWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateNestedManyWithoutGameInput({
+  const PlayerStatisticsCreateNestedManyWithoutQuarterInput({
     this.create,
     this.connectOrCreate,
     this.createMany,
@@ -4730,23 +4906,76 @@ class PlayerStatisticsCreateNestedManyWithoutGameInput
   });
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutGameInput,
+          _i2.PlayerStatisticsCreateWithoutQuarterInput,
           _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutGameInput>,
+              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
               _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutGameInput,
+                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
                   Iterable<
-                      _i2.PlayerStatisticsUncheckedCreateWithoutGameInput>>>>?
+                      _i2
+                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
       create;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput>>?
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
+          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
       connectOrCreate;
 
-  final _i2.PlayerStatisticsCreateManyGameInputEnvelope? createMany;
+  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
       Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'createMany': createMany,
+        'connect': connect,
+      };
+}
+
+class QuarterCreateWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateWithoutGameInput({
+    this.logs,
+    this.playerStatistics,
+  });
+
+  final _i2.LogsCreateNestedManyWithoutQuarterInput? logs;
+
+  final _i2.PlayerStatisticsCreateNestedManyWithoutQuarterInput?
+      playerStatistics;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'Logs': logs,
+        'PlayerStatistics': playerStatistics,
+      };
+}
+
+class QuarterCreateNestedManyWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterCreateNestedManyWithoutGameInput({
+    this.create,
+    this.connectOrCreate,
+    this.createMany,
+    this.connect,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.QuarterCreateWithoutGameInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.QuarterCreateWithoutGameInput>,
+          _i1.PrismaUnion<_i2.QuarterUncheckedCreateWithoutGameInput,
+              Iterable<_i2.QuarterUncheckedCreateWithoutGameInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateOrConnectWithoutGameInput,
+      Iterable<_i2.QuarterCreateOrConnectWithoutGameInput>>? connectOrCreate;
+
+  final _i2.QuarterCreateManyGameInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? connect;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4765,7 +4994,7 @@ class GameCreateWithoutSeasonInput
     required this.date,
     required this.semester,
     this.team,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final String title;
@@ -4778,7 +5007,7 @@ class GameCreateWithoutSeasonInput
 
   final _i2.TeamCreateNestedOneWithoutGameInput? team;
 
-  final _i2.PlayerStatisticsCreateNestedManyWithoutGameInput? playerStatistics;
+  final _i2.QuarterCreateNestedManyWithoutGameInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4787,7 +5016,7 @@ class GameCreateWithoutSeasonInput
         'date': date,
         'semester': semester,
         'team': team,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -4800,7 +5029,7 @@ class GameUncheckedCreateWithoutSeasonInput
     required this.date,
     required this.semester,
     this.teamID,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final int? id;
@@ -4815,8 +5044,7 @@ class GameUncheckedCreateWithoutSeasonInput
 
   final _i1.PrismaUnion<int, _i1.PrismaNull>? teamID;
 
-  final _i2.PlayerStatisticsUncheckedCreateNestedManyWithoutGameInput?
-      playerStatistics;
+  final _i2.QuarterUncheckedCreateNestedManyWithoutGameInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -4826,7 +5054,7 @@ class GameUncheckedCreateWithoutSeasonInput
         'date': date,
         'semester': semester,
         'teamID': teamID,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -5139,285 +5367,6 @@ class NullableIntFieldUpdateOperationsInput
         'decrement': decrement,
         'multiply': multiply,
         'divide': divide,
-      };
-}
-
-class SeasonUpdateWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonUpdateWithoutGamesInput({
-    this.startYear,
-    this.endYear,
-  });
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? startYear;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? endYear;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'startYear': startYear,
-        'endYear': endYear,
-      };
-}
-
-class SeasonUncheckedUpdateWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonUncheckedUpdateWithoutGamesInput({
-    this.id,
-    this.startYear,
-    this.endYear,
-  });
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? startYear;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? endYear;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'startYear': startYear,
-        'endYear': endYear,
-      };
-}
-
-class SeasonUpsertWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonUpsertWithoutGamesInput({
-    required this.update,
-    required this.create,
-    this.where,
-  });
-
-  final _i1.PrismaUnion<_i2.SeasonUpdateWithoutGamesInput,
-      _i2.SeasonUncheckedUpdateWithoutGamesInput> update;
-
-  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
-      _i2.SeasonUncheckedCreateWithoutGamesInput> create;
-
-  final _i2.SeasonWhereInput? where;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'update': update,
-        'create': create,
-        'where': where,
-      };
-}
-
-class SeasonUpdateToOneWithWhereWithoutGamesInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonUpdateToOneWithWhereWithoutGamesInput({
-    this.where,
-    required this.data,
-  });
-
-  final _i2.SeasonWhereInput? where;
-
-  final _i1.PrismaUnion<_i2.SeasonUpdateWithoutGamesInput,
-      _i2.SeasonUncheckedUpdateWithoutGamesInput> data;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'data': data,
-      };
-}
-
-class SeasonUpdateOneRequiredWithoutGamesNestedInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const SeasonUpdateOneRequiredWithoutGamesNestedInput({
-    this.create,
-    this.connectOrCreate,
-    this.upsert,
-    this.connect,
-    this.update,
-  });
-
-  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
-      _i2.SeasonUncheckedCreateWithoutGamesInput>? create;
-
-  final _i2.SeasonCreateOrConnectWithoutGamesInput? connectOrCreate;
-
-  final _i2.SeasonUpsertWithoutGamesInput? upsert;
-
-  final _i2.SeasonWhereUniqueInput? connect;
-
-  final _i1.PrismaUnion<
-      _i2.SeasonUpdateToOneWithWhereWithoutGamesInput,
-      _i1.PrismaUnion<_i2.SeasonUpdateWithoutGamesInput,
-          _i2.SeasonUncheckedUpdateWithoutGamesInput>>? update;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'upsert': upsert,
-        'connect': connect,
-        'update': update,
-      };
-}
-
-class GameUpdateWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameUpdateWithoutPlayerStatisticsInput({
-    this.title,
-    this.againstTeam,
-    this.date,
-    this.semester,
-    this.team,
-    this.season,
-  });
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
-      againstTeam;
-
-  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? semester;
-
-  final _i2.TeamUpdateOneWithoutGameNestedInput? team;
-
-  final _i2.SeasonUpdateOneRequiredWithoutGamesNestedInput? season;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'againstTeam': againstTeam,
-        'date': date,
-        'semester': semester,
-        'team': team,
-        'season': season,
-      };
-}
-
-class GameUncheckedUpdateWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameUncheckedUpdateWithoutPlayerStatisticsInput({
-    this.id,
-    this.title,
-    this.againstTeam,
-    this.date,
-    this.semester,
-    this.teamID,
-    this.seasonID,
-  });
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
-      againstTeam;
-
-  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? semester;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? teamID;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? seasonID;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'againstTeam': againstTeam,
-        'date': date,
-        'semester': semester,
-        'teamID': teamID,
-        'seasonID': seasonID,
-      };
-}
-
-class GameUpsertWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameUpsertWithoutPlayerStatisticsInput({
-    required this.update,
-    required this.create,
-    this.where,
-  });
-
-  final _i1.PrismaUnion<_i2.GameUpdateWithoutPlayerStatisticsInput,
-      _i2.GameUncheckedUpdateWithoutPlayerStatisticsInput> update;
-
-  final _i1.PrismaUnion<_i2.GameCreateWithoutPlayerStatisticsInput,
-      _i2.GameUncheckedCreateWithoutPlayerStatisticsInput> create;
-
-  final _i2.GameWhereInput? where;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'update': update,
-        'create': create,
-        'where': where,
-      };
-}
-
-class GameUpdateToOneWithWhereWithoutPlayerStatisticsInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameUpdateToOneWithWhereWithoutPlayerStatisticsInput({
-    this.where,
-    required this.data,
-  });
-
-  final _i2.GameWhereInput? where;
-
-  final _i1.PrismaUnion<_i2.GameUpdateWithoutPlayerStatisticsInput,
-      _i2.GameUncheckedUpdateWithoutPlayerStatisticsInput> data;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'data': data,
-      };
-}
-
-class GameUpdateOneWithoutPlayerStatisticsNestedInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const GameUpdateOneWithoutPlayerStatisticsNestedInput({
-    this.create,
-    this.connectOrCreate,
-    this.upsert,
-    this.disconnect,
-    this.delete,
-    this.connect,
-    this.update,
-  });
-
-  final _i1.PrismaUnion<_i2.GameCreateWithoutPlayerStatisticsInput,
-      _i2.GameUncheckedCreateWithoutPlayerStatisticsInput>? create;
-
-  final _i2.GameCreateOrConnectWithoutPlayerStatisticsInput? connectOrCreate;
-
-  final _i2.GameUpsertWithoutPlayerStatisticsInput? upsert;
-
-  final _i1.PrismaUnion<bool, _i2.GameWhereInput>? disconnect;
-
-  final _i1.PrismaUnion<bool, _i2.GameWhereInput>? delete;
-
-  final _i2.GameWhereUniqueInput? connect;
-
-  final _i1.PrismaUnion<
-      _i2.GameUpdateToOneWithWhereWithoutPlayerStatisticsInput,
-      _i1.PrismaUnion<_i2.GameUpdateWithoutPlayerStatisticsInput,
-          _i2.GameUncheckedUpdateWithoutPlayerStatisticsInput>>? update;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'upsert': upsert,
-        'disconnect': disconnect,
-        'delete': delete,
-        'connect': connect,
-        'update': update,
       };
 }
 
@@ -5780,71 +5729,292 @@ class LogsUpdateManyWithoutQuarterNestedInput
       };
 }
 
-class QuarterUpdateWithoutPlayerStatisticsInput
+class SeasonUpdateWithoutGamesInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterUpdateWithoutPlayerStatisticsInput({
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
-    this.logs,
+  const SeasonUpdateWithoutGamesInput({
+    this.startYear,
+    this.endYear,
   });
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? startYear;
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
-
-  final _i2.LogsUpdateManyWithoutQuarterNestedInput? logs;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? endYear;
 
   @override
   Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'startYear': startYear,
+        'endYear': endYear,
+      };
+}
+
+class SeasonUncheckedUpdateWithoutGamesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonUncheckedUpdateWithoutGamesInput({
+    this.id,
+    this.startYear,
+    this.endYear,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? startYear;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? endYear;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'startYear': startYear,
+        'endYear': endYear,
+      };
+}
+
+class SeasonUpsertWithoutGamesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonUpsertWithoutGamesInput({
+    required this.update,
+    required this.create,
+    this.where,
+  });
+
+  final _i1.PrismaUnion<_i2.SeasonUpdateWithoutGamesInput,
+      _i2.SeasonUncheckedUpdateWithoutGamesInput> update;
+
+  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
+      _i2.SeasonUncheckedCreateWithoutGamesInput> create;
+
+  final _i2.SeasonWhereInput? where;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'update': update,
+        'create': create,
+        'where': where,
+      };
+}
+
+class SeasonUpdateToOneWithWhereWithoutGamesInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonUpdateToOneWithWhereWithoutGamesInput({
+    this.where,
+    required this.data,
+  });
+
+  final _i2.SeasonWhereInput? where;
+
+  final _i1.PrismaUnion<_i2.SeasonUpdateWithoutGamesInput,
+      _i2.SeasonUncheckedUpdateWithoutGamesInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class SeasonUpdateOneRequiredWithoutGamesNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const SeasonUpdateOneRequiredWithoutGamesNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.connect,
+    this.update,
+  });
+
+  final _i1.PrismaUnion<_i2.SeasonCreateWithoutGamesInput,
+      _i2.SeasonUncheckedCreateWithoutGamesInput>? create;
+
+  final _i2.SeasonCreateOrConnectWithoutGamesInput? connectOrCreate;
+
+  final _i2.SeasonUpsertWithoutGamesInput? upsert;
+
+  final _i2.SeasonWhereUniqueInput? connect;
+
+  final _i1.PrismaUnion<
+      _i2.SeasonUpdateToOneWithWhereWithoutGamesInput,
+      _i1.PrismaUnion<_i2.SeasonUpdateWithoutGamesInput,
+          _i2.SeasonUncheckedUpdateWithoutGamesInput>>? update;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'connect': connect,
+        'update': update,
+      };
+}
+
+class GameUpdateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameUpdateWithoutQuarterInput({
+    this.title,
+    this.againstTeam,
+    this.date,
+    this.semester,
+    this.team,
+    this.season,
+  });
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? semester;
+
+  final _i2.TeamUpdateOneWithoutGameNestedInput? team;
+
+  final _i2.SeasonUpdateOneRequiredWithoutGamesNestedInput? season;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'againstTeam': againstTeam,
+        'date': date,
+        'semester': semester,
+        'team': team,
+        'season': season,
+      };
+}
+
+class GameUncheckedUpdateWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameUncheckedUpdateWithoutQuarterInput({
+    this.id,
+    this.title,
+    this.againstTeam,
+    this.date,
+    this.semester,
+    this.teamID,
+    this.seasonID,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>?
+      againstTeam;
+
+  final _i1.PrismaUnion<DateTime, _i2.DateTimeFieldUpdateOperationsInput>? date;
+
+  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? semester;
+
+  final _i1.PrismaUnion<
+      int,
+      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
+          _i1.PrismaNull>>? teamID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? seasonID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'againstTeam': againstTeam,
+        'date': date,
+        'semester': semester,
+        'teamID': teamID,
+        'seasonID': seasonID,
+      };
+}
+
+class GameUpsertWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameUpsertWithoutQuarterInput({
+    required this.update,
+    required this.create,
+    this.where,
+  });
+
+  final _i1.PrismaUnion<_i2.GameUpdateWithoutQuarterInput,
+      _i2.GameUncheckedUpdateWithoutQuarterInput> update;
+
+  final _i1.PrismaUnion<_i2.GameCreateWithoutQuarterInput,
+      _i2.GameUncheckedCreateWithoutQuarterInput> create;
+
+  final _i2.GameWhereInput? where;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'update': update,
+        'create': create,
+        'where': where,
+      };
+}
+
+class GameUpdateToOneWithWhereWithoutQuarterInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameUpdateToOneWithWhereWithoutQuarterInput({
+    this.where,
+    required this.data,
+  });
+
+  final _i2.GameWhereInput? where;
+
+  final _i1.PrismaUnion<_i2.GameUpdateWithoutQuarterInput,
+      _i2.GameUncheckedUpdateWithoutQuarterInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class GameUpdateOneRequiredWithoutQuarterNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const GameUpdateOneRequiredWithoutQuarterNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.connect,
+    this.update,
+  });
+
+  final _i1.PrismaUnion<_i2.GameCreateWithoutQuarterInput,
+      _i2.GameUncheckedCreateWithoutQuarterInput>? create;
+
+  final _i2.GameCreateOrConnectWithoutQuarterInput? connectOrCreate;
+
+  final _i2.GameUpsertWithoutQuarterInput? upsert;
+
+  final _i2.GameWhereUniqueInput? connect;
+
+  final _i1.PrismaUnion<
+      _i2.GameUpdateToOneWithWhereWithoutQuarterInput,
+      _i1.PrismaUnion<_i2.GameUpdateWithoutQuarterInput,
+          _i2.GameUncheckedUpdateWithoutQuarterInput>>? update;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'connect': connect,
+        'update': update,
+      };
+}
+
+class QuarterUpdateWithoutPlayerStatisticsInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateWithoutPlayerStatisticsInput({
+    this.logs,
+    this.game,
+  });
+
+  final _i2.LogsUpdateManyWithoutQuarterNestedInput? logs;
+
+  final _i2.GameUpdateOneRequiredWithoutQuarterNestedInput? game;
+
+  @override
+  Map<String, dynamic> toJson() => {
         'Logs': logs,
+        'game': game,
       };
 }
 
@@ -5920,70 +6090,20 @@ class QuarterUncheckedUpdateWithoutPlayerStatisticsInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedUpdateWithoutPlayerStatisticsInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.logs,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? gameID;
 
   final _i2.LogsUncheckedUpdateManyWithoutQuarterNestedInput? logs;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'Logs': logs,
       };
 }
@@ -6031,14 +6151,12 @@ class QuarterUpdateToOneWithWhereWithoutPlayerStatisticsInput
       };
 }
 
-class QuarterUpdateOneWithoutPlayerStatisticsNestedInput
+class QuarterUpdateOneRequiredWithoutPlayerStatisticsNestedInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterUpdateOneWithoutPlayerStatisticsNestedInput({
+  const QuarterUpdateOneRequiredWithoutPlayerStatisticsNestedInput({
     this.create,
     this.connectOrCreate,
     this.upsert,
-    this.disconnect,
-    this.delete,
     this.connect,
     this.update,
   });
@@ -6049,10 +6167,6 @@ class QuarterUpdateOneWithoutPlayerStatisticsNestedInput
   final _i2.QuarterCreateOrConnectWithoutPlayerStatisticsInput? connectOrCreate;
 
   final _i2.QuarterUpsertWithoutPlayerStatisticsInput? upsert;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterWhereInput>? disconnect;
-
-  final _i1.PrismaUnion<bool, _i2.QuarterWhereInput>? delete;
 
   final _i2.QuarterWhereUniqueInput? connect;
 
@@ -6066,8 +6180,6 @@ class QuarterUpdateOneWithoutPlayerStatisticsNestedInput
         'create': create,
         'connectOrCreate': connectOrCreate,
         'upsert': upsert,
-        'disconnect': disconnect,
-        'delete': delete,
         'connect': connect,
         'update': update,
       };
@@ -6076,28 +6188,64 @@ class QuarterUpdateOneWithoutPlayerStatisticsNestedInput
 class PlayerStatisticsUpdateWithoutPlayerInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUpdateWithoutPlayerInput({
-    this.action,
-    this.points,
-    this.game,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.quarter,
   });
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+          _i1.PrismaNull>>? miss;
 
-  final _i2.GameUpdateOneWithoutPlayerStatisticsNestedInput? game;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i2.QuarterUpdateOneWithoutPlayerStatisticsNestedInput? quarter;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+
+  final _i2.QuarterUpdateOneRequiredWithoutPlayerStatisticsNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
-        'game': game,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
       };
 }
@@ -6106,38 +6254,68 @@ class PlayerStatisticsUncheckedUpdateWithoutPlayerInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUncheckedUpdateWithoutPlayerInput({
     this.id,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? gameID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? quarterID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? quarterID;
+          _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -6191,11 +6369,20 @@ class PlayerStatisticsScalarWhereInput
     this.OR,
     this.NOT,
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsScalarWhereInput,
@@ -6208,23 +6395,35 @@ class PlayerStatisticsScalarWhereInput
 
   final _i1.PrismaUnion<_i2.IntFilter, int>? id;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      playerID;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? quarterID;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? playerID;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? number;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? totalScore;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeOne;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeTwo;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? madeThree;
 
   final _i1
       .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      gameID;
+      miss;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      quarterID;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? rebound;
 
-  final _i1.PrismaUnion<_i2.StringFilter, String>? action;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? foul;
 
-  final _i1
-      .PrismaUnion<_i2.IntNullableFilter, _i1.PrismaUnion<int, _i1.PrismaNull>>?
-      points;
+  final _i1.PrismaUnion<_i2.IntFilter, int>? turnover;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? assist;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? block;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -6232,32 +6431,81 @@ class PlayerStatisticsScalarWhereInput
         'OR': OR,
         'NOT': NOT,
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class PlayerStatisticsUpdateManyMutationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUpdateManyMutationInput({
-    this.action,
-    this.points,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+          _i1.PrismaNull>>? miss;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -6265,38 +6513,68 @@ class PlayerStatisticsUncheckedUpdateManyWithoutPlayerInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUncheckedUpdateManyWithoutPlayerInput({
     this.id,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? gameID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? quarterID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? quarterID;
+          _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -7020,7 +7298,7 @@ class GameUpdateWithoutTeamInput
     this.date,
     this.semester,
     this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
@@ -7034,7 +7312,7 @@ class GameUpdateWithoutTeamInput
 
   final _i2.SeasonUpdateOneRequiredWithoutGamesNestedInput? season;
 
-  final _i2.PlayerStatisticsUpdateManyWithoutGameNestedInput? playerStatistics;
+  final _i2.QuarterUpdateManyWithoutGameNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -7043,60 +7321,90 @@ class GameUpdateWithoutTeamInput
         'date': date,
         'semester': semester,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
-class PlayerStatisticsUncheckedUpdateWithoutGameInput
+class PlayerStatisticsUncheckedUpdateWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedUpdateWithoutGameInput({
+  const PlayerStatisticsUncheckedUpdateWithoutQuarterInput({
     this.id,
     this.playerID,
-    this.quarterID,
-    this.action,
-    this.points,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? playerID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? playerID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? quarterID;
+          _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'playerID': playerID,
-        'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
-class PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput
+class PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput({
+  const PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput({
     required this.where,
     required this.data,
   });
 
   final _i2.PlayerStatisticsWhereUniqueInput where;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateWithoutGameInput,
-      _i2.PlayerStatisticsUncheckedUpdateWithoutGameInput> data;
+  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateWithoutQuarterInput,
+      _i2.PlayerStatisticsUncheckedUpdateWithoutQuarterInput> data;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -7105,48 +7413,78 @@ class PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput
       };
 }
 
-class PlayerStatisticsUncheckedUpdateManyWithoutGameInput
+class PlayerStatisticsUncheckedUpdateManyWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedUpdateManyWithoutGameInput({
+  const PlayerStatisticsUncheckedUpdateManyWithoutQuarterInput({
     this.id,
     this.playerID,
-    this.quarterID,
-    this.action,
-    this.points,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? playerID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? playerID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? quarterID;
+          _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'playerID': playerID,
-        'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
-class PlayerStatisticsUpdateManyWithWhereWithoutGameInput
+class PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateManyWithWhereWithoutGameInput({
+  const PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput({
     required this.where,
     required this.data,
   });
@@ -7154,7 +7492,7 @@ class PlayerStatisticsUpdateManyWithWhereWithoutGameInput
   final _i2.PlayerStatisticsScalarWhereInput where;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateManyMutationInput,
-      _i2.PlayerStatisticsUncheckedUpdateManyWithoutGameInput> data;
+      _i2.PlayerStatisticsUncheckedUpdateManyWithoutQuarterInput> data;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -7163,9 +7501,9 @@ class PlayerStatisticsUpdateManyWithWhereWithoutGameInput
       };
 }
 
-class PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput
+class PlayerStatisticsUncheckedUpdateManyWithoutQuarterNestedInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput({
+  const PlayerStatisticsUncheckedUpdateManyWithoutQuarterNestedInput({
     this.create,
     this.connectOrCreate,
     this.upsert,
@@ -7180,25 +7518,27 @@ class PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput
   });
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutGameInput,
+          _i2.PlayerStatisticsCreateWithoutQuarterInput,
           _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutGameInput>,
+              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
               _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutGameInput,
+                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
                   Iterable<
-                      _i2.PlayerStatisticsUncheckedCreateWithoutGameInput>>>>?
+                      _i2
+                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
       create;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput>>?
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
+          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
       connectOrCreate;
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput>>?
+          _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput,
+          Iterable<
+              _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput>>?
       upsert;
 
-  final _i2.PlayerStatisticsCreateManyGameInputEnvelope? createMany;
+  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
       Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? set;
@@ -7213,16 +7553,197 @@ class PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput
       Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput>>?
+          _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput,
+          Iterable<
+              _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput>>?
       update;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateManyWithWhereWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsUpdateManyWithWhereWithoutGameInput>>?
+  final _i1.PrismaUnion<
+          _i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput,
+          Iterable<_i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput>>?
       updateMany;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsScalarWhereInput,
       Iterable<_i2.PlayerStatisticsScalarWhereInput>>? deleteMany;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'createMany': createMany,
+        'set': set,
+        'disconnect': disconnect,
+        'delete': delete,
+        'connect': connect,
+        'update': update,
+        'updateMany': updateMany,
+        'deleteMany': deleteMany,
+      };
+}
+
+class QuarterUncheckedUpdateWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedUpdateWithoutGameInput({
+    this.id,
+    this.logs,
+    this.playerStatistics,
+  });
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  final _i2.LogsUncheckedUpdateManyWithoutQuarterNestedInput? logs;
+
+  final _i2.PlayerStatisticsUncheckedUpdateManyWithoutQuarterNestedInput?
+      playerStatistics;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'Logs': logs,
+        'PlayerStatistics': playerStatistics,
+      };
+}
+
+class QuarterUpdateWithWhereUniqueWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateWithWhereUniqueWithoutGameInput({
+    required this.where,
+    required this.data,
+  });
+
+  final _i2.QuarterWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateWithoutGameInput,
+      _i2.QuarterUncheckedUpdateWithoutGameInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class QuarterScalarWhereInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterScalarWhereInput({
+    this.AND,
+    this.OR,
+    this.NOT,
+    this.id,
+    this.gameID,
+  });
+
+  final _i1.PrismaUnion<_i2.QuarterScalarWhereInput,
+      Iterable<_i2.QuarterScalarWhereInput>>? AND;
+
+  final Iterable<_i2.QuarterScalarWhereInput>? OR;
+
+  final _i1.PrismaUnion<_i2.QuarterScalarWhereInput,
+      Iterable<_i2.QuarterScalarWhereInput>>? NOT;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? id;
+
+  final _i1.PrismaUnion<_i2.IntFilter, int>? gameID;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'AND': AND,
+        'OR': OR,
+        'NOT': NOT,
+        'id': id,
+        'gameID': gameID,
+      };
+}
+
+class QuarterUpdateManyMutationInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateManyMutationInput();
+
+  @override
+  Map<String, dynamic> toJson() => {};
+}
+
+class QuarterUncheckedUpdateManyWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedUpdateManyWithoutGameInput({this.id});
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
+
+  @override
+  Map<String, dynamic> toJson() => {'id': id};
+}
+
+class QuarterUpdateManyWithWhereWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateManyWithWhereWithoutGameInput({
+    required this.where,
+    required this.data,
+  });
+
+  final _i2.QuarterScalarWhereInput where;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateManyMutationInput,
+      _i2.QuarterUncheckedUpdateManyWithoutGameInput> data;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'data': data,
+      };
+}
+
+class QuarterUncheckedUpdateManyWithoutGameNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUncheckedUpdateManyWithoutGameNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.createMany,
+    this.set,
+    this.disconnect,
+    this.delete,
+    this.connect,
+    this.update,
+    this.updateMany,
+    this.deleteMany,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.QuarterCreateWithoutGameInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.QuarterCreateWithoutGameInput>,
+          _i1.PrismaUnion<_i2.QuarterUncheckedCreateWithoutGameInput,
+              Iterable<_i2.QuarterUncheckedCreateWithoutGameInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateOrConnectWithoutGameInput,
+      Iterable<_i2.QuarterCreateOrConnectWithoutGameInput>>? connectOrCreate;
+
+  final _i1.PrismaUnion<_i2.QuarterUpsertWithWhereUniqueWithoutGameInput,
+      Iterable<_i2.QuarterUpsertWithWhereUniqueWithoutGameInput>>? upsert;
+
+  final _i2.QuarterCreateManyGameInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? set;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? disconnect;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? delete;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? connect;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateWithWhereUniqueWithoutGameInput,
+      Iterable<_i2.QuarterUpdateWithWhereUniqueWithoutGameInput>>? update;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateManyWithWhereWithoutGameInput,
+      Iterable<_i2.QuarterUpdateManyWithWhereWithoutGameInput>>? updateMany;
+
+  final _i1.PrismaUnion<_i2.QuarterScalarWhereInput,
+      Iterable<_i2.QuarterScalarWhereInput>>? deleteMany;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -7249,7 +7770,7 @@ class GameUncheckedUpdateWithoutTeamInput
     this.date,
     this.semester,
     this.seasonID,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
@@ -7265,8 +7786,7 @@ class GameUncheckedUpdateWithoutTeamInput
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? seasonID;
 
-  final _i2.PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput?
-      playerStatistics;
+  final _i2.QuarterUncheckedUpdateManyWithoutGameNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -7276,7 +7796,7 @@ class GameUncheckedUpdateWithoutTeamInput
         'date': date,
         'semester': semester,
         'seasonID': seasonID,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -7847,14 +8367,12 @@ class PlayerUpdateToOneWithWhereWithoutPlayerStatisticsInput
       };
 }
 
-class PlayerUpdateOneWithoutPlayerStatisticsNestedInput
+class PlayerUpdateOneRequiredWithoutPlayerStatisticsNestedInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerUpdateOneWithoutPlayerStatisticsNestedInput({
+  const PlayerUpdateOneRequiredWithoutPlayerStatisticsNestedInput({
     this.create,
     this.connectOrCreate,
     this.upsert,
-    this.disconnect,
-    this.delete,
     this.connect,
     this.update,
   });
@@ -7865,10 +8383,6 @@ class PlayerUpdateOneWithoutPlayerStatisticsNestedInput
   final _i2.PlayerCreateOrConnectWithoutPlayerStatisticsInput? connectOrCreate;
 
   final _i2.PlayerUpsertWithoutPlayerStatisticsInput? upsert;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerWhereInput>? disconnect;
-
-  final _i1.PrismaUnion<bool, _i2.PlayerWhereInput>? delete;
 
   final _i2.PlayerWhereUniqueInput? connect;
 
@@ -7882,45 +8396,79 @@ class PlayerUpdateOneWithoutPlayerStatisticsNestedInput
         'create': create,
         'connectOrCreate': connectOrCreate,
         'upsert': upsert,
-        'disconnect': disconnect,
-        'delete': delete,
         'connect': connect,
         'update': update,
       };
 }
 
-class PlayerStatisticsUpdateWithoutGameInput
+class PlayerStatisticsUpdateWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateWithoutGameInput({
-    this.action,
-    this.points,
+  const PlayerStatisticsUpdateWithoutQuarterInput({
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.player,
-    this.quarter,
   });
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+          _i1.PrismaNull>>? miss;
 
-  final _i2.PlayerUpdateOneWithoutPlayerStatisticsNestedInput? player;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i2.QuarterUpdateOneWithoutPlayerStatisticsNestedInput? quarter;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+
+  final _i2.PlayerUpdateOneRequiredWithoutPlayerStatisticsNestedInput? player;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'player': player,
-        'quarter': quarter,
       };
 }
 
-class PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput
+class PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput({
+  const PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput({
     required this.where,
     required this.update,
     required this.create,
@@ -7928,11 +8476,11 @@ class PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput
 
   final _i2.PlayerStatisticsWhereUniqueInput where;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateWithoutGameInput,
-      _i2.PlayerStatisticsUncheckedUpdateWithoutGameInput> update;
+  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateWithoutQuarterInput,
+      _i2.PlayerStatisticsUncheckedUpdateWithoutQuarterInput> update;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateWithoutGameInput,
-      _i2.PlayerStatisticsUncheckedCreateWithoutGameInput> create;
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateWithoutQuarterInput,
+      _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput> create;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -7942,9 +8490,9 @@ class PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput
       };
 }
 
-class PlayerStatisticsUpdateManyWithoutGameNestedInput
+class PlayerStatisticsUpdateManyWithoutQuarterNestedInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateManyWithoutGameNestedInput({
+  const PlayerStatisticsUpdateManyWithoutQuarterNestedInput({
     this.create,
     this.connectOrCreate,
     this.upsert,
@@ -7959,25 +8507,27 @@ class PlayerStatisticsUpdateManyWithoutGameNestedInput
   });
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutGameInput,
+          _i2.PlayerStatisticsCreateWithoutQuarterInput,
           _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutGameInput>,
+              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
               _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutGameInput,
+                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
                   Iterable<
-                      _i2.PlayerStatisticsUncheckedCreateWithoutGameInput>>>>?
+                      _i2
+                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
       create;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutGameInput>>?
+  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
+          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
       connectOrCreate;
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsUpsertWithWhereUniqueWithoutGameInput>>?
+          _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput,
+          Iterable<
+              _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput>>?
       upsert;
 
-  final _i2.PlayerStatisticsCreateManyGameInputEnvelope? createMany;
+  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
       Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? set;
@@ -7992,16 +8542,129 @@ class PlayerStatisticsUpdateManyWithoutGameNestedInput
       Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
 
   final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsUpdateWithWhereUniqueWithoutGameInput>>?
+          _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput,
+          Iterable<
+              _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput>>?
       update;
 
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateManyWithWhereWithoutGameInput,
-          Iterable<_i2.PlayerStatisticsUpdateManyWithWhereWithoutGameInput>>?
+  final _i1.PrismaUnion<
+          _i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput,
+          Iterable<_i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput>>?
       updateMany;
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsScalarWhereInput,
       Iterable<_i2.PlayerStatisticsScalarWhereInput>>? deleteMany;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'create': create,
+        'connectOrCreate': connectOrCreate,
+        'upsert': upsert,
+        'createMany': createMany,
+        'set': set,
+        'disconnect': disconnect,
+        'delete': delete,
+        'connect': connect,
+        'update': update,
+        'updateMany': updateMany,
+        'deleteMany': deleteMany,
+      };
+}
+
+class QuarterUpdateWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateWithoutGameInput({
+    this.logs,
+    this.playerStatistics,
+  });
+
+  final _i2.LogsUpdateManyWithoutQuarterNestedInput? logs;
+
+  final _i2.PlayerStatisticsUpdateManyWithoutQuarterNestedInput?
+      playerStatistics;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'Logs': logs,
+        'PlayerStatistics': playerStatistics,
+      };
+}
+
+class QuarterUpsertWithWhereUniqueWithoutGameInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpsertWithWhereUniqueWithoutGameInput({
+    required this.where,
+    required this.update,
+    required this.create,
+  });
+
+  final _i2.QuarterWhereUniqueInput where;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateWithoutGameInput,
+      _i2.QuarterUncheckedUpdateWithoutGameInput> update;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateWithoutGameInput,
+      _i2.QuarterUncheckedCreateWithoutGameInput> create;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'where': where,
+        'update': update,
+        'create': create,
+      };
+}
+
+class QuarterUpdateManyWithoutGameNestedInput
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const QuarterUpdateManyWithoutGameNestedInput({
+    this.create,
+    this.connectOrCreate,
+    this.upsert,
+    this.createMany,
+    this.set,
+    this.disconnect,
+    this.delete,
+    this.connect,
+    this.update,
+    this.updateMany,
+    this.deleteMany,
+  });
+
+  final _i1.PrismaUnion<
+      _i2.QuarterCreateWithoutGameInput,
+      _i1.PrismaUnion<
+          Iterable<_i2.QuarterCreateWithoutGameInput>,
+          _i1.PrismaUnion<_i2.QuarterUncheckedCreateWithoutGameInput,
+              Iterable<_i2.QuarterUncheckedCreateWithoutGameInput>>>>? create;
+
+  final _i1.PrismaUnion<_i2.QuarterCreateOrConnectWithoutGameInput,
+      Iterable<_i2.QuarterCreateOrConnectWithoutGameInput>>? connectOrCreate;
+
+  final _i1.PrismaUnion<_i2.QuarterUpsertWithWhereUniqueWithoutGameInput,
+      Iterable<_i2.QuarterUpsertWithWhereUniqueWithoutGameInput>>? upsert;
+
+  final _i2.QuarterCreateManyGameInputEnvelope? createMany;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? set;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? disconnect;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? delete;
+
+  final _i1.PrismaUnion<_i2.QuarterWhereUniqueInput,
+      Iterable<_i2.QuarterWhereUniqueInput>>? connect;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateWithWhereUniqueWithoutGameInput,
+      Iterable<_i2.QuarterUpdateWithWhereUniqueWithoutGameInput>>? update;
+
+  final _i1.PrismaUnion<_i2.QuarterUpdateManyWithWhereWithoutGameInput,
+      Iterable<_i2.QuarterUpdateManyWithWhereWithoutGameInput>>? updateMany;
+
+  final _i1.PrismaUnion<_i2.QuarterScalarWhereInput,
+      Iterable<_i2.QuarterScalarWhereInput>>? deleteMany;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -8027,7 +8690,7 @@ class GameUpdateWithoutSeasonInput
     this.date,
     this.semester,
     this.team,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
@@ -8041,7 +8704,7 @@ class GameUpdateWithoutSeasonInput
 
   final _i2.TeamUpdateOneWithoutGameNestedInput? team;
 
-  final _i2.PlayerStatisticsUpdateManyWithoutGameNestedInput? playerStatistics;
+  final _i2.QuarterUpdateManyWithoutGameNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -8050,7 +8713,7 @@ class GameUpdateWithoutSeasonInput
         'date': date,
         'semester': semester,
         'team': team,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -8063,7 +8726,7 @@ class GameUncheckedUpdateWithoutSeasonInput
     this.date,
     this.semester,
     this.teamID,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
@@ -8082,8 +8745,7 @@ class GameUncheckedUpdateWithoutSeasonInput
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
           _i1.PrismaNull>>? teamID;
 
-  final _i2.PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput?
-      playerStatistics;
+  final _i2.QuarterUncheckedUpdateManyWithoutGameNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -8093,7 +8755,7 @@ class GameUncheckedUpdateWithoutSeasonInput
         'date': date,
         'semester': semester,
         'teamID': teamID,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -9314,7 +9976,7 @@ class GameCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     required this.semester,
     this.team,
     required this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final String title;
@@ -9329,7 +9991,7 @@ class GameCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i2.SeasonCreateNestedOneWithoutGamesInput season;
 
-  final _i2.PlayerStatisticsCreateNestedManyWithoutGameInput? playerStatistics;
+  final _i2.QuarterCreateNestedManyWithoutGameInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -9339,7 +10001,7 @@ class GameCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'semester': semester,
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -9353,7 +10015,7 @@ class GameUncheckedCreateInput
     required this.semester,
     this.teamID,
     required this.seasonID,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final int? id;
@@ -9370,8 +10032,7 @@ class GameUncheckedCreateInput
 
   final int seasonID;
 
-  final _i2.PlayerStatisticsUncheckedCreateNestedManyWithoutGameInput?
-      playerStatistics;
+  final _i2.QuarterUncheckedCreateNestedManyWithoutGameInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -9382,7 +10043,7 @@ class GameUncheckedCreateInput
         'semester': semester,
         'teamID': teamID,
         'seasonID': seasonID,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -9539,7 +10200,7 @@ class GameUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
     this.semester,
     this.team,
     this.season,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? title;
@@ -9555,7 +10216,7 @@ class GameUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
 
   final _i2.SeasonUpdateOneRequiredWithoutGamesNestedInput? season;
 
-  final _i2.PlayerStatisticsUpdateManyWithoutGameNestedInput? playerStatistics;
+  final _i2.QuarterUpdateManyWithoutGameNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -9565,7 +10226,7 @@ class GameUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
         'semester': semester,
         'team': team,
         'season': season,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -9579,7 +10240,7 @@ class GameUncheckedUpdateInput
     this.semester,
     this.teamID,
     this.seasonID,
-    this.playerStatistics,
+    this.quarter,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
@@ -9600,8 +10261,7 @@ class GameUncheckedUpdateInput
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? seasonID;
 
-  final _i2.PlayerStatisticsUncheckedUpdateManyWithoutGameNestedInput?
-      playerStatistics;
+  final _i2.QuarterUncheckedUpdateManyWithoutGameNestedInput? quarter;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -9612,7 +10272,7 @@ class GameUncheckedUpdateInput
         'semester': semester,
         'teamID': teamID,
         'seasonID': seasonID,
-        'PlayerStatistics': playerStatistics,
+        'Quarter': quarter,
       };
 }
 
@@ -11033,293 +11693,25 @@ class AggregateGameSelect implements _i1.JsonConvertible<Map<String, dynamic>> {
       };
 }
 
-enum QuarterScalar<T> implements _i1.PrismaEnum, _i1.Reference<T> {
-  id<int>('id', 'Quarter'),
-  number<int>('number', 'Quarter'),
-  totalScore<int>('totalScore', 'Quarter'),
-  madeOne<int>('madeOne', 'Quarter'),
-  madeTwo<int>('madeTwo', 'Quarter'),
-  madeThree<int>('madeThree', 'Quarter'),
-  miss<int>('miss', 'Quarter'),
-  reboundOffensive<int>('reboundOffensive', 'Quarter'),
-  reboundDefensive<int>('reboundDefensive', 'Quarter'),
-  foul<int>('foul', 'Quarter'),
-  turnover<int>('turnover', 'Quarter'),
-  assist<int>('assist', 'Quarter'),
-  block<int>('block', 'Quarter'),
-  steal<int>('steal', 'Quarter');
-
-  const QuarterScalar(
-    this.name,
-    this.model,
-  );
-
-  @override
-  final String name;
-
-  @override
-  final String model;
-}
-
-class PlayerStatisticsCreateWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateWithoutQuarterInput({
-    required this.action,
-    this.points,
-    this.player,
-    this.game,
-  });
-
-  final String action;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
-
-  final _i2.PlayerCreateNestedOneWithoutPlayerStatisticsInput? player;
-
-  final _i2.GameCreateNestedOneWithoutPlayerStatisticsInput? game;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
-      };
-}
-
-class PlayerStatisticsUncheckedCreateWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedCreateWithoutQuarterInput({
-    this.id,
-    this.playerID,
-    this.gameID,
-    required this.action,
-    this.points,
-  });
-
-  final int? id;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? playerID;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? gameID;
-
-  final String action;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
-        'action': action,
-        'points': points,
-      };
-}
-
-class PlayerStatisticsCreateOrConnectWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateOrConnectWithoutQuarterInput({
-    required this.where,
-    required this.create,
-  });
-
-  final _i2.PlayerStatisticsWhereUniqueInput where;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateWithoutQuarterInput,
-      _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput> create;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'create': create,
-      };
-}
-
-class PlayerStatisticsCreateManyQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateManyQuarterInput({
-    this.id,
-    this.playerID,
-    this.gameID,
-    required this.action,
-    this.points,
-  });
-
-  final int? id;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? playerID;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? gameID;
-
-  final String action;
-
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
-        'action': action,
-        'points': points,
-      };
-}
-
-class PlayerStatisticsCreateManyQuarterInputEnvelope
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateManyQuarterInputEnvelope({required this.data});
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateManyQuarterInput,
-      Iterable<_i2.PlayerStatisticsCreateManyQuarterInput>> data;
-
-  @override
-  Map<String, dynamic> toJson() => {'data': data};
-}
-
-class PlayerStatisticsCreateNestedManyWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsCreateNestedManyWithoutQuarterInput({
-    this.create,
-    this.connectOrCreate,
-    this.createMany,
-    this.connect,
-  });
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutQuarterInput,
-          _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
-              _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
-                  Iterable<
-                      _i2
-                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
-      create;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
-      connectOrCreate;
-
-  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'createMany': createMany,
-        'connect': connect,
-      };
-}
-
 class QuarterCreateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterCreateInput({
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
     this.logs,
+    required this.game,
     this.playerStatistics,
   });
 
-  final int number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
-
   final _i2.LogsCreateNestedManyWithoutQuarterInput? logs;
+
+  final _i2.GameCreateNestedOneWithoutQuarterInput game;
 
   final _i2.PlayerStatisticsCreateNestedManyWithoutQuarterInput?
       playerStatistics;
 
   @override
   Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
         'Logs': logs,
+        'game': game,
         'PlayerStatistics': playerStatistics,
-      };
-}
-
-class PlayerStatisticsUncheckedCreateNestedManyWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedCreateNestedManyWithoutQuarterInput({
-    this.create,
-    this.connectOrCreate,
-    this.createMany,
-    this.connect,
-  });
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutQuarterInput,
-          _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
-              _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
-                  Iterable<
-                      _i2
-                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
-      create;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
-      connectOrCreate;
-
-  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'createMany': createMany,
-        'connect': connect,
       };
 }
 
@@ -11327,50 +11719,14 @@ class QuarterUncheckedCreateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedCreateInput({
     this.id,
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    required this.gameID,
     this.logs,
     this.playerStatistics,
   });
 
   final int? id;
 
-  final int number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int gameID;
 
   final _i2.LogsUncheckedCreateNestedManyWithoutQuarterInput? logs;
 
@@ -11380,19 +11736,7 @@ class QuarterUncheckedCreateInput
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'Logs': logs,
         'PlayerStatistics': playerStatistics,
       };
@@ -11402,65 +11746,35 @@ class QuarterCreateManyInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterCreateManyInput({
     this.id,
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    required this.gameID,
   });
 
   final int? id;
 
-  final int number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
+      };
+}
+
+class CreateManyQuarterAndReturnOutputTypeGameArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const CreateManyQuarterAndReturnOutputTypeGameArgs({
+    this.select,
+    this.include,
+  });
+
+  final _i2.GameSelect? select;
+
+  final _i2.GameInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'select': select,
+        'include': include,
       };
 }
 
@@ -11468,468 +11782,55 @@ class CreateManyQuarterAndReturnOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const CreateManyQuarterAndReturnOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
+    this.game,
   });
 
   final bool? id;
 
-  final bool? number;
+  final bool? gameID;
 
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final _i1.PrismaUnion<bool, _i2.CreateManyQuarterAndReturnOutputTypeGameArgs>?
+      game;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
-      };
-}
-
-class PlayerStatisticsUpdateWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateWithoutQuarterInput({
-    this.action,
-    this.points,
-    this.player,
-    this.game,
-  });
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
-
-  final _i2.PlayerUpdateOneWithoutPlayerStatisticsNestedInput? player;
-
-  final _i2.GameUpdateOneWithoutPlayerStatisticsNestedInput? game;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
-        'player': player,
+        'gameID': gameID,
         'game': game,
       };
 }
 
-class PlayerStatisticsUncheckedUpdateWithoutQuarterInput
+class CreateManyQuarterAndReturnOutputTypeInclude
     implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedUpdateWithoutQuarterInput({
-    this.id,
-    this.playerID,
-    this.gameID,
-    this.action,
-    this.points,
-  });
+  const CreateManyQuarterAndReturnOutputTypeInclude({this.game});
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? playerID;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? gameID;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<bool, _i2.CreateManyQuarterAndReturnOutputTypeGameArgs>?
+      game;
 
   @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
-        'action': action,
-        'points': points,
-      };
-}
-
-class PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput({
-    required this.where,
-    required this.update,
-    required this.create,
-  });
-
-  final _i2.PlayerStatisticsWhereUniqueInput where;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateWithoutQuarterInput,
-      _i2.PlayerStatisticsUncheckedUpdateWithoutQuarterInput> update;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateWithoutQuarterInput,
-      _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput> create;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'update': update,
-        'create': create,
-      };
-}
-
-class PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput({
-    required this.where,
-    required this.data,
-  });
-
-  final _i2.PlayerStatisticsWhereUniqueInput where;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateWithoutQuarterInput,
-      _i2.PlayerStatisticsUncheckedUpdateWithoutQuarterInput> data;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'data': data,
-      };
-}
-
-class PlayerStatisticsUncheckedUpdateManyWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedUpdateManyWithoutQuarterInput({
-    this.id,
-    this.playerID,
-    this.gameID,
-    this.action,
-    this.points,
-  });
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? playerID;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? gameID;
-
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
-
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
-        'action': action,
-        'points': points,
-      };
-}
-
-class PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput({
-    required this.where,
-    required this.data,
-  });
-
-  final _i2.PlayerStatisticsScalarWhereInput where;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsUpdateManyMutationInput,
-      _i2.PlayerStatisticsUncheckedUpdateManyWithoutQuarterInput> data;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'data': data,
-      };
-}
-
-class PlayerStatisticsUpdateManyWithoutQuarterNestedInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUpdateManyWithoutQuarterNestedInput({
-    this.create,
-    this.connectOrCreate,
-    this.upsert,
-    this.createMany,
-    this.set,
-    this.disconnect,
-    this.delete,
-    this.connect,
-    this.update,
-    this.updateMany,
-    this.deleteMany,
-  });
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutQuarterInput,
-          _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
-              _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
-                  Iterable<
-                      _i2
-                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
-      create;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
-      connectOrCreate;
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput,
-          Iterable<
-              _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput>>?
-      upsert;
-
-  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? set;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? disconnect;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? delete;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput,
-          Iterable<
-              _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput>>?
-      update;
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput,
-          Iterable<_i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput>>?
-      updateMany;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsScalarWhereInput,
-      Iterable<_i2.PlayerStatisticsScalarWhereInput>>? deleteMany;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'upsert': upsert,
-        'createMany': createMany,
-        'set': set,
-        'disconnect': disconnect,
-        'delete': delete,
-        'connect': connect,
-        'update': update,
-        'updateMany': updateMany,
-        'deleteMany': deleteMany,
-      };
+  Map<String, dynamic> toJson() => {'game': game};
 }
 
 class QuarterUpdateInput implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUpdateInput({
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
     this.logs,
+    this.game,
     this.playerStatistics,
   });
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
-
   final _i2.LogsUpdateManyWithoutQuarterNestedInput? logs;
+
+  final _i2.GameUpdateOneRequiredWithoutQuarterNestedInput? game;
 
   final _i2.PlayerStatisticsUpdateManyWithoutQuarterNestedInput?
       playerStatistics;
 
   @override
   Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
         'Logs': logs,
+        'game': game,
         'PlayerStatistics': playerStatistics,
-      };
-}
-
-class PlayerStatisticsUncheckedUpdateManyWithoutQuarterNestedInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const PlayerStatisticsUncheckedUpdateManyWithoutQuarterNestedInput({
-    this.create,
-    this.connectOrCreate,
-    this.upsert,
-    this.createMany,
-    this.set,
-    this.disconnect,
-    this.delete,
-    this.connect,
-    this.update,
-    this.updateMany,
-    this.deleteMany,
-  });
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsCreateWithoutQuarterInput,
-          _i1.PrismaUnion<
-              Iterable<_i2.PlayerStatisticsCreateWithoutQuarterInput>,
-              _i1.PrismaUnion<
-                  _i2.PlayerStatisticsUncheckedCreateWithoutQuarterInput,
-                  Iterable<
-                      _i2
-                      .PlayerStatisticsUncheckedCreateWithoutQuarterInput>>>>?
-      create;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput,
-          Iterable<_i2.PlayerStatisticsCreateOrConnectWithoutQuarterInput>>?
-      connectOrCreate;
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput,
-          Iterable<
-              _i2.PlayerStatisticsUpsertWithWhereUniqueWithoutQuarterInput>>?
-      upsert;
-
-  final _i2.PlayerStatisticsCreateManyQuarterInputEnvelope? createMany;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? set;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? disconnect;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? delete;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsWhereUniqueInput,
-      Iterable<_i2.PlayerStatisticsWhereUniqueInput>>? connect;
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput,
-          Iterable<
-              _i2.PlayerStatisticsUpdateWithWhereUniqueWithoutQuarterInput>>?
-      update;
-
-  final _i1.PrismaUnion<
-          _i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput,
-          Iterable<_i2.PlayerStatisticsUpdateManyWithWhereWithoutQuarterInput>>?
-      updateMany;
-
-  final _i1.PrismaUnion<_i2.PlayerStatisticsScalarWhereInput,
-      Iterable<_i2.PlayerStatisticsScalarWhereInput>>? deleteMany;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'create': create,
-        'connectOrCreate': connectOrCreate,
-        'upsert': upsert,
-        'createMany': createMany,
-        'set': set,
-        'disconnect': disconnect,
-        'delete': delete,
-        'connect': connect,
-        'update': update,
-        'updateMany': updateMany,
-        'deleteMany': deleteMany,
       };
 }
 
@@ -11937,52 +11838,14 @@ class QuarterUncheckedUpdateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedUpdateInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.logs,
     this.playerStatistics,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? gameID;
 
   final _i2.LogsUncheckedUpdateManyWithoutQuarterNestedInput? logs;
 
@@ -11992,85 +11855,9 @@ class QuarterUncheckedUpdateInput
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'Logs': logs,
         'PlayerStatistics': playerStatistics,
-      };
-}
-
-class QuarterUpdateManyMutationInput
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const QuarterUpdateManyMutationInput({
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
-  });
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
       };
 }
 
@@ -12078,153 +11865,43 @@ class QuarterUncheckedUpdateManyInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedUpdateManyInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
 class QuarterCountAggregateOutputType {
   const QuarterCountAggregateOutputType({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.$all,
   });
 
   factory QuarterCountAggregateOutputType.fromJson(Map json) =>
       QuarterCountAggregateOutputType(
         id: json['id'],
-        number: json['number'],
-        totalScore: json['totalScore'],
-        madeOne: json['madeOne'],
-        madeTwo: json['madeTwo'],
-        madeThree: json['madeThree'],
-        miss: json['miss'],
-        reboundOffensive: json['reboundOffensive'],
-        reboundDefensive: json['reboundDefensive'],
-        foul: json['foul'],
-        turnover: json['turnover'],
-        assist: json['assist'],
-        block: json['block'],
-        steal: json['steal'],
+        gameID: json['gameID'],
         $all: json['_all'],
       );
 
   final int? id;
 
-  final int? number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int? gameID;
 
   final int? $all;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         '_all': $all,
       };
 }
@@ -12232,347 +11909,95 @@ class QuarterCountAggregateOutputType {
 class QuarterAvgAggregateOutputType {
   const QuarterAvgAggregateOutputType({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   factory QuarterAvgAggregateOutputType.fromJson(Map json) =>
       QuarterAvgAggregateOutputType(
         id: json['id'],
-        number: json['number'],
-        totalScore: json['totalScore'],
-        madeOne: json['madeOne'],
-        madeTwo: json['madeTwo'],
-        madeThree: json['madeThree'],
-        miss: json['miss'],
-        reboundOffensive: json['reboundOffensive'],
-        reboundDefensive: json['reboundDefensive'],
-        foul: json['foul'],
-        turnover: json['turnover'],
-        assist: json['assist'],
-        block: json['block'],
-        steal: json['steal'],
+        gameID: json['gameID'],
       );
 
   final double? id;
 
-  final double? number;
-
-  final double? totalScore;
-
-  final double? madeOne;
-
-  final double? madeTwo;
-
-  final double? madeThree;
-
-  final double? miss;
-
-  final double? reboundOffensive;
-
-  final double? reboundDefensive;
-
-  final double? foul;
-
-  final double? turnover;
-
-  final double? assist;
-
-  final double? block;
-
-  final double? steal;
+  final double? gameID;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
 class QuarterSumAggregateOutputType {
   const QuarterSumAggregateOutputType({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   factory QuarterSumAggregateOutputType.fromJson(Map json) =>
       QuarterSumAggregateOutputType(
         id: json['id'],
-        number: json['number'],
-        totalScore: json['totalScore'],
-        madeOne: json['madeOne'],
-        madeTwo: json['madeTwo'],
-        madeThree: json['madeThree'],
-        miss: json['miss'],
-        reboundOffensive: json['reboundOffensive'],
-        reboundDefensive: json['reboundDefensive'],
-        foul: json['foul'],
-        turnover: json['turnover'],
-        assist: json['assist'],
-        block: json['block'],
-        steal: json['steal'],
+        gameID: json['gameID'],
       );
 
   final int? id;
 
-  final int? number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int? gameID;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
 class QuarterMinAggregateOutputType {
   const QuarterMinAggregateOutputType({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   factory QuarterMinAggregateOutputType.fromJson(Map json) =>
       QuarterMinAggregateOutputType(
         id: json['id'],
-        number: json['number'],
-        totalScore: json['totalScore'],
-        madeOne: json['madeOne'],
-        madeTwo: json['madeTwo'],
-        madeThree: json['madeThree'],
-        miss: json['miss'],
-        reboundOffensive: json['reboundOffensive'],
-        reboundDefensive: json['reboundDefensive'],
-        foul: json['foul'],
-        turnover: json['turnover'],
-        assist: json['assist'],
-        block: json['block'],
-        steal: json['steal'],
+        gameID: json['gameID'],
       );
 
   final int? id;
 
-  final int? number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int? gameID;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
 class QuarterMaxAggregateOutputType {
   const QuarterMaxAggregateOutputType({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   factory QuarterMaxAggregateOutputType.fromJson(Map json) =>
       QuarterMaxAggregateOutputType(
         id: json['id'],
-        number: json['number'],
-        totalScore: json['totalScore'],
-        madeOne: json['madeOne'],
-        madeTwo: json['madeTwo'],
-        madeThree: json['madeThree'],
-        miss: json['miss'],
-        reboundOffensive: json['reboundOffensive'],
-        reboundDefensive: json['reboundDefensive'],
-        foul: json['foul'],
-        turnover: json['turnover'],
-        assist: json['assist'],
-        block: json['block'],
-        steal: json['steal'],
+        gameID: json['gameID'],
       );
 
   final int? id;
 
-  final int? number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int? gameID;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
 class QuarterGroupByOutputType {
   const QuarterGroupByOutputType({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.$count,
     this.$avg,
     this.$sum,
@@ -12583,19 +12008,7 @@ class QuarterGroupByOutputType {
   factory QuarterGroupByOutputType.fromJson(Map json) =>
       QuarterGroupByOutputType(
         id: json['id'],
-        number: json['number'],
-        totalScore: json['totalScore'],
-        madeOne: json['madeOne'],
-        madeTwo: json['madeTwo'],
-        madeThree: json['madeThree'],
-        miss: json['miss'],
-        reboundOffensive: json['reboundOffensive'],
-        reboundDefensive: json['reboundDefensive'],
-        foul: json['foul'],
-        turnover: json['turnover'],
-        assist: json['assist'],
-        block: json['block'],
-        steal: json['steal'],
+        gameID: json['gameID'],
         $count: json['_count'] is Map
             ? _i2.QuarterCountAggregateOutputType.fromJson(json['_count'])
             : null,
@@ -12615,31 +12028,7 @@ class QuarterGroupByOutputType {
 
   final int? id;
 
-  final int? number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int? gameID;
 
   final _i2.QuarterCountAggregateOutputType? $count;
 
@@ -12653,19 +12042,7 @@ class QuarterGroupByOutputType {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         '_count': $count?.toJson(),
         '_avg': $avg?.toJson(),
         '_sum': $sum?.toJson(),
@@ -12678,65 +12055,17 @@ class QuarterCountOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterCountOrderByAggregateInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -12744,65 +12073,17 @@ class QuarterAvgOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterAvgOrderByAggregateInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -12810,65 +12091,17 @@ class QuarterMaxOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterMaxOrderByAggregateInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -12876,65 +12109,17 @@ class QuarterMinOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterMinOrderByAggregateInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -12942,65 +12127,17 @@ class QuarterSumOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterSumOrderByAggregateInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -13008,19 +12145,7 @@ class QuarterOrderByWithAggregationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterOrderByWithAggregationInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.$count,
     this.$avg,
     this.$max,
@@ -13030,31 +12155,7 @@ class QuarterOrderByWithAggregationInput
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? number;
-
-  final _i2.SortOrder? totalScore;
-
-  final _i2.SortOrder? madeOne;
-
-  final _i2.SortOrder? madeTwo;
-
-  final _i2.SortOrder? madeThree;
-
-  final _i2.SortOrder? miss;
-
-  final _i2.SortOrder? reboundOffensive;
-
-  final _i2.SortOrder? reboundDefensive;
-
-  final _i2.SortOrder? foul;
-
-  final _i2.SortOrder? turnover;
-
-  final _i2.SortOrder? assist;
-
-  final _i2.SortOrder? block;
-
-  final _i2.SortOrder? steal;
+  final _i2.SortOrder? gameID;
 
   final _i2.QuarterCountOrderByAggregateInput? $count;
 
@@ -13069,19 +12170,7 @@ class QuarterOrderByWithAggregationInput
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         '_count': $count,
         '_avg': $avg,
         '_max': $max,
@@ -13097,19 +12186,7 @@ class QuarterScalarWhereWithAggregatesInput
     this.OR,
     this.NOT,
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final _i1.PrismaUnion<_i2.QuarterScalarWhereWithAggregatesInput,
@@ -13122,31 +12199,7 @@ class QuarterScalarWhereWithAggregatesInput
 
   final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? id;
 
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? number;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? totalScore;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? madeOne;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? madeTwo;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? madeThree;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? miss;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? reboundOffensive;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? reboundDefensive;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? foul;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? turnover;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? assist;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? block;
-
-  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? steal;
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -13154,19 +12207,7 @@ class QuarterScalarWhereWithAggregatesInput
         'OR': OR,
         'NOT': NOT,
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -13174,68 +12215,20 @@ class QuarterCountAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterCountAggregateOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.$all,
   });
 
   final bool? id;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final bool? gameID;
 
   final bool? $all;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         '_all': $all,
       };
 }
@@ -13254,65 +12247,17 @@ class QuarterAvgAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterAvgAggregateOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final bool? id;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final bool? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -13330,65 +12275,17 @@ class QuarterSumAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterSumAggregateOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final bool? id;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final bool? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -13406,65 +12303,17 @@ class QuarterMinAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterMinAggregateOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final bool? id;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final bool? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -13482,65 +12331,17 @@ class QuarterMaxAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterMaxAggregateOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
   });
 
   final bool? id;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final bool? gameID;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
       };
 }
 
@@ -13558,19 +12359,7 @@ class QuarterGroupByOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterGroupByOutputTypeSelect({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.$count,
     this.$avg,
     this.$sum,
@@ -13580,31 +12369,7 @@ class QuarterGroupByOutputTypeSelect
 
   final bool? id;
 
-  final bool? number;
-
-  final bool? totalScore;
-
-  final bool? madeOne;
-
-  final bool? madeTwo;
-
-  final bool? madeThree;
-
-  final bool? miss;
-
-  final bool? reboundOffensive;
-
-  final bool? reboundDefensive;
-
-  final bool? foul;
-
-  final bool? turnover;
-
-  final bool? assist;
-
-  final bool? block;
-
-  final bool? steal;
+  final bool? gameID;
 
   final _i1.PrismaUnion<bool, _i2.QuarterGroupByOutputTypeCountArgs>? $count;
 
@@ -13619,19 +12384,7 @@ class QuarterGroupByOutputTypeSelect
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         '_count': $count,
         '_avg': $avg,
         '_sum': $sum,
@@ -13769,66 +12522,18 @@ class AggregateQuarterSelect
 class QuarterCreateWithoutLogsInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterCreateWithoutLogsInput({
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    required this.game,
     this.playerStatistics,
   });
 
-  final int number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final _i2.GameCreateNestedOneWithoutQuarterInput game;
 
   final _i2.PlayerStatisticsCreateNestedManyWithoutQuarterInput?
       playerStatistics;
 
   @override
   Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'game': game,
         'PlayerStatistics': playerStatistics,
       };
 }
@@ -13837,49 +12542,13 @@ class QuarterUncheckedCreateWithoutLogsInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedCreateWithoutLogsInput({
     this.id,
-    required this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    required this.gameID,
     this.playerStatistics,
   });
 
   final int? id;
 
-  final int number;
-
-  final int? totalScore;
-
-  final int? madeOne;
-
-  final int? madeTwo;
-
-  final int? madeThree;
-
-  final int? miss;
-
-  final int? reboundOffensive;
-
-  final int? reboundDefensive;
-
-  final int? foul;
-
-  final int? turnover;
-
-  final int? assist;
-
-  final int? block;
-
-  final int? steal;
+  final int gameID;
 
   final _i2.PlayerStatisticsUncheckedCreateNestedManyWithoutQuarterInput?
       playerStatistics;
@@ -13887,19 +12556,7 @@ class QuarterUncheckedCreateWithoutLogsInput
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'PlayerStatistics': playerStatistics,
       };
 }
@@ -14129,68 +12786,18 @@ class CreateManyLogsAndReturnOutputTypeInclude
 class QuarterUpdateWithoutLogsInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUpdateWithoutLogsInput({
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.game,
     this.playerStatistics,
   });
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+  final _i2.GameUpdateOneRequiredWithoutQuarterNestedInput? game;
 
   final _i2.PlayerStatisticsUpdateManyWithoutQuarterNestedInput?
       playerStatistics;
 
   @override
   Map<String, dynamic> toJson() => {
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'game': game,
         'PlayerStatistics': playerStatistics,
       };
 }
@@ -14199,51 +12806,13 @@ class QuarterUncheckedUpdateWithoutLogsInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const QuarterUncheckedUpdateWithoutLogsInput({
     this.id,
-    this.number,
-    this.totalScore,
-    this.madeOne,
-    this.madeTwo,
-    this.madeThree,
-    this.miss,
-    this.reboundOffensive,
-    this.reboundDefensive,
-    this.foul,
-    this.turnover,
-    this.assist,
-    this.block,
-    this.steal,
+    this.gameID,
     this.playerStatistics,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? miss;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundOffensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>?
-      reboundDefensive;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
-
-  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? gameID;
 
   final _i2.PlayerStatisticsUncheckedUpdateManyWithoutQuarterNestedInput?
       playerStatistics;
@@ -14251,19 +12820,7 @@ class QuarterUncheckedUpdateWithoutLogsInput
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
-        'totalScore': totalScore,
-        'madeOne': madeOne,
-        'madeTwo': madeTwo,
-        'madeThree': madeThree,
-        'miss': miss,
-        'reboundOffensive': reboundOffensive,
-        'reboundDefensive': reboundDefensive,
-        'foul': foul,
-        'turnover': turnover,
-        'assist': assist,
-        'block': block,
-        'steal': steal,
+        'gameID': gameID,
         'PlayerStatistics': playerStatistics,
       };
 }
@@ -17674,30 +16231,66 @@ class AggregatePlayerSelect
 class PlayerStatisticsCreateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsCreateInput({
-    required this.action,
-    this.points,
-    this.player,
-    this.game,
-    this.quarter,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
+    required this.quarter,
+    required this.player,
   });
 
-  final String action;
+  final int number;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? totalScore;
 
-  final _i2.PlayerCreateNestedOneWithoutPlayerStatisticsInput? player;
+  final int? madeOne;
 
-  final _i2.GameCreateNestedOneWithoutPlayerStatisticsInput? game;
+  final int? madeTwo;
 
-  final _i2.QuarterCreateNestedOneWithoutPlayerStatisticsInput? quarter;
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
+
+  final _i2.QuarterCreateNestedOneWithoutPlayerStatisticsInput quarter;
+
+  final _i2.PlayerCreateNestedOneWithoutPlayerStatisticsInput player;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
+        'player': player,
       };
 }
 
@@ -17705,33 +16298,69 @@ class PlayerStatisticsUncheckedCreateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUncheckedCreateInput({
     this.id,
-    this.playerID,
-    this.gameID,
-    this.quarterID,
-    required this.action,
-    this.points,
+    required this.quarterID,
+    required this.playerID,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? playerID;
+  final int quarterID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? gameID;
+  final int playerID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? quarterID;
+  final int number;
 
-  final String action;
+  final int? totalScore;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -17739,89 +16368,78 @@ class PlayerStatisticsCreateManyInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsCreateManyInput({
     this.id,
-    this.playerID,
-    this.gameID,
-    this.quarterID,
-    required this.action,
-    this.points,
+    required this.quarterID,
+    required this.playerID,
+    required this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final int? id;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? playerID;
+  final int quarterID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? gameID;
+  final int playerID;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? quarterID;
+  final int number;
 
-  final String action;
+  final int? totalScore;
 
-  final _i1.PrismaUnion<int, _i1.PrismaNull>? points;
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final _i1.PrismaUnion<int, _i1.PrismaNull>? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
-      };
-}
-
-class CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs({
-    this.where,
-    this.select,
-    this.include,
-  });
-
-  final _i2.PlayerWhereInput? where;
-
-  final _i2.PlayerSelect? select;
-
-  final _i2.PlayerInclude? include;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'select': select,
-        'include': include,
-      };
-}
-
-class CreateManyPlayerStatisticsAndReturnOutputTypeGameArgs
-    implements _i1.JsonConvertible<Map<String, dynamic>> {
-  const CreateManyPlayerStatisticsAndReturnOutputTypeGameArgs({
-    this.where,
-    this.select,
-    this.include,
-  });
-
-  final _i2.GameWhereInput? where;
-
-  final _i2.GameSelect? select;
-
-  final _i2.GameInclude? include;
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'where': where,
-        'select': select,
-        'include': include,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class CreateManyPlayerStatisticsAndReturnOutputTypeQuarterArgs
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const CreateManyPlayerStatisticsAndReturnOutputTypeQuarterArgs({
-    this.where,
     this.select,
     this.include,
   });
-
-  final _i2.QuarterWhereInput? where;
 
   final _i2.QuarterSelect? select;
 
@@ -17829,7 +16447,24 @@ class CreateManyPlayerStatisticsAndReturnOutputTypeQuarterArgs
 
   @override
   Map<String, dynamic> toJson() => {
-        'where': where,
+        'select': select,
+        'include': include,
+      };
+}
+
+class CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs
+    implements _i1.JsonConvertible<Map<String, dynamic>> {
+  const CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs({
+    this.select,
+    this.include,
+  });
+
+  final _i2.PlayerSelect? select;
+
+  final _i2.PlayerInclude? include;
+
+  @override
+  Map<String, dynamic> toJson() => {
         'select': select,
         'include': include,
       };
@@ -17839,106 +16474,168 @@ class CreateManyPlayerStatisticsAndReturnOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const CreateManyPlayerStatisticsAndReturnOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
-    this.player,
-    this.game,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.quarter,
+    this.player,
   });
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? action;
+  final bool? playerID;
 
-  final bool? points;
+  final bool? number;
 
-  final _i1.PrismaUnion<bool,
-      _i2.CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs>? player;
+  final bool? totalScore;
 
-  final _i1.PrismaUnion<bool,
-      _i2.CreateManyPlayerStatisticsAndReturnOutputTypeGameArgs>? game;
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   final _i1.PrismaUnion<bool,
       _i2.CreateManyPlayerStatisticsAndReturnOutputTypeQuarterArgs>? quarter;
 
+  final _i1.PrismaUnion<bool,
+      _i2.CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs>? player;
+
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
+        'player': player,
       };
 }
 
 class CreateManyPlayerStatisticsAndReturnOutputTypeInclude
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const CreateManyPlayerStatisticsAndReturnOutputTypeInclude({
-    this.player,
-    this.game,
     this.quarter,
+    this.player,
   });
-
-  final _i1.PrismaUnion<bool,
-      _i2.CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs>? player;
-
-  final _i1.PrismaUnion<bool,
-      _i2.CreateManyPlayerStatisticsAndReturnOutputTypeGameArgs>? game;
 
   final _i1.PrismaUnion<bool,
       _i2.CreateManyPlayerStatisticsAndReturnOutputTypeQuarterArgs>? quarter;
 
+  final _i1.PrismaUnion<bool,
+      _i2.CreateManyPlayerStatisticsAndReturnOutputTypePlayerArgs>? player;
+
   @override
   Map<String, dynamic> toJson() => {
-        'player': player,
-        'game': game,
         'quarter': quarter,
+        'player': player,
       };
 }
 
 class PlayerStatisticsUpdateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUpdateInput({
-    this.action,
-    this.points,
-    this.player,
-    this.game,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.quarter,
+    this.player,
   });
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+          _i1.PrismaNull>>? miss;
 
-  final _i2.PlayerUpdateOneWithoutPlayerStatisticsNestedInput? player;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i2.GameUpdateOneWithoutPlayerStatisticsNestedInput? game;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
 
-  final _i2.QuarterUpdateOneWithoutPlayerStatisticsNestedInput? quarter;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
+
+  final _i2.QuarterUpdateOneRequiredWithoutPlayerStatisticsNestedInput? quarter;
+
+  final _i2.PlayerUpdateOneRequiredWithoutPlayerStatisticsNestedInput? player;
 
   @override
   Map<String, dynamic> toJson() => {
-        'action': action,
-        'points': points,
-        'player': player,
-        'game': game,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         'quarter': quarter,
+        'player': player,
       };
 }
 
@@ -17946,45 +16643,72 @@ class PlayerStatisticsUncheckedUpdateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUncheckedUpdateInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? playerID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? quarterID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? playerID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? gameID;
+          _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? quarterID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -17992,91 +16716,163 @@ class PlayerStatisticsUncheckedUpdateManyInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsUncheckedUpdateManyInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? id;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? playerID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? quarterID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? playerID;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? number;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? totalScore;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeOne;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeTwo;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? madeThree;
 
   final _i1.PrismaUnion<
       int,
       _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? gameID;
+          _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? quarterID;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? rebound;
 
-  final _i1.PrismaUnion<String, _i2.StringFieldUpdateOperationsInput>? action;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? foul;
 
-  final _i1.PrismaUnion<
-      int,
-      _i1.PrismaUnion<_i2.NullableIntFieldUpdateOperationsInput,
-          _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? turnover;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? assist;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? block;
+
+  final _i1.PrismaUnion<int, _i2.IntFieldUpdateOperationsInput>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class PlayerStatisticsCountAggregateOutputType {
   const PlayerStatisticsCountAggregateOutputType({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.$all,
   });
 
   factory PlayerStatisticsCountAggregateOutputType.fromJson(Map json) =>
       PlayerStatisticsCountAggregateOutputType(
         id: json['id'],
-        playerID: json['playerID'],
-        gameID: json['gameID'],
         quarterID: json['quarterID'],
-        action: json['action'],
-        points: json['points'],
+        playerID: json['playerID'],
+        number: json['number'],
+        totalScore: json['totalScore'],
+        madeOne: json['madeOne'],
+        madeTwo: json['madeTwo'],
+        madeThree: json['madeThree'],
+        miss: json['miss'],
+        rebound: json['rebound'],
+        foul: json['foul'],
+        turnover: json['turnover'],
+        assist: json['assist'],
+        block: json['block'],
+        steal: json['steal'],
         $all: json['_all'],
       );
 
   final int? id;
 
-  final int? playerID;
-
-  final int? gameID;
-
   final int? quarterID;
 
-  final int? action;
+  final int? playerID;
 
-  final int? points;
+  final int? number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   final int? $all;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         '_all': $all,
       };
 }
@@ -18084,169 +16880,368 @@ class PlayerStatisticsCountAggregateOutputType {
 class PlayerStatisticsAvgAggregateOutputType {
   const PlayerStatisticsAvgAggregateOutputType({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   factory PlayerStatisticsAvgAggregateOutputType.fromJson(Map json) =>
       PlayerStatisticsAvgAggregateOutputType(
         id: json['id'],
-        playerID: json['playerID'],
-        gameID: json['gameID'],
         quarterID: json['quarterID'],
-        points: json['points'],
+        playerID: json['playerID'],
+        number: json['number'],
+        totalScore: json['totalScore'],
+        madeOne: json['madeOne'],
+        madeTwo: json['madeTwo'],
+        madeThree: json['madeThree'],
+        miss: json['miss'],
+        rebound: json['rebound'],
+        foul: json['foul'],
+        turnover: json['turnover'],
+        assist: json['assist'],
+        block: json['block'],
+        steal: json['steal'],
       );
 
   final double? id;
 
-  final double? playerID;
-
-  final double? gameID;
-
   final double? quarterID;
 
-  final double? points;
+  final double? playerID;
+
+  final double? number;
+
+  final double? totalScore;
+
+  final double? madeOne;
+
+  final double? madeTwo;
+
+  final double? madeThree;
+
+  final double? miss;
+
+  final double? rebound;
+
+  final double? foul;
+
+  final double? turnover;
+
+  final double? assist;
+
+  final double? block;
+
+  final double? steal;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class PlayerStatisticsSumAggregateOutputType {
   const PlayerStatisticsSumAggregateOutputType({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   factory PlayerStatisticsSumAggregateOutputType.fromJson(Map json) =>
       PlayerStatisticsSumAggregateOutputType(
         id: json['id'],
-        playerID: json['playerID'],
-        gameID: json['gameID'],
         quarterID: json['quarterID'],
-        points: json['points'],
+        playerID: json['playerID'],
+        number: json['number'],
+        totalScore: json['totalScore'],
+        madeOne: json['madeOne'],
+        madeTwo: json['madeTwo'],
+        madeThree: json['madeThree'],
+        miss: json['miss'],
+        rebound: json['rebound'],
+        foul: json['foul'],
+        turnover: json['turnover'],
+        assist: json['assist'],
+        block: json['block'],
+        steal: json['steal'],
       );
 
   final int? id;
 
-  final int? playerID;
-
-  final int? gameID;
-
   final int? quarterID;
 
-  final int? points;
+  final int? playerID;
+
+  final int? number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class PlayerStatisticsMinAggregateOutputType {
   const PlayerStatisticsMinAggregateOutputType({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   factory PlayerStatisticsMinAggregateOutputType.fromJson(Map json) =>
       PlayerStatisticsMinAggregateOutputType(
         id: json['id'],
-        playerID: json['playerID'],
-        gameID: json['gameID'],
         quarterID: json['quarterID'],
-        action: json['action'],
-        points: json['points'],
+        playerID: json['playerID'],
+        number: json['number'],
+        totalScore: json['totalScore'],
+        madeOne: json['madeOne'],
+        madeTwo: json['madeTwo'],
+        madeThree: json['madeThree'],
+        miss: json['miss'],
+        rebound: json['rebound'],
+        foul: json['foul'],
+        turnover: json['turnover'],
+        assist: json['assist'],
+        block: json['block'],
+        steal: json['steal'],
       );
 
   final int? id;
 
-  final int? playerID;
-
-  final int? gameID;
-
   final int? quarterID;
 
-  final String? action;
+  final int? playerID;
 
-  final int? points;
+  final int? number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class PlayerStatisticsMaxAggregateOutputType {
   const PlayerStatisticsMaxAggregateOutputType({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   factory PlayerStatisticsMaxAggregateOutputType.fromJson(Map json) =>
       PlayerStatisticsMaxAggregateOutputType(
         id: json['id'],
-        playerID: json['playerID'],
-        gameID: json['gameID'],
         quarterID: json['quarterID'],
-        action: json['action'],
-        points: json['points'],
+        playerID: json['playerID'],
+        number: json['number'],
+        totalScore: json['totalScore'],
+        madeOne: json['madeOne'],
+        madeTwo: json['madeTwo'],
+        madeThree: json['madeThree'],
+        miss: json['miss'],
+        rebound: json['rebound'],
+        foul: json['foul'],
+        turnover: json['turnover'],
+        assist: json['assist'],
+        block: json['block'],
+        steal: json['steal'],
       );
 
   final int? id;
 
-  final int? playerID;
-
-  final int? gameID;
-
   final int? quarterID;
 
-  final String? action;
+  final int? playerID;
 
-  final int? points;
+  final int? number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
 class PlayerStatisticsGroupByOutputType {
   const PlayerStatisticsGroupByOutputType({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.$count,
     this.$avg,
     this.$sum,
@@ -18257,11 +17252,20 @@ class PlayerStatisticsGroupByOutputType {
   factory PlayerStatisticsGroupByOutputType.fromJson(Map json) =>
       PlayerStatisticsGroupByOutputType(
         id: json['id'],
-        playerID: json['playerID'],
-        gameID: json['gameID'],
         quarterID: json['quarterID'],
-        action: json['action'],
-        points: json['points'],
+        playerID: json['playerID'],
+        number: json['number'],
+        totalScore: json['totalScore'],
+        madeOne: json['madeOne'],
+        madeTwo: json['madeTwo'],
+        madeThree: json['madeThree'],
+        miss: json['miss'],
+        rebound: json['rebound'],
+        foul: json['foul'],
+        turnover: json['turnover'],
+        assist: json['assist'],
+        block: json['block'],
+        steal: json['steal'],
         $count: json['_count'] is Map
             ? _i2.PlayerStatisticsCountAggregateOutputType.fromJson(
                 json['_count'])
@@ -18282,15 +17286,33 @@ class PlayerStatisticsGroupByOutputType {
 
   final int? id;
 
-  final int? playerID;
-
-  final int? gameID;
-
   final int? quarterID;
 
-  final String? action;
+  final int? playerID;
 
-  final int? points;
+  final int? number;
+
+  final int? totalScore;
+
+  final int? madeOne;
+
+  final int? madeTwo;
+
+  final int? madeThree;
+
+  final int? miss;
+
+  final int? rebound;
+
+  final int? foul;
+
+  final int? turnover;
+
+  final int? assist;
+
+  final int? block;
+
+  final int? steal;
 
   final _i2.PlayerStatisticsCountAggregateOutputType? $count;
 
@@ -18304,11 +17326,20 @@ class PlayerStatisticsGroupByOutputType {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         '_count': $count?.toJson(),
         '_avg': $avg?.toJson(),
         '_sum': $sum?.toJson(),
@@ -18321,33 +17352,69 @@ class PlayerStatisticsCountOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsCountOrderByAggregateInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? playerID;
-
-  final _i2.SortOrder? gameID;
-
   final _i2.SortOrder? quarterID;
 
-  final _i2.SortOrder? action;
+  final _i2.SortOrder? playerID;
 
-  final _i2.SortOrder? points;
+  final _i2.SortOrder? number;
+
+  final _i2.SortOrder? totalScore;
+
+  final _i2.SortOrder? madeOne;
+
+  final _i2.SortOrder? madeTwo;
+
+  final _i2.SortOrder? madeThree;
+
+  final _i2.SortOrder? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18355,29 +17422,69 @@ class PlayerStatisticsAvgOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsAvgOrderByAggregateInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? playerID;
-
-  final _i2.SortOrder? gameID;
-
   final _i2.SortOrder? quarterID;
 
-  final _i2.SortOrder? points;
+  final _i2.SortOrder? playerID;
+
+  final _i2.SortOrder? number;
+
+  final _i2.SortOrder? totalScore;
+
+  final _i2.SortOrder? madeOne;
+
+  final _i2.SortOrder? madeTwo;
+
+  final _i2.SortOrder? madeThree;
+
+  final _i2.SortOrder? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18385,33 +17492,69 @@ class PlayerStatisticsMaxOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsMaxOrderByAggregateInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? playerID;
-
-  final _i2.SortOrder? gameID;
-
   final _i2.SortOrder? quarterID;
 
-  final _i2.SortOrder? action;
+  final _i2.SortOrder? playerID;
 
-  final _i2.SortOrder? points;
+  final _i2.SortOrder? number;
+
+  final _i2.SortOrder? totalScore;
+
+  final _i2.SortOrder? madeOne;
+
+  final _i2.SortOrder? madeTwo;
+
+  final _i2.SortOrder? madeThree;
+
+  final _i2.SortOrder? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18419,33 +17562,69 @@ class PlayerStatisticsMinOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsMinOrderByAggregateInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? playerID;
-
-  final _i2.SortOrder? gameID;
-
   final _i2.SortOrder? quarterID;
 
-  final _i2.SortOrder? action;
+  final _i2.SortOrder? playerID;
 
-  final _i2.SortOrder? points;
+  final _i2.SortOrder? number;
+
+  final _i2.SortOrder? totalScore;
+
+  final _i2.SortOrder? madeOne;
+
+  final _i2.SortOrder? madeTwo;
+
+  final _i2.SortOrder? madeThree;
+
+  final _i2.SortOrder? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18453,29 +17632,69 @@ class PlayerStatisticsSumOrderByAggregateInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsSumOrderByAggregateInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i2.SortOrder? id;
 
-  final _i2.SortOrder? playerID;
-
-  final _i2.SortOrder? gameID;
-
   final _i2.SortOrder? quarterID;
 
-  final _i2.SortOrder? points;
+  final _i2.SortOrder? playerID;
+
+  final _i2.SortOrder? number;
+
+  final _i2.SortOrder? totalScore;
+
+  final _i2.SortOrder? madeOne;
+
+  final _i2.SortOrder? madeTwo;
+
+  final _i2.SortOrder? madeThree;
+
+  final _i2.SortOrder? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18483,11 +17702,20 @@ class PlayerStatisticsOrderByWithAggregationInput
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsOrderByWithAggregationInput({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.$count,
     this.$avg,
     this.$max,
@@ -18497,15 +17725,33 @@ class PlayerStatisticsOrderByWithAggregationInput
 
   final _i2.SortOrder? id;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? playerID;
+  final _i2.SortOrder? quarterID;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? gameID;
+  final _i2.SortOrder? playerID;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? quarterID;
+  final _i2.SortOrder? number;
 
-  final _i2.SortOrder? action;
+  final _i2.SortOrder? totalScore;
 
-  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? points;
+  final _i2.SortOrder? madeOne;
+
+  final _i2.SortOrder? madeTwo;
+
+  final _i2.SortOrder? madeThree;
+
+  final _i1.PrismaUnion<_i2.SortOrder, _i2.SortOrderInput>? miss;
+
+  final _i2.SortOrder? rebound;
+
+  final _i2.SortOrder? foul;
+
+  final _i2.SortOrder? turnover;
+
+  final _i2.SortOrder? assist;
+
+  final _i2.SortOrder? block;
+
+  final _i2.SortOrder? steal;
 
   final _i2.PlayerStatisticsCountOrderByAggregateInput? $count;
 
@@ -18520,11 +17766,20 @@ class PlayerStatisticsOrderByWithAggregationInput
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         '_count': $count,
         '_avg': $avg,
         '_max': $max,
@@ -18540,11 +17795,20 @@ class PlayerStatisticsScalarWhereWithAggregatesInput
     this.OR,
     this.NOT,
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final _i1.PrismaUnion<_i2.PlayerStatisticsScalarWhereWithAggregatesInput,
@@ -18557,19 +17821,34 @@ class PlayerStatisticsScalarWhereWithAggregatesInput
 
   final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? id;
 
-  final _i1.PrismaUnion<_i2.IntNullableWithAggregatesFilter,
-      _i1.PrismaUnion<int, _i1.PrismaNull>>? playerID;
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? quarterID;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? playerID;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? number;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? totalScore;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? madeOne;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? madeTwo;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? madeThree;
 
   final _i1.PrismaUnion<_i2.IntNullableWithAggregatesFilter,
-      _i1.PrismaUnion<int, _i1.PrismaNull>>? gameID;
+      _i1.PrismaUnion<int, _i1.PrismaNull>>? miss;
 
-  final _i1.PrismaUnion<_i2.IntNullableWithAggregatesFilter,
-      _i1.PrismaUnion<int, _i1.PrismaNull>>? quarterID;
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? rebound;
 
-  final _i1.PrismaUnion<_i2.StringWithAggregatesFilter, String>? action;
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? foul;
 
-  final _i1.PrismaUnion<_i2.IntNullableWithAggregatesFilter,
-      _i1.PrismaUnion<int, _i1.PrismaNull>>? points;
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? turnover;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? assist;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? block;
+
+  final _i1.PrismaUnion<_i2.IntWithAggregatesFilter, int>? steal;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -18577,11 +17856,20 @@ class PlayerStatisticsScalarWhereWithAggregatesInput
         'OR': OR,
         'NOT': NOT,
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18589,36 +17877,72 @@ class PlayerStatisticsCountAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsCountAggregateOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.$all,
   });
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? action;
+  final bool? playerID;
 
-  final bool? points;
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   final bool? $all;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         '_all': $all,
       };
 }
@@ -18637,29 +17961,69 @@ class PlayerStatisticsAvgAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsAvgAggregateOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? points;
+  final bool? playerID;
+
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18677,29 +18041,69 @@ class PlayerStatisticsSumAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsSumAggregateOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? points;
+  final bool? playerID;
+
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18717,33 +18121,69 @@ class PlayerStatisticsMinAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsMinAggregateOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? action;
+  final bool? playerID;
 
-  final bool? points;
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18761,33 +18201,69 @@ class PlayerStatisticsMaxAggregateOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsMaxAggregateOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
   });
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? action;
+  final bool? playerID;
 
-  final bool? points;
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
       };
 }
 
@@ -18805,11 +18281,20 @@ class PlayerStatisticsGroupByOutputTypeSelect
     implements _i1.JsonConvertible<Map<String, dynamic>> {
   const PlayerStatisticsGroupByOutputTypeSelect({
     this.id,
-    this.playerID,
-    this.gameID,
     this.quarterID,
-    this.action,
-    this.points,
+    this.playerID,
+    this.number,
+    this.totalScore,
+    this.madeOne,
+    this.madeTwo,
+    this.madeThree,
+    this.miss,
+    this.rebound,
+    this.foul,
+    this.turnover,
+    this.assist,
+    this.block,
+    this.steal,
     this.$count,
     this.$avg,
     this.$sum,
@@ -18819,15 +18304,33 @@ class PlayerStatisticsGroupByOutputTypeSelect
 
   final bool? id;
 
-  final bool? playerID;
-
-  final bool? gameID;
-
   final bool? quarterID;
 
-  final bool? action;
+  final bool? playerID;
 
-  final bool? points;
+  final bool? number;
+
+  final bool? totalScore;
+
+  final bool? madeOne;
+
+  final bool? madeTwo;
+
+  final bool? madeThree;
+
+  final bool? miss;
+
+  final bool? rebound;
+
+  final bool? foul;
+
+  final bool? turnover;
+
+  final bool? assist;
+
+  final bool? block;
+
+  final bool? steal;
 
   final _i1.PrismaUnion<bool, _i2.PlayerStatisticsGroupByOutputTypeCountArgs>?
       $count;
@@ -18847,11 +18350,20 @@ class PlayerStatisticsGroupByOutputTypeSelect
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
-        'playerID': playerID,
-        'gameID': gameID,
         'quarterID': quarterID,
-        'action': action,
-        'points': points,
+        'playerID': playerID,
+        'number': number,
+        'totalScore': totalScore,
+        'madeOne': madeOne,
+        'madeTwo': madeTwo,
+        'madeThree': madeThree,
+        'miss': miss,
+        'rebound': rebound,
+        'foul': foul,
+        'turnover': turnover,
+        'assist': assist,
+        'block': block,
+        'steal': steal,
         '_count': $count,
         '_avg': $avg,
         '_sum': $sum,
