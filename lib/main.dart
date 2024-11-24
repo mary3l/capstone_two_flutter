@@ -246,7 +246,7 @@ Future<void> createGame() async {
           date: DateTime.now(),
           semester: "1",
           team: const TeamCreateNestedOneWithoutGameInput(
-            connect: (TeamWhereUniqueInput(id: 10)),
+            connect: (TeamWhereUniqueInput(id: 1)),
           ),
           title: 'JIYO VS THE WORLD',
           againstTeam: 'against Team',
@@ -346,7 +346,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Basketball Voice Recognition App',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      initialRoute: '/screens/teamStatistics', // mariel's initial route
+      initialRoute: '/screens/startRecording', // mariel's initial route
       // initialRoute: '/screens/startRecording', jiyo's initial route
       // initialRoute: '/screens/landing', // mariel's initial route
 

@@ -155,36 +155,35 @@ class _StartRecordingState extends State<StartRecording> {
     String first = _keywordCombinations[0];
     String second = _keywordCombinations[1];
     String third = _keywordCombinations[2];
-    // try {
-    //   final quarter = await prisma.quarter.findMany();
-    //   for (var quarter in quarter) {
-    //     print('Quarter ID: ${quarter.id}');
-    //   }
+    try {
+      final quarter = await prisma.quarter.findMany();
+      for (var quarter in quarter) {
+        print('Quarter ID: ${quarter.id}');
+      }
 
-    //   await prisma.logs.create(
-    //     data: PrismaUnion.$1(
-    //       LogsCreateInput(
-    //         quarter: QuarterCreateNestedOneWithoutLogsInput(
-    //           connect: (QuarterWhereUniqueInput(id: 1)),
-    //         ),
-    //         keywordOne: first,
-    //         keywordTwo: second,
-    //         keywordThree: third.isNotEmpty
-    //             ? PrismaUnion.$1(third)
-    //             : const PrismaUnion.$2(PrismaNull()),
-    //         timestamp: DateTime.now(),
-    //         isValidCombination:
-    //             _isValidKeywordCombination, // the value for isValidCombination is passed here from _isValidKeywordCombination
-    //       ),
-    //     ),
-    //   );
-    //   log('Successfully created logs');
-    // } catch (e) {
-    //   print(e);
-    //   log('Error ${e.toString()}');
-    // } finally {
-    //   _keywordCombinations.clear();
-    // }
+      await prisma.logs.create(
+        data: PrismaUnion.$1(
+          LogsCreateInput(
+            quarter: QuarterCreateNestedOneWithoutLogsInput(
+              connect: (QuarterWhereUniqueInput(id: quarterNumber)),
+            ),
+            keywordOne: first,
+            keywordTwo: second,
+            keywordThree: third.isNotEmpty
+                ? PrismaUnion.$1(third)
+                : const PrismaUnion.$2(PrismaNull()),
+            timestamp: DateTime.now(),
+            isValidCombination: _isValidKeywordCombination,
+          ),
+        ),
+      );
+      log('Successfully created logs');
+    } catch (e) {
+      print(e);
+      log('Error ${e.toString()}');
+    } finally {
+      _keywordCombinations.clear();
+    }
   }
 
   Future<bool> _requestPermission() async {
@@ -229,13 +228,27 @@ class _StartRecordingState extends State<StartRecording> {
 
   Future<void> _initRecorder() async {
     const _modelSpeechPath =
+        'assets/models/intended-speech/intended-speech.tflite';
+    const _modelSpeechlabelsPath =
+        'assets/models/intended-speech/intended-speech-labels.txt';
+/*     const _modelSpeechPath =
         'assets/models/intended-speech/soundclassifier_with_metadata.tflite';
-    const _modelSpeechlabelsPath = 'assets/models/intended-speech/labels.txt';
-    const _modelSpeechSize = 20;
+    const _modelSpeechlabelsPath = 'assets/models/intended-speech/labels.txt'; */
+/*     const _modelSpeechPath =
+        'assets/models/intended-speech/limited-speech.tflite';
+    const _modelSpeechlabelsPath =
+        'assets/models/intended-speech/limited-speech-labels.txt'; */
+    const _modelSpeechSize = 22;
     const _modelNoisePath =
-        'assets/models/intended-noise/soundclassifier_with_metadata.tflite';
-    const _modelNoiselabelsPath = 'assets/models/intended-noise/labels.txt';
-    const _modelNoiseSize = 7;
+        'assets/models/intended-noise/intended-noise.tflite';
+    const _modelNoiselabelsPath =
+        'assets/models/intended-noise/intended-noise_labels.txt';
+    const _modelNoiseSize = 6;
+    const _modelCombinedPath =
+        'assets/models/combined-model/combined_model.tflite';
+    const _modelCombinedlabelsPath =
+        'assets/models/combined-model/combined_model_labels.txt';
+
     _helperSpeech = AudioClassificationHelper(
       _modelSpeechPath,
       _modelSpeechlabelsPath,
@@ -264,7 +277,6 @@ class _StartRecordingState extends State<StartRecording> {
       (resultSpeech.entries as Iterable<MapEntry<String, double>>)
           .reduce((a, b) => a.value > b.value ? a : b)
     ];
-
     _classificationNoise = [
       (resultNoise.entries as Iterable<MapEntry<String, double>>)
           .reduce((a, b) => a.value > b.value ? a : b)
@@ -284,6 +296,8 @@ class _StartRecordingState extends State<StartRecording> {
       log('Keywords: $_keywordCombinations');
       _stopRecorder();
     }
+
+    _createLog(_keywordCombinations, selectedQuarter as int);
 
     setState(() {
       biggestValue = biggestValue;
@@ -347,6 +361,7 @@ class _StartRecordingState extends State<StartRecording> {
               });
             }),
             const SizedBox(height: 10),
+            Text(biggestValue.toString()),
 
             RecordingField(
               speech: _keywordCombinations.join('-'),

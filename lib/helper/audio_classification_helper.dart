@@ -51,6 +51,7 @@ class AudioClassificationHelper {
   Future<void> _loadLabels() async {
     final labelTxt = await rootBundle.loadString(_labelsPath);
     _labels = labelTxt.split('\n');
+    log(_labels.toString());
   }
 
   Future<void> initHelper() async {
@@ -76,7 +77,6 @@ class AudioClassificationHelper {
     try {
       // Run the model
       _interpreter.run(input.reshape([1, expectedLength]), speechOutput);
-      print(speechOutput);
     } catch (e) {
       print('Error during inference: $e');
       return {};

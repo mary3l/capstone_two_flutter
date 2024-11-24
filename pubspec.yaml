@@ -65,8 +65,20 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/models/combined-model/combined_model.tflite
+    - assets/models/combined-model/combined_model_labels.txt
+    - assets/models/intended-speech/intended-speech.tflite
+    - assets/models/intended-speech/intended-speech-labels.txt
+    - assets/models/intended-speech/limited-speech.tflite
+    - assets/models/intended-speech/limited-speech-labels.txt
+    # outdated speech model
     - assets/models/intended-speech/soundclassifier_with_metadata.tflite
     - assets/models/intended-speech/labels.txt
+
+    - assets/models/intended-noise/intended-noise.tflite
+    - assets/models/intended-noise/intended-noise_labels.txt
+
+    # outdated noise model
     - assets/models/intended-noise/soundclassifier_with_metadata.tflite
     - assets/models/intended-noise/labels.txt
     - lib/prisma/migrations/ # Migrations root dir
