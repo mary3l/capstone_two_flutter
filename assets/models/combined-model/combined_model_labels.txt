@@ -1,0 +1,26 @@
+0 Background Noise
+1 Player One
+2 Player Two
+3 Player Three
+4 Player Four
+5 Player Five
+6 Player Six
+7 Player Seven
+8 Player Eight
+9 Player Ten
+10 One
+11 Two
+12 Three
+13 Miss
+14 Made
+15 Rebound
+16 Foul
+17 Turnover
+18 Assist
+19 Steal
+20 Block
+21 Shoe Traction
+22 Ball Bouncing
+23 Whistle
+24 Crowd Noise
+25 Buzzer / Horn
