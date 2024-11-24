@@ -7,20 +7,21 @@
 6 Player Six
 7 Player Seven
 8 Player Eight
-9 Player Ten
-10 One
-11 Two
-12 Three
-13 Miss
-14 Made
-15 Rebound
-16 Foul
-17 Turnover
-18 Assist
-19 Steal
-20 Block
-21 Shoe Traction
-22 Ball Bouncing
-23 Whistle
-24 Crowd Noise
-25 Buzzer / Horn
+9 Player Nine
+10 Player Ten
+11 One
+12 Two
+13 Three
+14 Miss
+15 Made
+16 Rebound
+17 Foul
+18 Turnover
+19 Assist
+20 Steal
+21 Block
+22 Shoe Traction
+23 Ball Bouncing
+24 Whistle
+25 Crowd Noise
+26 Buzzer / Horn

@@ -227,37 +227,62 @@ class _StartRecordingState extends State<StartRecording> {
   }
 
   Future<void> _initRecorder() async {
-    const _modelSpeechPath =
-        'assets/models/intended-speech/intended-speech.tflite';
-    const _modelSpeechlabelsPath =
-        'assets/models/intended-speech/intended-speech-labels.txt';
+    /* NEW CUSTOM MODEL */
 /*     const _modelSpeechPath =
-        'assets/models/intended-speech/soundclassifier_with_metadata.tflite';
-    const _modelSpeechlabelsPath = 'assets/models/intended-speech/labels.txt'; */
-/*     const _modelSpeechPath =
-        'assets/models/intended-speech/limited-speech.tflite';
+        'assets/models/intended-speech/custom-intended-speech.tflite';
     const _modelSpeechlabelsPath =
-        'assets/models/intended-speech/limited-speech-labels.txt'; */
+        'assets/models/intended-speech/custom-intended-speech_labels.txt';
     const _modelSpeechSize = 22;
+
     const _modelNoisePath =
-        'assets/models/intended-noise/intended-noise.tflite';
+        'assets/models/intended-noise/custom-intended-noise.tflite';
     const _modelNoiselabelsPath =
-        'assets/models/intended-noise/intended-noise_labels.txt';
+        'assets/models/intended-noise/custom-intended-noise_labels.txt';
+    const _modelNoiseSize = 6; */
+
+    /*OLD GTM models*/
+/*     const _modelSpeechPath =
+        'assets/models/intended-speech/old-gtm-intended-speech.tflite';
+    const _modelSpeechlabelsPath =
+        'assets/models/intended-speech/old-gtm-intended-speech_labels.txt';
+    const _modelSpeechSize = 20;
+
+    const _modelNoisePath =
+        'assets/models/intended-noise/old-gtm-intended-noise.tflite';
+    const _modelNoiselabelsPath =
+        'assets/models/intended-noise/old-gtm-intended-noise_labels.txt';
+    const _modelNoiseSize = 7; */
+
+    /* LIMITED GTM MODELS*/
+/*     const _modelSpeechPath =
+        'assets/models/intended-speech/gtm-limited-speech.tflite';
+    const _modelSpeechlabelsPath =
+        'assets/models/intended-speech/gtm-limited-speech_labels.txt'; 
+        const _modelSpeechSize = 7;
+             
+        const _modelNoisePath =
+        'assets/models/intended-noise/gtm-intended-noise.tflite';
+    const _modelNoiselabelsPath =
+        'assets/models/intended-noise/gtm-intended-noise_labels.txt';
     const _modelNoiseSize = 6;
-    const _modelCombinedPath =
+        */
+
+    /* Combined Model*/
+    const _modelSpeechPath =
         'assets/models/combined-model/combined_model.tflite';
-    const _modelCombinedlabelsPath =
+    const _modelSpeechlabelsPath =
         'assets/models/combined-model/combined_model_labels.txt';
+    const _modelSpeechSize = 27;
 
     _helperSpeech = AudioClassificationHelper(
       _modelSpeechPath,
       _modelSpeechlabelsPath,
       _modelSpeechSize,
     );
-    _helperNoise = AudioClassificationHelper(
-        _modelNoisePath, _modelNoiselabelsPath, _modelNoiseSize);
+    /* _helperNoise = AudioClassificationHelper(
+        _modelNoisePath, _modelNoiselabelsPath, _modelNoiseSize); */
     await _helperSpeech.initHelper();
-    await _helperNoise.initHelper();
+/*     await _helperNoise.initHelper(); */
     _hasPermission = await _requestPermission();
   }
 
@@ -267,28 +292,29 @@ class _StartRecordingState extends State<StartRecording> {
     // Adjust the input array to match your model's input tensor
     final resultSpeech = await _helperSpeech
         .inference(inputArray.sublist(0, _requiredInputBuffer));
-    final resultNoise = await _helperNoise
-        .inference(inputArray.sublist(0, _requiredInputBuffer));
-    _VoteBetweenModels(resultSpeech, resultNoise);
+/*     final resultNoise = await _helperNoise
+        .inference(inputArray.sublist(0, _requiredInputBuffer)); */
+    _VoteBetweenModels(resultSpeech);
   }
 
-  void _VoteBetweenModels(resultSpeech, resultNoise) {
+  void _VoteBetweenModels(resultSpeech) {
     _classificationSpeech = [
       (resultSpeech.entries as Iterable<MapEntry<String, double>>)
           .reduce((a, b) => a.value > b.value ? a : b)
     ];
-    _classificationNoise = [
+    biggestValue = _classificationSpeech;
+/*     _classificationNoise = [
       (resultNoise.entries as Iterable<MapEntry<String, double>>)
           .reduce((a, b) => a.value > b.value ? a : b)
-    ];
+    ]; */
 
-    if (_classificationSpeech[0].value > _classificationNoise[0].value) {
+/*     if (_classificationSpeech[0].value > _classificationNoise[0].value) {
       biggestValue = _classificationSpeech; // Speech classification wins
     } else {
       biggestValue = _classificationNoise; // Noise classification wins
     }
     print(biggestValue);
-
+ */
     if (_keywordCombinations.length < 4) {
       _keywordCombinations.add(biggestValue[0].key);
     } else {
@@ -297,7 +323,7 @@ class _StartRecordingState extends State<StartRecording> {
       _stopRecorder();
     }
 
-    _createLog(_keywordCombinations, selectedQuarter as int);
+    //_createLog(_keywordCombinations, selectedQuarter as int);
 
     setState(() {
       biggestValue = biggestValue;
@@ -353,6 +379,10 @@ class _StartRecordingState extends State<StartRecording> {
               alignment: LabelAlignment.header,
             ), */
             const SizedBox(height: 10),
+
+            Text(keywordCombinations.isEmpty
+                ? ''
+                : '${keywordCombinations[0]}-${keywordCombinations[1]}-${keywordCombinations[2]}'),
 
             // Pass the setter function to GameQuarter
             GameQuarter(onSelectQuarter: (quarter) {

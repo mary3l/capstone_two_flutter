@@ -65,22 +65,26 @@ flutter:
   uses-material-design: true
 
   assets:
+    # combined model
     - assets/models/combined-model/combined_model.tflite
     - assets/models/combined-model/combined_model_labels.txt
-    - assets/models/intended-speech/intended-speech.tflite
-    - assets/models/intended-speech/intended-speech-labels.txt
-    - assets/models/intended-speech/limited-speech.tflite
-    - assets/models/intended-speech/limited-speech-labels.txt
-    # outdated speech model
-    - assets/models/intended-speech/soundclassifier_with_metadata.tflite
-    - assets/models/intended-speech/labels.txt
 
-    - assets/models/intended-noise/intended-noise.tflite
-    - assets/models/intended-noise/intended-noise_labels.txt
+    #NEW CUSTOM MODEL
+    - assets/models/intended-speech/custom-intended-speech.tflite
+    - assets/models/intended-speech/custom-intended-speech_labels.txt
+    - assets/models/intended-noise/custom-intended-noise.tflite
+    - assets/models/intended-noise/custom-intended-noise_labels.txt
+    #OLD GTM Models
+    - assets/models/intended-speech/old-gtm-intended-speech.tflite
+    - assets/models/intended-speech/old-gtm-intended-speech_labels.txt
+    - assets/models/intended-noise/old-gtm-intended-noise.tflite
+    - assets/models/intended-noise/old-gtm-intended-noise_labels.txt
+    #LIMITED GTM MODELS
+    - assets/models/intended-speech/gtm-limited-speech.tflite
+    - assets/models/intended-speech/gtm-limited-speech_labels.txt
+    - assets/models/intended-noise/gtm-intended-noise.tflite
+    - assets/models/intended-noise/gtm-intended-noise_labels.txt
 
-    # outdated noise model
-    - assets/models/intended-noise/soundclassifier_with_metadata.tflite
-    - assets/models/intended-noise/labels.txt
     - lib/prisma/migrations/ # Migrations root dir
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
     - lib/prisma/migrations/20241113052255_init_new_db_model/
