@@ -72,7 +72,6 @@ flutter:
     - lib/prisma/migrations/ # Migrations root dir
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
     - lib/prisma/migrations/20241113052255_init_new_db_model/
-    - lib/prisma/migrations/20241113054355_added_quarter_table/
     - lib/prisma/migrations//20241113173915_added_logs_table/
     - lib/prisma/migrations/20241114054819_mariel_added_relations_with_season_and_game/
     - lib/prisma/migrations/20241114075233_mariel_changed_season_and_games_into_one_to_many_relationship/
@@ -84,7 +83,7 @@ flutter:
     - lib/prisma/migrations/20241120052619_mariel_added_is_valid_combination_logs_table/
     - lib/prisma/migrations/20241121013050_mariel_added_player_statistics_an_added_model_for_logs_table_and_the_player/
     - lib/prisma/migrations/20241123123442_mariel_updated_logs_quarter_player_statistics_and_quarter/
-    - lib/prisma/migrations/20241124032152_mariel_update_quarter/
+
     ### mariel's assets
     - lib/data/gameData.json
     - lib/assets/images/ball.png

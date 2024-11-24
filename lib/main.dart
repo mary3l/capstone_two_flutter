@@ -75,113 +75,123 @@ void seedData() async {
   // }
 // for quarter table create
 //  -------------------------------------------- Create player statistics
-  try {
-    // Define field values
-    final madeOne = 5;
-    final madeTwo = 3;
-    final madeThree = 2;
+//   try {
+//     // Define field values
+//     final madeOne = 5;
+//     final madeTwo = 3;
+//     final madeThree = 2;
 
-    // Log the field values to ensure they are correct
-    log('Made One: $madeOne');
-    log('Made Two: $madeTwo');
-    log('Made Three: $madeThree');
+//     // Log the field values to ensure they are correct
+//     log('Made One: $madeOne');
+//     log('Made Two: $madeTwo');
+//     log('Made Three: $madeThree');
 
-    //   // Calculate totalScore
-    final totalScore = (madeOne * 1) + (madeTwo * 2) + (madeThree * 3);
-    log('Total Score: $totalScore'); // Log the total score calculation
+//     //   // Calculate totalScore
+//     final totalScore = (madeOne * 1) + (madeTwo * 2) + (madeThree * 3);
+//     log('Total Score: $totalScore'); // Log the total score calculation
 
-    //   // Create Quarter record
-    final quarterID = 1; // Ensure this is a valid quarter ID
-    log('Quarter ID: $quarterID');
+//     //   // Create Quarter record
+//     final quarterID = 1; // Ensure this is a valid quarter ID
+//     log('Quarter ID: $quarterID');
 
-    final playerID = 1; // Ensure this is a valid player ID
-    log('Player ID: $playerID');
+//     final playerID = 1; // Ensure this is a valid player ID
+//     log('Player ID: $playerID');
 
-    final gameID = 1; // Ensure this is a valid player ID
-    log('Game ID: $gameID');
+//     final gameID = 1; // Ensure this is a valid player ID
+//     log('Game ID: $gameID');
 
-    // Create quarter
-    final playerStatisticsInput = PlayerStatisticsCreateInput(
-      quarter: QuarterCreateNestedOneWithoutPlayerStatisticsInput(
-          connect: QuarterWhereUniqueInput(id: quarterID)),
-      madeOne: madeOne,
-      madeTwo: madeTwo,
-      madeThree: madeThree,
-      totalScore: totalScore, // Computed value
-      rebound: 1,
-      foul: 2,
-      assist: 1,
-      turnover: 1,
-      steal: 1,
-      block: 1,
-      // game: GameCreateNestedOneWithoutPlayerStatisticsInput(
-      //     connect: GameWhereUniqueInput(id: gameID)),
-      player: PlayerCreateNestedOneWithoutPlayerStatisticsInput(
-          connect: PlayerWhereUniqueInput(id: playerID)),
-    );
+//     // Create quarter
+//     final playerStatisticsInput = PlayerStatisticsCreateInput(
+//       quarter: QuarterCreateNestedOneWithoutPlayerStatisticsInput(
+//           connect: QuarterWhereUniqueInput(id: quarterID)),
+//       madeOne: madeOne,
+//       madeTwo: madeTwo,
+//       madeThree: madeThree,
+//       totalScore: totalScore, // Computed value
+//       rebound: 1,
+//       foul: 2,
+//       assist: 1,
+//       turnover: 1,
+//       steal: 1,
+//       block: 1,
+//       // game: GameCreateNestedOneWithoutPlayerStatisticsInput(
+//       //     connect: GameWhereUniqueInput(id: gameID)),
+//       player: PlayerCreateNestedOneWithoutPlayerStatisticsInput(
+//           connect: PlayerWhereUniqueInput(id: playerID)),
+//     );
 
-    log('Player Statistics Input: $playerStatisticsInput');
+//     log('Player Statistics Input: $playerStatisticsInput');
 
-    await prisma.playerStatistics.create(
-      data: PrismaUnion.$1(playerStatisticsInput),
-    );
+//     await prisma.playerStatistics.create(
+//       data: PrismaUnion.$1(playerStatisticsInput),
+//     );
 
-    log('Seed: Successfully created player statistics');
-  } catch (e) {
-    log('Seed: Failed to create player statistics with error: $e');
-  }
+//     log('Seed: Successfully created player statistics');
+//   } catch (e) {
+//     log('Seed: Failed to create player statistics with error: $e');
+//   }
+// //  -------------------------------------------- Create quarter
+//   final logsID = [1, 2, 3];
+//     try {
+//       await prisma.quarter.create(
+//         data: PrismaUnion.$1(
+//           QuarterCreateInput(
+//             number: 1,
+//             game: GameCreateNestedOneWithoutQuarterInput(
+//               connect: GameWhereUniqueInput(id: 1),
+//             ),
+//             logs: LogsCreateNestedManyWithoutQuarterInput(
+//               connect: PrismaUnion.$2(
+//                 logsID.map((id) => LogsWhereUniqueInput(id: 1)).toList(),
+//               ),
+//             ),
+//           ),
+//         ),
+//       );
+//       log('Successfully created quarter');
+//     } catch (e) {
+//       log('Failed to create quarter: $e');
+//     }
+//   }
 
-//create quarter
-  try {
-    await prisma.quarter.create(
-      data: PrismaUnion.$1(
-        QuarterCreateInput(
-            game: GameCreateNestedOneWithoutQuarterInput(
-                connect: GameWhereUniqueInput(id: 1))),
-      ),
-    );
-    log('Seed: Successfully created game');
-  } catch (e) {
-    log('Seed: Failed to create game');
-  }
-  // try {
-  //   await prisma.game.create(
-  //     data: PrismaUnion.$1(
-  //       GameCreateInput(
-  //           date: DateTime.now(),
-  //           semester: "1",
-  //           team: const TeamCreateNestedOneWithoutGameInput(
-  //             connect: (TeamWhereUniqueInput(id: 1)),
-  //           ),
-  //           title: 'JIYO VS THE WORLD',
-  //           againstTeam: 'against Team',
-  //           season: const SeasonCreateNestedOneWithoutGamesInput(
-  //               connect: SeasonWhereUniqueInput(id: 1))),
-  //     ),
-  //   );
-  //   log('Seed: Successfully created game');
-  // } catch (e) {
-  //   log('Seed: Failed to create game');
-  // }
+//   // try {
+//   //   await prisma.game.create(
+//   //     data: PrismaUnion.$1(
+//   //       GameCreateInput(
+//   //           date: DateTime.now(),
+//   //           semester: "1",
+//   //           team: const TeamCreateNestedOneWithoutGameInput(
+//   //             connect: (TeamWhereUniqueInput(id: 1)),
+//   //           ),
+//   //           title: 'JIYO VS THE WORLD',
+//   //           againstTeam: 'against Team',
+//   //           season: const SeasonCreateNestedOneWithoutGamesInput(
+//   //               connect: SeasonWhereUniqueInput(id: 1))),
+//   //     ),
+//   //   );
+//   //   log('Seed: Successfully created game');
+//   // } catch (e) {
+//   //   log('Seed: Failed to create game');
+//   // }
 
-  // try {
-  //   await prisma.logs.create(
-  //     data: PrismaUnion.$1(
-  //       LogsCreateInput(
-  //         keywordOne: 'Player One',
-  //         keywordTwo: 'Made',
-  //         keywordThree: null,
-  //         timestamp: DateTime.now(),
-  //         quarter: const QuarterCreateNestedOneWithoutLogsInput(
-  //           connect: (QuarterWhereUniqueInput(id: 1)),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  //   log('Seed: Successfully created logs');
-  // } catch (e) {
-  //   log('Seed: Failed to create logs');
-  // }
+//   // try {
+//   //   await prisma.logs.create(
+//   //     data: PrismaUnion.$1(
+//   //       LogsCreateInput(
+//   //         keywordOne: 'Player One',
+//   //         keywordTwo: 'Made',
+//   //         keywordThree: null,
+//   //         timestamp: DateTime.now(),
+//   //         quarter: const QuarterCreateNestedOneWithoutLogsInput(
+//   //           connect: (QuarterWhereUniqueInput(id: 1)),
+//   //         ),
+//   //       ),
+//   //     ),
+//   //   );
+//   //   log('Seed: Successfully created logs');
+//   // } catch (e) {
+//   //   log('Seed: Failed to create logs');
+//   // }
 }
 
 void main() async {

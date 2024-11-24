@@ -25,25 +25,15 @@ model Season {
 }
 
 model Game {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   againstTeam String
   date        DateTime
   semester    String
-  team        Team?     @relation(fields: [teamID], references: [id])
+  team        Team?    @relation(fields: [teamID], references: [id])
   teamID      Int?
-  season      Season    @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season
+  season      Season   @relation(fields: [seasonID], references: [id]) // This defines the back reference from Game to Season
   seasonID    Int
-  Quarter     Quarter[]
-}
-
-model Quarter {
-  id               Int                @id @default(autoincrement())
-  Logs             Logs[]
-  number           Int
-  game             Game               @relation(fields: [gameID], references: [id])
-  gameID           Int
-  PlayerStatistics PlayerStatistics[]
 }
 
 model Logs {
@@ -53,8 +43,6 @@ model Logs {
   keywordThree       String?
   isValidCombination Boolean
   timestamp          DateTime
-  quarter            Quarter  @relation(fields: [quarterID], references: [id])
-  quarterID          Int
 }
 
 model Team {
@@ -77,20 +65,18 @@ model Player {
 }
 
 model PlayerStatistics {
-  id         Int      @id @default(autoincrement())
-  player     Player?  @relation(fields: [playerID], references: [id])
+  id         Int     @id @default(autoincrement())
+  player     Player? @relation(fields: [playerID], references: [id])
   playerID   Int? // Corresponds to String first = _keywordCombinations[0];
-  quarter    Quarter? @relation(fields: [quarterID], references: [id])
-  quarterID  Int? // Corresponds to the associated quarter.
-  totalScore Int      @default(0)
-  madeOne    Int      @default(0)
-  madeTwo    Int      @default(0)
-  madeThree  Int      @default(0)
-  miss       Int?     @default(0)
-  rebound    Int      @default(0)
-  foul       Int      @default(0)
-  turnover   Int      @default(0)
-  assist     Int      @default(0)
-  block      Int      @default(0)
-  steal      Int      @default(0)
+  totalScore Int     @default(0)
+  madeOne    Int     @default(0)
+  madeTwo    Int     @default(0)
+  madeThree  Int     @default(0)
+  miss       Int?    @default(0)
+  rebound    Int     @default(0)
+  foul       Int     @default(0)
+  turnover   Int     @default(0)
+  assist     Int     @default(0)
+  block      Int     @default(0)
+  steal      Int     @default(0)
 }

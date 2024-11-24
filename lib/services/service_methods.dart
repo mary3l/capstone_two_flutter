@@ -295,26 +295,51 @@ class ServiceMethod {
 
 // --------------- Player Statistics -----------------
 // Fetch player statistics according to gameID
-Future<List<PlayerStatistics>> fetchPlayerStatisticsByGameID(
-    int gameID, int playerID) async {
-  try {
-    final playersStatistics = await prisma.playerStatistics.findMany(
-      where: PlayerStatisticsWhereInput(
-        AND: PrismaUnion.$1(PlayerStatisticsWhereInput(
-            playerID: PrismaUnion.$1(
-                IntNullableFilter(equals: PrismaUnion.$1(playerID))))),
-        quarter: PrismaUnion.$1(QuarterNullableRelationFilter(
-            $is: PrismaUnion.$1(QuarterWhereInput(
-                gameID: PrismaUnion.$1(
-                    IntFilter(equals: PrismaUnion.$1(gameID))))))),
-      ),
-    );
+// Future<List<PlayerStatistics>> fetchPlayerStatisticsByGameID(
+//     int gameID, int playerID) async {
+//   try {
+//     final playersStatistics = await prisma.playerStatistics.findMany(
+//       where: PlayerStatisticsWhereInput(
+//         AND: PrismaUnion.$1(PlayerStatisticsWhereInput(
+//             playerID: PrismaUnion.$1(
+//                 IntNullableFilter(equals: PrismaUnion.$1(playerID))))),
+//         quarter: PrismaUnion.$1(QuarterNullableRelationFilter(
+//             $is: PrismaUnion.$1(QuarterWhereInput(
+//                 gameID: PrismaUnion.$1(
+//                     IntFilter(equals: PrismaUnion.$1(gameID))))))),
+//       ),
+//     );
 
-    // Log the grouped statistics
-    log('Player $playerID has statistics with in gameID:$gameID');
-    return playersStatistics.toList();
-  } catch (e) {
-    log('Error grouping and aggregating player statistics: $e');
-    return [];
-  }
-}
+//     // Log the grouped statistics
+//     log('Player $playerID has statistics with in gameID:$gameID');
+//     return playersStatistics.toList();
+//   } catch (e) {
+//     log('Error grouping and aggregating player statistics: $e');
+//     return [];
+//   }
+// }
+
+// // -------------------- Quarters ---------------------------
+// // create quarter
+// Future<void> createQuarter(int number, int gameID, List<int> logsID) async {
+//   try {
+//     await prisma.quarter.create(
+//       data: PrismaUnion.$1(
+//         QuarterCreateInput(
+//           number: number,
+//           game: GameCreateNestedOneWithoutQuarterInput(
+//             connect: GameWhereUniqueInput(id: gameID),
+//           ),
+//           logs: LogsCreateNestedManyWithoutQuarterInput(
+//             connect: PrismaUnion.$2(
+//               logsID.map((id) => LogsWhereUniqueInput(id: id)).toList(),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//     log('Successfully created quarter');
+//   } catch (e) {
+//     log('Failed to create quarter: $e');
+//   }
+// }
