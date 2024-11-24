@@ -40,6 +40,7 @@ model Game {
 model Quarter {
   id               Int                @id @default(autoincrement())
   Logs             Logs[]
+  number           Int
   game             Game               @relation(fields: [gameID], references: [id])
   gameID           Int
   PlayerStatistics PlayerStatistics[]
@@ -76,21 +77,20 @@ model Player {
 }
 
 model PlayerStatistics {
-  id         Int     @id @default(autoincrement())
-  quarter    Quarter @relation(fields: [quarterID], references: [id])
-  quarterID  Int
-  player     Player  @relation(fields: [playerID], references: [id])
-  playerID   Int
-  number     Int
-  totalScore Int     @default(0)
-  madeOne    Int     @default(0)
-  madeTwo    Int     @default(0)
-  madeThree  Int     @default(0)
-  miss       Int?    @default(0)
-  rebound    Int     @default(0)
-  foul       Int     @default(0)
-  turnover   Int     @default(0)
-  assist     Int     @default(0)
-  block      Int     @default(0)
-  steal      Int     @default(0)
+  id         Int      @id @default(autoincrement())
+  player     Player?  @relation(fields: [playerID], references: [id])
+  playerID   Int? // Corresponds to String first = _keywordCombinations[0];
+  quarter    Quarter? @relation(fields: [quarterID], references: [id])
+  quarterID  Int? // Corresponds to the associated quarter.
+  totalScore Int      @default(0)
+  madeOne    Int      @default(0)
+  madeTwo    Int      @default(0)
+  madeThree  Int      @default(0)
+  miss       Int?     @default(0)
+  rebound    Int      @default(0)
+  foul       Int      @default(0)
+  turnover   Int      @default(0)
+  assist     Int      @default(0)
+  block      Int      @default(0)
+  steal      Int      @default(0)
 }

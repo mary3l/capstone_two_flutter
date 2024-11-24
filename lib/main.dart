@@ -74,7 +74,7 @@ void seedData() async {
   //   log('Seed: Failed to create player');
   // }
 // for quarter table create
-
+//  -------------------------------------------- Create player statistics
   try {
     // Define field values
     final madeOne = 5;
@@ -86,22 +86,24 @@ void seedData() async {
     log('Made Two: $madeTwo');
     log('Made Three: $madeThree');
 
-    // Calculate totalScore
+    //   // Calculate totalScore
     final totalScore = (madeOne * 1) + (madeTwo * 2) + (madeThree * 3);
     log('Total Score: $totalScore'); // Log the total score calculation
 
-    // Create Quarter record
+    //   // Create Quarter record
     final quarterID = 1; // Ensure this is a valid quarter ID
     log('Quarter ID: $quarterID');
 
     final playerID = 1; // Ensure this is a valid player ID
     log('Player ID: $playerID');
 
-    // Create player statistics
+    final gameID = 1; // Ensure this is a valid player ID
+    log('Game ID: $gameID');
+
+    // Create quarter
     final playerStatisticsInput = PlayerStatisticsCreateInput(
       quarter: QuarterCreateNestedOneWithoutPlayerStatisticsInput(
           connect: QuarterWhereUniqueInput(id: quarterID)),
-      number: 1,
       madeOne: madeOne,
       madeTwo: madeTwo,
       madeThree: madeThree,
@@ -112,6 +114,8 @@ void seedData() async {
       turnover: 1,
       steal: 1,
       block: 1,
+      // game: GameCreateNestedOneWithoutPlayerStatisticsInput(
+      //     connect: GameWhereUniqueInput(id: gameID)),
       player: PlayerCreateNestedOneWithoutPlayerStatisticsInput(
           connect: PlayerWhereUniqueInput(id: playerID)),
     );
@@ -127,6 +131,19 @@ void seedData() async {
     log('Seed: Failed to create player statistics with error: $e');
   }
 
+//create quarter
+  try {
+    await prisma.quarter.create(
+      data: PrismaUnion.$1(
+        QuarterCreateInput(
+            game: GameCreateNestedOneWithoutQuarterInput(
+                connect: GameWhereUniqueInput(id: 1))),
+      ),
+    );
+    log('Seed: Successfully created game');
+  } catch (e) {
+    log('Seed: Failed to create game');
+  }
   // try {
   //   await prisma.game.create(
   //     data: PrismaUnion.$1(
@@ -171,14 +188,44 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initializePrisma();
-  seedData();
+  // seedData();
   loadPackageInfo();
   runApp(MyApp());
+  // deleteTeams();
+  // deleteQuarter();
+  // deleteLogs();
 }
 
 Future<void> initializePrisma() async {
   await initPrismaClient();
 }
+
+// Future<void> deleteTeams() async {
+//   try {
+//     await prisma.team.deleteMany();
+//     log('Successfully deleted all teams');
+//   } catch (e) {
+//     log('Failed to fetch teams: $e');
+//   }
+// }
+
+// Future<void> deleteLogs() async {
+//   try {
+//     await prisma.logs.deleteMany();
+//     log('Successfully deleted all logs');
+//   } catch (e) {
+//     log('Failed to fetch logs: $e');
+//   }
+// }
+
+// Future<void> deleteQuarter() async {
+//   try {
+//     await prisma.quarter.deleteMany();
+//     log('Successfully deleted all quarter');
+//   } catch (e) {
+//     log('Failed to fetch quarter: $e');
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   @override
@@ -188,7 +235,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       initialRoute: '/screens/teamStatistics', // mariel's initial route
       // initialRoute: '/screens/startRecording', jiyo's initial route
-      //initialRoute: '/screens/landing', // mariel's initial route
+      // initialRoute: '/screens/landing', // mariel's initial route
 
       routes: {
         '/screens/landing': (context) => Landing(),
@@ -197,7 +244,6 @@ class MyApp extends StatelessWidget {
         '/screens/teamStatistics': (context) => TeamStatistics(),
         '/screens/teamProfile': (context) => TeamProfile(),
         //'/screens/playerProfile': (context) => PlayerProfile(),
-        // '/screens/teamPlayerProfile': (context) => TeamPlayerProfile()
       },
     );
   }

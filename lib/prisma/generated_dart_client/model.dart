@@ -62,6 +62,7 @@ class Logs {
 class Quarter {
   const Quarter({
     this.id,
+    this.number,
     this.gameID,
     this.logs,
     this.game,
@@ -71,6 +72,7 @@ class Quarter {
 
   factory Quarter.fromJson(Map json) => Quarter(
         id: json['id'],
+        number: json['number'],
         gameID: json['gameID'],
         logs:
             (json['Logs'] as Iterable?)?.map((json) => _i1.Logs.fromJson(json)),
@@ -84,6 +86,8 @@ class Quarter {
 
   final int? id;
 
+  final int? number;
+
   final int? gameID;
 
   final Iterable<_i1.Logs>? logs;
@@ -96,6 +100,7 @@ class Quarter {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'number': number,
         'gameID': gameID,
         'Logs': logs?.map((e) => e.toJson()),
         'game': game?.toJson(),
@@ -107,9 +112,8 @@ class Quarter {
 class PlayerStatistics {
   const PlayerStatistics({
     this.id,
-    this.quarterID,
     this.playerID,
-    this.number,
+    this.quarterID,
     this.totalScore,
     this.madeOne,
     this.madeTwo,
@@ -121,15 +125,14 @@ class PlayerStatistics {
     this.assist,
     this.block,
     this.steal,
-    this.quarter,
     this.player,
+    this.quarter,
   });
 
   factory PlayerStatistics.fromJson(Map json) => PlayerStatistics(
         id: json['id'],
-        quarterID: json['quarterID'],
         playerID: json['playerID'],
-        number: json['number'],
+        quarterID: json['quarterID'],
         totalScore: json['totalScore'],
         madeOne: json['madeOne'],
         madeTwo: json['madeTwo'],
@@ -141,20 +144,18 @@ class PlayerStatistics {
         assist: json['assist'],
         block: json['block'],
         steal: json['steal'],
+        player:
+            json['player'] is Map ? _i1.Player.fromJson(json['player']) : null,
         quarter: json['quarter'] is Map
             ? _i1.Quarter.fromJson(json['quarter'])
             : null,
-        player:
-            json['player'] is Map ? _i1.Player.fromJson(json['player']) : null,
       );
 
   final int? id;
 
-  final int? quarterID;
-
   final int? playerID;
 
-  final int? number;
+  final int? quarterID;
 
   final int? totalScore;
 
@@ -178,15 +179,14 @@ class PlayerStatistics {
 
   final int? steal;
 
-  final _i1.Quarter? quarter;
-
   final _i1.Player? player;
+
+  final _i1.Quarter? quarter;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'quarterID': quarterID,
         'playerID': playerID,
-        'number': number,
+        'quarterID': quarterID,
         'totalScore': totalScore,
         'madeOne': madeOne,
         'madeTwo': madeTwo,
@@ -198,8 +198,8 @@ class PlayerStatistics {
         'assist': assist,
         'block': block,
         'steal': steal,
-        'quarter': quarter?.toJson(),
         'player': player?.toJson(),
+        'quarter': quarter?.toJson(),
       };
 }
 
@@ -512,6 +512,7 @@ class CreateManyGameAndReturnOutputType {
 class CreateManyQuarterAndReturnOutputType {
   const CreateManyQuarterAndReturnOutputType({
     this.id,
+    this.number,
     this.gameID,
     this.game,
   });
@@ -519,11 +520,14 @@ class CreateManyQuarterAndReturnOutputType {
   factory CreateManyQuarterAndReturnOutputType.fromJson(Map json) =>
       CreateManyQuarterAndReturnOutputType(
         id: json['id'],
+        number: json['number'],
         gameID: json['gameID'],
         game: json['game'] is Map ? _i1.Game.fromJson(json['game']) : null,
       );
 
   final int? id;
+
+  final int? number;
 
   final int? gameID;
 
@@ -531,6 +535,7 @@ class CreateManyQuarterAndReturnOutputType {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'number': number,
         'gameID': gameID,
         'game': game?.toJson(),
       };
@@ -671,9 +676,8 @@ class CreateManyPlayerAndReturnOutputType {
 class CreateManyPlayerStatisticsAndReturnOutputType {
   const CreateManyPlayerStatisticsAndReturnOutputType({
     this.id,
-    this.quarterID,
     this.playerID,
-    this.number,
+    this.quarterID,
     this.totalScore,
     this.madeOne,
     this.madeTwo,
@@ -685,16 +689,15 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
     this.assist,
     this.block,
     this.steal,
-    this.quarter,
     this.player,
+    this.quarter,
   });
 
   factory CreateManyPlayerStatisticsAndReturnOutputType.fromJson(Map json) =>
       CreateManyPlayerStatisticsAndReturnOutputType(
         id: json['id'],
-        quarterID: json['quarterID'],
         playerID: json['playerID'],
-        number: json['number'],
+        quarterID: json['quarterID'],
         totalScore: json['totalScore'],
         madeOne: json['madeOne'],
         madeTwo: json['madeTwo'],
@@ -706,20 +709,18 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
         assist: json['assist'],
         block: json['block'],
         steal: json['steal'],
+        player:
+            json['player'] is Map ? _i1.Player.fromJson(json['player']) : null,
         quarter: json['quarter'] is Map
             ? _i1.Quarter.fromJson(json['quarter'])
             : null,
-        player:
-            json['player'] is Map ? _i1.Player.fromJson(json['player']) : null,
       );
 
   final int? id;
 
-  final int? quarterID;
-
   final int? playerID;
 
-  final int? number;
+  final int? quarterID;
 
   final int? totalScore;
 
@@ -743,15 +744,14 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
 
   final int? steal;
 
-  final _i1.Quarter? quarter;
-
   final _i1.Player? player;
+
+  final _i1.Quarter? quarter;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'quarterID': quarterID,
         'playerID': playerID,
-        'number': number,
+        'quarterID': quarterID,
         'totalScore': totalScore,
         'madeOne': madeOne,
         'madeTwo': madeTwo,
@@ -763,7 +763,7 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
         'assist': assist,
         'block': block,
         'steal': steal,
-        'quarter': quarter?.toJson(),
         'player': player?.toJson(),
+        'quarter': quarter?.toJson(),
       };
 }

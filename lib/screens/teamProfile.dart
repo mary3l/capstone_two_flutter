@@ -39,6 +39,21 @@ class _TeamProfileState extends State<TeamProfile> {
     _fetchTeams(); // Fetch teams when the widget initializes
   }
 
+  // Fetch available seasons (called when the button is clicked)
+  Future<void> _fetchPlayer() async {
+    try {
+      List<Player> players = await serviceMethod.fetchPlayers();
+      setState(() {
+        _players = players;
+      });
+      if (players.isEmpty) {
+        debugPrint('No players available.');
+      }
+    } catch (e) {
+      debugPrint('Error fetching players: $e');
+    }
+  }
+
 // Fetch available seasons (called when the button is clicked)
   Future<void> _fetchSeasons() async {
     try {
@@ -115,17 +130,17 @@ class _TeamProfileState extends State<TeamProfile> {
 // for showing a form when user clicks "add new team" button
   void _showAddTeamDialog() async {
     // Fetch players asynchronously before showing the dialog
-    List<Team> teams =
-        await serviceMethod.fetchTeams(); // Ensure teams are fetched first
+    List<Player> players =
+        await serviceMethod.fetchPlayers(); // Ensure players are fetched first
 
-    if (teams.isEmpty) {
-      // Handle empty teams, if necessary (e.g., show a message)
-      print('No teams available');
+    if (players.isEmpty) {
+      // Handle empty players, if necessary (e.g., show a message)
+      print('No players available');
     }
 
-    // After fetching, update the _teams list
+    // After fetching, update the _players list
     setState(() {
-      _teams = teams;
+      _players = players;
     });
 
     // Show the dialog

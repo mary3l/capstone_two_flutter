@@ -8,19 +8,6 @@
 -- RedefineTables
 PRAGMA defer_foreign_keys=ON;
 PRAGMA foreign_keys=OFF;
-CREATE TABLE "new_Game" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "title" TEXT NOT NULL,
-    "date" DATETIME NOT NULL,
-    "semester" TEXT NOT NULL,
-    "teamID" INTEGER NOT NULL,
-    "seasonId" INTEGER NOT NULL,
-    CONSTRAINT "Game_teamID_fkey" FOREIGN KEY ("teamID") REFERENCES "Team" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Game_seasonId_fkey" FOREIGN KEY ("seasonId") REFERENCES "Season" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-INSERT INTO "new_Game" ("date", "id", "semester", "teamID", "title") SELECT "date", "id", "semester", "teamID", "title" FROM "Game";
-DROP TABLE "Game";
-ALTER TABLE "new_Game" RENAME TO "Game";
 CREATE TABLE "new_Season" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "startYear" INTEGER NOT NULL,

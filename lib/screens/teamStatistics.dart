@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:audio_classification/widgets/general_screen_padding.dart';
 import 'package:audio_classification/widgets/header.dart';
 import 'package:audio_classification/widgets/label.dart';
-import 'package:audio_classification/widgets/game_card.dart'; // Adjust the import path as necessary
-import 'package:audio_classification/models/basketball_model.dart'; // Model for game and player statistics
+import 'package:audio_classification/widgets/game_card.dart'; // Adjust the import path as necessary // Model for game and player statistics
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:audio_classification/widgets/statistic_category_selector.dart';
 import 'package:audio_classification/constants/stat_category.dart';
 import 'package:orm/orm.dart'; // Import your constants file
+import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 
 class TeamStatistics extends StatefulWidget {
   @override
@@ -25,6 +25,7 @@ class _TeamStatisticsState extends State<TeamStatistics> {
   // State to manage the selected statistic category
   StatCategory selectedStat = StatCategory.points;
   List<Game> games = []; // Updated to hold games instead of players
+  List<PlayerStatistics> _playerStatistics = [];
 
   final serviceMethod = ServiceMethod();
 
@@ -32,6 +33,21 @@ class _TeamStatisticsState extends State<TeamStatistics> {
   void initState() {
     super.initState();
   }
+
+  // Fetch player's statistics based on gameID
+  // Future<void> _fetchPlayerStatisticsByGameID() async {
+  //   if (widget.selectedSeasonID != null) {
+  //     try {
+  //       final games =
+  //           await serviceMethod.fetchGamesBySeasonID(widget.selectedSeasonID!);
+  //       setState(() {
+  //         _games = games; // Update the _games list with the fetched games
+  //       });
+  //     } catch (e) {
+  //       print("Error fetching games: $e");
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +90,7 @@ class _TeamStatisticsState extends State<TeamStatistics> {
 
               // Game card with spacing
               // GameCard(
-              //   player: Player(
-              //     lastName: 'lastname',
-              //     firstName: 'firstname',
-              //     jerseyNumber: 12,
-              //     pointsBreakdown: pointsBreakdownList,
-              //   ),
+              //   player: Player(lastName: ),
               // ),
               SizedBox(height: 20),
 
