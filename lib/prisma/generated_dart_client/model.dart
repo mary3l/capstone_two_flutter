@@ -2,10 +2,180 @@
 import 'model.dart' as _i1;
 import 'prisma.dart' as _i2;
 
+class FinalQuarter {
+  const FinalQuarter({
+    this.id,
+    this.number,
+    this.gameID,
+    this.logs,
+    this.game,
+    this.playerStatistics,
+    this.$count,
+  });
+
+  factory FinalQuarter.fromJson(Map json) => FinalQuarter(
+        id: json['id'],
+        number: json['number'],
+        gameID: json['gameID'],
+        logs:
+            (json['Logs'] as Iterable?)?.map((json) => _i1.Logs.fromJson(json)),
+        game: json['game'] is Map ? _i1.Game.fromJson(json['game']) : null,
+        playerStatistics: (json['PlayerStatistics'] as Iterable?)
+            ?.map((json) => _i1.PlayerStatistics.fromJson(json)),
+        $count: json['_count'] is Map
+            ? _i2.FinalQuarterCountOutputType.fromJson(json['_count'])
+            : null,
+      );
+
+  final int? id;
+
+  final int? number;
+
+  final int? gameID;
+
+  final Iterable<_i1.Logs>? logs;
+
+  final _i1.Game? game;
+
+  final Iterable<_i1.PlayerStatistics>? playerStatistics;
+
+  final _i2.FinalQuarterCountOutputType? $count;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'gameID': gameID,
+        'Logs': logs?.map((e) => e.toJson()),
+        'game': game?.toJson(),
+        'PlayerStatistics': playerStatistics?.map((e) => e.toJson()),
+        '_count': $count?.toJson(),
+      };
+}
+
+class Logs {
+  const Logs({
+    this.id,
+    this.keywordOne,
+    this.keywordTwo,
+    this.keywordThree,
+    this.isValidCombination,
+    this.timestamp,
+    this.quarterID,
+    this.finalQuarterId,
+    this.quarter,
+    this.finalQuarter,
+  });
+
+  factory Logs.fromJson(Map json) => Logs(
+        id: json['id'],
+        keywordOne: json['keywordOne'],
+        keywordTwo: json['keywordTwo'],
+        keywordThree: json['keywordThree'],
+        isValidCombination: json['isValidCombination'],
+        timestamp: switch (json['timestamp']) {
+          DateTime value => value,
+          String value => DateTime.parse(value),
+          _ => json['timestamp']
+        },
+        quarterID: json['quarterID'],
+        finalQuarterId: json['finalQuarterId'],
+        quarter: json['quarter'] is Map
+            ? _i1.Quarter.fromJson(json['quarter'])
+            : null,
+        finalQuarter: json['FinalQuarter'] is Map
+            ? _i1.FinalQuarter.fromJson(json['FinalQuarter'])
+            : null,
+      );
+
+  final int? id;
+
+  final String? keywordOne;
+
+  final String? keywordTwo;
+
+  final String? keywordThree;
+
+  final bool? isValidCombination;
+
+  final DateTime? timestamp;
+
+  final int? quarterID;
+
+  final int? finalQuarterId;
+
+  final _i1.Quarter? quarter;
+
+  final _i1.FinalQuarter? finalQuarter;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'keywordOne': keywordOne,
+        'keywordTwo': keywordTwo,
+        'keywordThree': keywordThree,
+        'isValidCombination': isValidCombination,
+        'timestamp': timestamp?.toIso8601String(),
+        'quarterID': quarterID,
+        'finalQuarterId': finalQuarterId,
+        'quarter': quarter?.toJson(),
+        'FinalQuarter': finalQuarter?.toJson(),
+      };
+}
+
+class Quarter {
+  const Quarter({
+    this.id,
+    this.number,
+    this.gameID,
+    this.logs,
+    this.game,
+    this.playerStatistics,
+    this.$count,
+  });
+
+  factory Quarter.fromJson(Map json) => Quarter(
+        id: json['id'],
+        number: json['number'],
+        gameID: json['gameID'],
+        logs:
+            (json['Logs'] as Iterable?)?.map((json) => _i1.Logs.fromJson(json)),
+        game: json['game'] is Map ? _i1.Game.fromJson(json['game']) : null,
+        playerStatistics: (json['PlayerStatistics'] as Iterable?)
+            ?.map((json) => _i1.PlayerStatistics.fromJson(json)),
+        $count: json['_count'] is Map
+            ? _i2.QuarterCountOutputType.fromJson(json['_count'])
+            : null,
+      );
+
+  final int? id;
+
+  final int? number;
+
+  final int? gameID;
+
+  final Iterable<_i1.Logs>? logs;
+
+  final _i1.Game? game;
+
+  final Iterable<_i1.PlayerStatistics>? playerStatistics;
+
+  final _i2.QuarterCountOutputType? $count;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'gameID': gameID,
+        'Logs': logs?.map((e) => e.toJson()),
+        'game': game?.toJson(),
+        'PlayerStatistics': playerStatistics?.map((e) => e.toJson()),
+        '_count': $count?.toJson(),
+      };
+}
+
 class PlayerStatistics {
   const PlayerStatistics({
     this.id,
     this.playerID,
+    this.quarterID,
     this.totalScore,
     this.madeOne,
     this.madeTwo,
@@ -17,12 +187,16 @@ class PlayerStatistics {
     this.assist,
     this.block,
     this.steal,
+    this.finalQuarterId,
     this.player,
+    this.quarter,
+    this.finalQuarter,
   });
 
   factory PlayerStatistics.fromJson(Map json) => PlayerStatistics(
         id: json['id'],
         playerID: json['playerID'],
+        quarterID: json['quarterID'],
         totalScore: json['totalScore'],
         madeOne: json['madeOne'],
         madeTwo: json['madeTwo'],
@@ -34,13 +208,22 @@ class PlayerStatistics {
         assist: json['assist'],
         block: json['block'],
         steal: json['steal'],
+        finalQuarterId: json['finalQuarterId'],
         player:
             json['player'] is Map ? _i1.Player.fromJson(json['player']) : null,
+        quarter: json['quarter'] is Map
+            ? _i1.Quarter.fromJson(json['quarter'])
+            : null,
+        finalQuarter: json['FinalQuarter'] is Map
+            ? _i1.FinalQuarter.fromJson(json['FinalQuarter'])
+            : null,
       );
 
   final int? id;
 
   final int? playerID;
+
+  final int? quarterID;
 
   final int? totalScore;
 
@@ -64,11 +247,18 @@ class PlayerStatistics {
 
   final int? steal;
 
+  final int? finalQuarterId;
+
   final _i1.Player? player;
+
+  final _i1.Quarter? quarter;
+
+  final _i1.FinalQuarter? finalQuarter;
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'playerID': playerID,
+        'quarterID': quarterID,
         'totalScore': totalScore,
         'madeOne': madeOne,
         'madeTwo': madeTwo,
@@ -80,7 +270,10 @@ class PlayerStatistics {
         'assist': assist,
         'block': block,
         'steal': steal,
+        'finalQuarterId': finalQuarterId,
         'player': player?.toJson(),
+        'quarter': quarter?.toJson(),
+        'FinalQuarter': finalQuarter?.toJson(),
       };
 }
 
@@ -199,6 +392,9 @@ class Game {
     this.seasonID,
     this.team,
     this.season,
+    this.quarter,
+    this.finalQuarter,
+    this.$count,
   });
 
   factory Game.fromJson(Map json) => Game(
@@ -216,6 +412,13 @@ class Game {
         team: json['team'] is Map ? _i1.Team.fromJson(json['team']) : null,
         season:
             json['season'] is Map ? _i1.Season.fromJson(json['season']) : null,
+        quarter: (json['Quarter'] as Iterable?)
+            ?.map((json) => _i1.Quarter.fromJson(json)),
+        finalQuarter: (json['FinalQuarter'] as Iterable?)
+            ?.map((json) => _i1.FinalQuarter.fromJson(json)),
+        $count: json['_count'] is Map
+            ? _i2.GameCountOutputType.fromJson(json['_count'])
+            : null,
       );
 
   final int? id;
@@ -236,6 +439,12 @@ class Game {
 
   final _i1.Season? season;
 
+  final Iterable<_i1.Quarter>? quarter;
+
+  final Iterable<_i1.FinalQuarter>? finalQuarter;
+
+  final _i2.GameCountOutputType? $count;
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
@@ -246,6 +455,9 @@ class Game {
         'seasonID': seasonID,
         'team': team?.toJson(),
         'season': season?.toJson(),
+        'Quarter': quarter?.map((e) => e.toJson()),
+        'FinalQuarter': finalQuarter?.map((e) => e.toJson()),
+        '_count': $count?.toJson(),
       };
 }
 
@@ -377,48 +589,35 @@ class CreateManyGameAndReturnOutputType {
       };
 }
 
-class Logs {
-  const Logs({
+class CreateManyQuarterAndReturnOutputType {
+  const CreateManyQuarterAndReturnOutputType({
     this.id,
-    this.keywordOne,
-    this.keywordTwo,
-    this.keywordThree,
-    this.isValidCombination,
-    this.timestamp,
+    this.number,
+    this.gameID,
+    this.game,
   });
 
-  factory Logs.fromJson(Map json) => Logs(
+  factory CreateManyQuarterAndReturnOutputType.fromJson(Map json) =>
+      CreateManyQuarterAndReturnOutputType(
         id: json['id'],
-        keywordOne: json['keywordOne'],
-        keywordTwo: json['keywordTwo'],
-        keywordThree: json['keywordThree'],
-        isValidCombination: json['isValidCombination'],
-        timestamp: switch (json['timestamp']) {
-          DateTime value => value,
-          String value => DateTime.parse(value),
-          _ => json['timestamp']
-        },
+        number: json['number'],
+        gameID: json['gameID'],
+        game: json['game'] is Map ? _i1.Game.fromJson(json['game']) : null,
       );
 
   final int? id;
 
-  final String? keywordOne;
+  final int? number;
 
-  final String? keywordTwo;
+  final int? gameID;
 
-  final String? keywordThree;
-
-  final bool? isValidCombination;
-
-  final DateTime? timestamp;
+  final _i1.Game? game;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'keywordOne': keywordOne,
-        'keywordTwo': keywordTwo,
-        'keywordThree': keywordThree,
-        'isValidCombination': isValidCombination,
-        'timestamp': timestamp?.toIso8601String(),
+        'number': number,
+        'gameID': gameID,
+        'game': game?.toJson(),
       };
 }
 
@@ -430,6 +629,10 @@ class CreateManyLogsAndReturnOutputType {
     this.keywordThree,
     this.isValidCombination,
     this.timestamp,
+    this.quarterID,
+    this.finalQuarterId,
+    this.quarter,
+    this.finalQuarter,
   });
 
   factory CreateManyLogsAndReturnOutputType.fromJson(Map json) =>
@@ -444,6 +647,14 @@ class CreateManyLogsAndReturnOutputType {
           String value => DateTime.parse(value),
           _ => json['timestamp']
         },
+        quarterID: json['quarterID'],
+        finalQuarterId: json['finalQuarterId'],
+        quarter: json['quarter'] is Map
+            ? _i1.Quarter.fromJson(json['quarter'])
+            : null,
+        finalQuarter: json['FinalQuarter'] is Map
+            ? _i1.FinalQuarter.fromJson(json['FinalQuarter'])
+            : null,
       );
 
   final int? id;
@@ -458,6 +669,14 @@ class CreateManyLogsAndReturnOutputType {
 
   final DateTime? timestamp;
 
+  final int? quarterID;
+
+  final int? finalQuarterId;
+
+  final _i1.Quarter? quarter;
+
+  final _i1.FinalQuarter? finalQuarter;
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'keywordOne': keywordOne,
@@ -465,6 +684,10 @@ class CreateManyLogsAndReturnOutputType {
         'keywordThree': keywordThree,
         'isValidCombination': isValidCombination,
         'timestamp': timestamp?.toIso8601String(),
+        'quarterID': quarterID,
+        'finalQuarterId': finalQuarterId,
+        'quarter': quarter?.toJson(),
+        'FinalQuarter': finalQuarter?.toJson(),
       };
 }
 
@@ -546,6 +769,7 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
   const CreateManyPlayerStatisticsAndReturnOutputType({
     this.id,
     this.playerID,
+    this.quarterID,
     this.totalScore,
     this.madeOne,
     this.madeTwo,
@@ -557,13 +781,17 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
     this.assist,
     this.block,
     this.steal,
+    this.finalQuarterId,
     this.player,
+    this.quarter,
+    this.finalQuarter,
   });
 
   factory CreateManyPlayerStatisticsAndReturnOutputType.fromJson(Map json) =>
       CreateManyPlayerStatisticsAndReturnOutputType(
         id: json['id'],
         playerID: json['playerID'],
+        quarterID: json['quarterID'],
         totalScore: json['totalScore'],
         madeOne: json['madeOne'],
         madeTwo: json['madeTwo'],
@@ -575,13 +803,22 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
         assist: json['assist'],
         block: json['block'],
         steal: json['steal'],
+        finalQuarterId: json['finalQuarterId'],
         player:
             json['player'] is Map ? _i1.Player.fromJson(json['player']) : null,
+        quarter: json['quarter'] is Map
+            ? _i1.Quarter.fromJson(json['quarter'])
+            : null,
+        finalQuarter: json['FinalQuarter'] is Map
+            ? _i1.FinalQuarter.fromJson(json['FinalQuarter'])
+            : null,
       );
 
   final int? id;
 
   final int? playerID;
+
+  final int? quarterID;
 
   final int? totalScore;
 
@@ -605,11 +842,18 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
 
   final int? steal;
 
+  final int? finalQuarterId;
+
   final _i1.Player? player;
+
+  final _i1.Quarter? quarter;
+
+  final _i1.FinalQuarter? finalQuarter;
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'playerID': playerID,
+        'quarterID': quarterID,
         'totalScore': totalScore,
         'madeOne': madeOne,
         'madeTwo': madeTwo,
@@ -621,6 +865,41 @@ class CreateManyPlayerStatisticsAndReturnOutputType {
         'assist': assist,
         'block': block,
         'steal': steal,
+        'finalQuarterId': finalQuarterId,
         'player': player?.toJson(),
+        'quarter': quarter?.toJson(),
+        'FinalQuarter': finalQuarter?.toJson(),
+      };
+}
+
+class CreateManyFinalQuarterAndReturnOutputType {
+  const CreateManyFinalQuarterAndReturnOutputType({
+    this.id,
+    this.number,
+    this.gameID,
+    this.game,
+  });
+
+  factory CreateManyFinalQuarterAndReturnOutputType.fromJson(Map json) =>
+      CreateManyFinalQuarterAndReturnOutputType(
+        id: json['id'],
+        number: json['number'],
+        gameID: json['gameID'],
+        game: json['game'] is Map ? _i1.Game.fromJson(json['game']) : null,
+      );
+
+  final int? id;
+
+  final int? number;
+
+  final int? gameID;
+
+  final _i1.Game? game;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'gameID': gameID,
+        'game': game?.toJson(),
       };
 }

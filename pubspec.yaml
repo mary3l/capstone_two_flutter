@@ -83,6 +83,8 @@ flutter:
     - lib/prisma/migrations/20241120052619_mariel_added_is_valid_combination_logs_table/
     - lib/prisma/migrations/20241121013050_mariel_added_player_statistics_an_added_model_for_logs_table_and_the_player/
     - lib/prisma/migrations/20241123123442_mariel_updated_logs_quarter_player_statistics_and_quarter/
+    - lib/prisma/migrations/20241124054908_test/
+    - lib/prisma/migrations/20241124060649_created_final_quarter/
 
     ### mariel's assets
     - lib/data/gameData.json
