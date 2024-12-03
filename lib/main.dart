@@ -12,7 +12,6 @@ import 'package:audio_classification/screens/startRecording.dart';
 import 'package:audio_classification/screens/dashboard.dart';
 import 'package:audio_classification/screens/landing.dart';
 import 'package:orm/orm.dart';
-import 'package:audio_classification/screens/teamPlayerProfile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -75,61 +74,65 @@ void seedData() async {
   // }
 // for quarter table create
 //  -------------------------------------------- Create player statistics
-  // try {
-  //   // Define field values
-  //   final madeOne = 5;
-  //   final madeTwo = 3;
-  //   final madeThree = 2;
+  try {
+    // Define field values
+    final madeOne = 5;
+    final madeTwo = 3;
+    final madeThree = 2;
 
-  //   // Log the field values to ensure they are correct
-  //   log('Made One: $madeOne');
-  //   log('Made Two: $madeTwo');
-  //   log('Made Three: $madeThree');
+    // Log the field values to ensure they are correct
+    log('Made One: $madeOne');
+    log('Made Two: $madeTwo');
+    log('Made Three: $madeThree');
 
-  //   //   // Calculate totalScore
-  //   final totalScore = (madeOne * 1) + (madeTwo * 2) + (madeThree * 3);
-  //   log('Total Score: $totalScore'); // Log the total score calculation
+    //   // Calculate totalScore
+    final totalScore = (madeOne * 1) + (madeTwo * 2) + (madeThree * 3);
+    log('Total Score: $totalScore'); // Log the total score calculation
 
-  //   //   // Create Quarter record
-  //   final quarterID = 1; // Ensure this is a valid quarter ID
-  //   log('Quarter ID: $quarterID');
+    //   // Create Quarter record
+    final finalQuarterId = 1; // Ensure this is a valid quarter ID
+    log('Quarter ID: $finalQuarterId');
 
-  //   final playerID = 1; // Ensure this is a valid player ID
-  //   log('Player ID: $playerID');
+    final playerID = 1; // Ensure this is a valid player ID
+    log('Player ID: $playerID');
 
-  //   final gameID = 1; // Ensure this is a valid player ID
-  //   log('Game ID: $gameID');
+    final gameID = 1; // Ensure this is a valid player ID
+    log('Game ID: $gameID');
 
-  //   // Create quarter
-  //   final playerStatisticsInput = PlayerStatisticsCreateInput(
-  //     quarter: QuarterCreateNestedOneWithoutPlayerStatisticsInput(
-  //         connect: QuarterWhereUniqueInput(id: quarterID)),
-  //     madeOne: madeOne,
-  //     madeTwo: madeTwo,
-  //     madeThree: madeThree,
-  //     totalScore: totalScore, // Computed value
-  //     rebound: 1,
-  //     foul: 2,
-  //     assist: 1,
-  //     turnover: 1,
-  //     steal: 1,
-  //     block: 1,
-  //     // game: GameCreateNestedOneWithoutPlayerStatisticsInput(
-  //     //     connect: GameWhereUniqueInput(id: gameID)),
-  //     player: PlayerCreateNestedOneWithoutPlayerStatisticsInput(
-  //         connect: PlayerWhereUniqueInput(id: playerID)),
-  //   );
+    // Create quarter
+    final playerStatisticsInput = PlayerStatisticsCreateInput(
+      finalQuarter: FinalQuarterCreateNestedOneWithoutPlayerStatisticsInput(
+          connect: FinalQuarterWhereUniqueInput(id: finalQuarterId)),
+      madeOne: madeOne,
+      madeTwo: madeTwo,
+      madeThree: madeThree,
+      totalScore: totalScore, // Computed value
+      rebound: 1,
+      foul: 2,
+      assist: 1,
+      turnover: 1,
+      steal: 1,
+      block: 1,
+      // game: GameCreateNestedOneWithoutPlayerStatisticsInput(
+      //     connect: GameWhereUniqueInput(id: gameID)),
+      player: PlayerCreateNestedOneWithoutPlayerStatisticsInput(
+          connect: PlayerWhereUniqueInput(id: playerID)),
+    );
 
-  //   log('Player Statistics Input: $playerStatisticsInput');
+    // Print the data being passed to the database
+    print(
+        'Data being passed to the database: ${playerStatisticsInput.toString()}');
 
-  //   await prisma.playerStatistics.create(
-  //     data: PrismaUnion.$1(playerStatisticsInput),
-  //   );
+    log('Player Statistics Input: $playerStatisticsInput');
 
-  //   log('Seed: Successfully created player statistics');
-  // } catch (e) {
-  //   log('Seed: Failed to create player statistics with error: $e');
-  // }
+    await prisma.playerStatistics.create(
+      data: PrismaUnion.$1(playerStatisticsInput),
+    );
+
+    log('Seed: Successfully created player statistics');
+  } catch (e) {
+    log('Seed: Failed to create player statistics with error: $e');
+  }
 //  -------------------------------------------- Create quarter
   // Future<void> createFinalQuarter() async {
   //     final logsID = [1, 2, 3];
@@ -207,9 +210,9 @@ void main() async {
   // seedData();
   loadPackageInfo();
   runApp(MyApp());
-  createGame();
+  // createGame();
   // createLogs();
-  createFinalQuarter();
+  // createFinalQuarter();
   // deleteTeams();
   // deleteQuarter();
   // deleteLogs();
@@ -346,8 +349,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Basketball Voice Recognition App',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      initialRoute: '/screens/startRecording', // mariel's initial route
-      // initialRoute: '/screens/startRecording', jiyo's initial route
+      // initialRoute: '/screens/teamStatistics',
+      initialRoute: '/screens/startRecording', //jiyo's initial route
       // initialRoute: '/screens/landing', // mariel's initial route
 
       routes: {
@@ -356,7 +359,6 @@ class MyApp extends StatelessWidget {
         '/screens/dashboard': (context) => const Dashboard(),
         '/screens/teamStatistics': (context) => TeamStatistics(),
         '/screens/teamProfile': (context) => TeamProfile(),
-        //'/screens/playerProfile': (context) => PlayerProfile(),
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:audio_classification/constants/colors.dart';
+import 'package:audio_classification/constants/stat_category.dart';
 import 'package:audio_classification/prisma/generated_dart_client/model.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,11 @@ class GameCard extends StatelessWidget {
   final Game? game;
   final Team? team;
   final Player? player;
+  final PlayerStatistics? playerStatistics;
   final VoidCallback? onPress;
   final bool showStats;
   final bool againstTeam;
+  final StatCategory? selectedStat;
   final String? season;
   final String? semester;
 
@@ -17,6 +20,8 @@ class GameCard extends StatelessWidget {
     this.game,
     this.team,
     this.player,
+    this.playerStatistics,
+    this.selectedStat,
     this.onPress,
     this.showStats = false,
     this.againstTeam = false,
@@ -45,7 +50,10 @@ class GameCard extends StatelessWidget {
             if (game != null) ...[
               GameDetails(game: game!, formattedDate: formattedDate),
             ] else if (player != null) ...[
-              PlayerDetails(player: player!),
+              PlayerDetails(
+                playerStatistics: playerStatistics!,
+                selectedStat: selectedStat!,
+              ),
             ] else if (team != null) ...[
               TeamDetails(
                 team: team!,
@@ -133,46 +141,74 @@ class GameDetails extends StatelessWidget {
 }
 
 class PlayerDetails extends StatelessWidget {
-  final Player player;
+  final PlayerStatistics playerStatistics;
+  final StatCategory selectedStat;
 
   const PlayerDetails({
     Key? key,
-    required this.player,
+    required this.playerStatistics,
+    required this.selectedStat,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${player.lastName?.toUpperCase()}, ${player.firstName}",
-                style: const TextStyle(
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: AppColors.black,
-                ),
+        // Player's name and jersey number
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${playerStatistics.player?.lastName?.toUpperCase() ?? 'No Last Name'}, ${playerStatistics.player?.firstName ?? 'No First Name'}",
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: AppColors.black,
+                    ),
+                  ),
+                  Text(
+                    "Player Jersey No.${playerStatistics.player!.jerseyNumber}",
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      color: AppColors.grey,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                "Player Jersey No.${player.jerseyNumber}",
-                style: const TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  color: AppColors.grey,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        Icon(
-          Icons.remove_red_eye_outlined,
-          color: AppColors.darkOrange,
-          size: 35,
+
+        // Stats (Points, Rebounds, Steals, Blocks, Turnovers, Fouls, Assists)
+        SizedBox(height: 10), // Add some spacing
+        _buildStatRow('Points', playerStatistics.totalScore),
+        _buildStatRow('Rebounds', playerStatistics.rebound),
+        _buildStatRow('Steals', playerStatistics.steal),
+        _buildStatRow('Blocks', playerStatistics.block),
+        _buildStatRow('Turnovers', playerStatistics.turnover),
+        _buildStatRow('Fouls', playerStatistics.foul),
+        _buildStatRow('Assists', playerStatistics.assist),
+      ],
+    );
+  }
+
+  // Helper method to create a stat row
+  Widget _buildStatRow(String statName, int? statValue) {
+    return Row(
+      children: [
+        Text(
+          "$statName: ${statValue ?? 0}",
+          style: const TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            color: AppColors.grey,
+          ),
         ),
       ],
     );
@@ -181,16 +217,12 @@ class PlayerDetails extends StatelessWidget {
 
 class TeamDetails extends StatelessWidget {
   final Team team;
-  // final String seasonYear;
-  // final String startYear;
-  // final String endYear;
+
   final String semester;
 
   const TeamDetails({
     Key? key,
     required this.team,
-    // required this.startYear,
-    // required this.endYear,
     required this.semester,
     // required this.seasonYear,
   }) : super(key: key);
@@ -211,26 +243,6 @@ class TeamDetails extends StatelessWidget {
             ),
           ),
         ),
-        // Expanded(
-        //   child: Text(
-        //     '$startYear - $endYear',
-        //     style: const TextStyle(
-        //       fontFamily: 'Inter',
-        //       fontSize: 14,
-        //       color: AppColors.grey,
-        //     ),
-        //   ),
-        // ),
-        // Expanded(
-        //   child: Text(
-        //     semester ?? 'No Semester Available',
-        //     style: const TextStyle(
-        //       fontFamily: 'Inter',
-        //       fontSize: 14,
-        //       color: AppColors.grey,
-        //     ),
-        //   ),
-        // ),
         Icon(
           Icons.remove_red_eye_outlined,
           color: AppColors.darkOrange,

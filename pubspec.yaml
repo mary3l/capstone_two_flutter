@@ -85,6 +85,22 @@ flutter:
     - assets/models/intended-noise/gtm-intended-noise.tflite
     - assets/models/intended-noise/gtm-intended-noise_labels.txt
 
+    #NEW-MODEL
+    - assets/models/new-model/model.tflite
+    - assets/models/new-model/model_labels.txt
+
+    #ANOTHER NEW-MODEL
+    - assets/models/another-new-model/another-new-model.tflite
+    - assets/models/another-new-model/model_labels.txt
+
+    #ANOTHER-ANOTHER NEW-MODEL
+    - assets/models/another-another-new-model/another-another-new-model.tflite
+    - assets/models/another-another-new-model/model_labels.txt
+
+    #NEWEST-MODEL
+    - assets/models/newest-model/model.tflite
+    - assets/models/newest-model/model_labels.txt
+
     - lib/prisma/migrations/ # Migrations root dir
     - lib/prisma/migrations/20241112172353_init/ # Set first migration files dir
     - lib/prisma/migrations/20241113052255_init_new_db_model/

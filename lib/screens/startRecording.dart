@@ -268,11 +268,36 @@ class _StartRecordingState extends State<StartRecording> {
         */
 
     /* Combined Model*/
-    const _modelSpeechPath =
-        'assets/models/combined-model/combined_model.tflite';
+    // const _modelSpeechPath =
+    //     'assets/models/combined-model/combined_model.tflite';
+    // const _modelSpeechlabelsPath =
+    //     'assets/models/combined-model/combined_model_labels.txt';
+    // const _modelSpeechSize = 27;
+
+    /* New Model*/
+    // const _modelSpeechPath = 'assets/models/new-model/model.tflite';
+    // const _modelSpeechlabelsPath = 'assets/models/new-model/model_labels.txt';
+    // const _modelSpeechSize = 3;
+
+    // /* Another New Model*/
+    // const _modelSpeechPath =
+    //     'assets/models/another-new-model/another-new-model.tflite';
+    // const _modelSpeechlabelsPath =
+    //     'assets/models/another-new-model/model_labels.txt';
+    // const _modelSpeechSize = 4;
+
+    /* Another Another New Model*/
+    // const _modelSpeechPath =
+    //     'assets/models/another-another-new-model/another-another-new-model.tflite';
+    // const _modelSpeechlabelsPath =
+    //     'assets/models/another-another-new-model/model_labels.txt';
+    // const _modelSpeechSize = 4;
+
+    /* Another Another New Model*/
+    const _modelSpeechPath = 'assets/models/newest-model/model.tflite';
     const _modelSpeechlabelsPath =
-        'assets/models/combined-model/combined_model_labels.txt';
-    const _modelSpeechSize = 27;
+        'assets/models/newest-model/model_labels.txt';
+    const _modelSpeechSize = 4;
 
     _helperSpeech = AudioClassificationHelper(
       _modelSpeechPath,
@@ -282,7 +307,7 @@ class _StartRecordingState extends State<StartRecording> {
     /* _helperNoise = AudioClassificationHelper(
         _modelNoisePath, _modelNoiselabelsPath, _modelNoiseSize); */
     await _helperSpeech.initHelper();
-/*     await _helperNoise.initHelper(); */
+    //await _helperNoise.initHelper();
     _hasPermission = await _requestPermission();
   }
 
@@ -292,8 +317,8 @@ class _StartRecordingState extends State<StartRecording> {
     // Adjust the input array to match your model's input tensor
     final resultSpeech = await _helperSpeech
         .inference(inputArray.sublist(0, _requiredInputBuffer));
-/*     final resultNoise = await _helperNoise
-        .inference(inputArray.sublist(0, _requiredInputBuffer)); */
+    /*    final resultNoise = await _helperNoise
+        .inference(inputArray.sublist(0, _requiredInputBuffer));*/
     _VoteBetweenModels(resultSpeech);
   }
 
@@ -312,9 +337,9 @@ class _StartRecordingState extends State<StartRecording> {
       biggestValue = _classificationSpeech; // Speech classification wins
     } else {
       biggestValue = _classificationNoise; // Noise classification wins
-    }
+    } */
     print(biggestValue);
- */
+
     if (_keywordCombinations.length < 4) {
       _keywordCombinations.add(biggestValue[0].key);
     } else {

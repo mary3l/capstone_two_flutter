@@ -278,7 +278,76 @@ class ServiceMethod {
       log('Failed to create team: $e');
     }
   }
-}
+
+// --------------- Player Statistics -----------------
+// fetch player statistics of all player in a game
+// Fetch player statistics according to gameID
+  Future<List<PlayerStatistics>> fetchPlayerStatisticsByGameID(
+      int gameID) async {
+    try {
+      final playersStatistics = await prisma.playerStatistics.findMany(
+          where: PlayerStatisticsWhereInput(
+            finalQuarter: PrismaUnion.$1(FinalQuarterNullableRelationFilter(
+                $is: PrismaUnion.$1(FinalQuarterWhereInput(
+                    gameID: PrismaUnion.$1(
+                        IntFilter(equals: PrismaUnion.$1(gameID))))))),
+          ),
+          include: PlayerStatisticsInclude(player: PrismaUnion.$1(true)));
+      // Enhanced logging: Number of records fetched
+      log('Fetched ${playersStatistics.length} player statistics for gameID: $gameID');
+
+      // Log details of each record (useful for debugging; can be removed in production)
+      for (var stat in playersStatistics) {
+        log(stat.toString());
+      }
+
+      return playersStatistics.toList();
+    } catch (e, stackTrace) {
+      // Log error with stack trace for detailed debugging
+      log(
+        'Error fetching player statistics for gameID: $gameID',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      return [];
+    }
+  }
+
+  // aggregate player statistics by its playerID
+
+  // Future<List<PlayerStatisticsGroupByOutputType>>
+  //     aggregatePlayerStatisticsByPlayerID(int gameID, int playerID) async {
+  //   try {
+  //     final playersStatistics = await prisma.playerStatistics.groupBy(
+  //       by: PrismaUnion.$1(
+  //           [PlayerStatisticsScalar.playerID]), // Grouping by playerID
+  //       where: PlayerStatisticsWhereInput(
+  //         playerID: PrismaUnion.$1(IntNullableFilter(
+  //             equals: PrismaUnion.$1(playerID))), // Filtering by playerID
+  //         finalQuarterId: PrismaUnion.$1(IntNullableFilter(
+  //             equals: PrismaUnion.$1(gameID))), // Filtering by gameID
+  //       ),
+  //       select: PlayerStatisticsGroupByOutputTypeSelect(
+  //         playerID: true,
+  //         $sum: PrismaUnion.$1(
+  //           PlayerStatisticsSumAggregateOutputTypeSelect(
+  //             assist: true,
+  //             block: true,
+  //             foul: true,
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //     return playersStatistics;
+  //   } catch (e, stackTrace) {
+  //     log(
+  //       'Error aggregating player statistics for gameID $gameID and playerID $playerID ',
+  //       error: e,
+  //       stackTrace: stackTrace,
+  //     );
+  //     return []; // Return empty if an error occurs
+  //   }
+  // }
 
 // -------------------- Logs ---------------------------
 // fetch all logs
@@ -290,32 +359,6 @@ class ServiceMethod {
 //   } catch (e) {
 //     log('Failed to fetch logs: $e');
 //     return []; // Return an empty list in case of an error
-//   }
-// }
-
-// --------------- Player Statistics -----------------
-// Fetch player statistics according to gameID
-// Future<List<PlayerStatistics>> fetchPlayerStatisticsByGameID(
-//     int gameID, int playerID) async {
-//   try {
-//     final playersStatistics = await prisma.playerStatistics.findMany(
-//       where: PlayerStatisticsWhereInput(
-//         AND: PrismaUnion.$1(PlayerStatisticsWhereInput(
-//             playerID: PrismaUnion.$1(
-//                 IntNullableFilter(equals: PrismaUnion.$1(playerID))))),
-//         quarter: PrismaUnion.$1(QuarterNullableRelationFilter(
-//             $is: PrismaUnion.$1(QuarterWhereInput(
-//                 gameID: PrismaUnion.$1(
-//                     IntFilter(equals: PrismaUnion.$1(gameID))))))),
-//       ),
-//     );
-
-//     // Log the grouped statistics
-//     log('Player $playerID has statistics with in gameID:$gameID');
-//     return playersStatistics.toList();
-//   } catch (e) {
-//     log('Error grouping and aggregating player statistics: $e');
-//     return [];
 //   }
 // }
 
@@ -343,4 +386,4 @@ class ServiceMethod {
 //     log('Failed to create quarter: $e');
 //   }
 // }
- 
+}
